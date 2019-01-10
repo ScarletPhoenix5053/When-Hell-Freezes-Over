@@ -25,7 +25,6 @@ namespace Tutorial.NahuelG_Fighter
 
         // Can use OnDrawGizmosSelected to only render hitboxes when selected
         protected void OnDrawGizmos()
-        
         {
             SetGizmoColor();
             
@@ -45,7 +44,7 @@ namespace Tutorial.NahuelG_Fighter
             if (_state == State.Inactive) { return; }
 
             // Check Hitbox
-            Collider[] colliders = GetOverlappingHurtboxes();
+            Collider2D[] colliders = GetOverlappingHurtboxes();
 
             if (colliders.Length > 0)
             {
@@ -66,12 +65,12 @@ namespace Tutorial.NahuelG_Fighter
             if (_state == State.Inactive) { return; }
 
             // Check Hitbox
-            Collider[] colliders = GetOverlappingHurtboxes();
+            Collider2D[] colliders = GetOverlappingHurtboxes();
 
             // Perform interaction on hit
             for (int i = 0; i < colliders.Length; i++)
             {
-                Collider collider = colliders[i];
+                Collider2D collider = colliders[i];
                 _responder?.Hit(collider);
             }
         }
@@ -112,14 +111,14 @@ namespace Tutorial.NahuelG_Fighter
                     break;
             }
         }
-        protected Collider[] GetOverlappingHurtboxes()
+        protected Collider2D[] GetOverlappingHurtboxes()
         {
             var size = new Vector3(Size.x / 2, Size.y / 2, Size.z / 2);
-            return Physics.OverlapBox(transform.position, size, Rotation, LayerMask);
+            return Physics2D.OverlapBoxAll(transform.position, size, LayerMask);
         }
     }
     public interface IHitboxResponder
     {
-        void Hit(Collider collider);
+        void Hit(Collider2D collider);
     }
 }

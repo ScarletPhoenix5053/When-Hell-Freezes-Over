@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class KeyboardTracker : DeviceTracker
 {
@@ -11,12 +12,12 @@ public class KeyboardTracker : DeviceTracker
         ButtonKeys = new KeyCode[im.ButtonCount];
         AxisKeys = new AxisKeys[im.AxisCount];
     }
-    protected void FixedUpdate()
+    protected void Update()
     {
         // check for inputs
         CheckNewAxisInput();
         CheckNewButtonInput();
-        if (newData) PassNewData();
+        if (newData) StartCoroutine(PassNewData());
     }
 
     public override void Refresh()
@@ -73,8 +74,10 @@ public class KeyboardTracker : DeviceTracker
             data.axes[i] = val;
         }
     }
-    protected void PassNewData()
+    protected IEnumerator PassNewData()
     {
+        yield return new WaitForFixedUpdate();
+
         im.PassInput(data);
         data.Reset();
         newData = false;
