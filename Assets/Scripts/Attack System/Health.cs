@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 
+[RequireComponent(typeof(MotionController))]
 public class Health : MonoBehaviour
 {
-    public int Hp = 10000;
-    public int HpMax = 10000;
+    public int Hp = 6;
+    public int HpMax = 6;
 
     public bool Dead { get { return Hp <= 0; } }
 

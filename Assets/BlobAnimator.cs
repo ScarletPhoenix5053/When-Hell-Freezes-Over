@@ -6,29 +6,28 @@ public class BlobAnimator : MonoBehaviour
 {
     private Animator an;
     private Vector3 currentPos;
+    private IEnumerator animPhysCoroutine = null;
 
     private void Awake()
     {
         an = GetComponent<Animator>();
     }
-    private void LateUpdate()
-    {
-        // update position to account for animation moving the entity to an absolute space.
-        //transform.position += currentPos;
-    }
 
     public void PlayAttack()
     {
         an.SetTrigger("Leap");
+        if (animPhysCoroutine != null) StopCoroutine(animPhysCoroutine);
+        animPhysCoroutine = AnimatePhysicsFor(100);
+        StartCoroutine(animPhysCoroutine);
     }
 
-    private IEnumerator DontAnimatePhysicsFor(int frames)
+    private IEnumerator AnimatePhysicsFor(int frames)
     {
-        Debug.Log("Stopping Physics anim");
-        an.updateMode = AnimatorUpdateMode.Normal;
+        Debug.Log("Starting Physics anim");
+        an.updateMode = AnimatorUpdateMode.AnimatePhysics;
         yield return new WaitForSeconds(Utility.FramesToSeconds(frames));
     
-        Debug.Log("Resuming Physics anim");
-        an.updateMode = AnimatorUpdateMode.AnimatePhysics;
+        Debug.Log("Stopping Physics anim");
+        an.updateMode = AnimatorUpdateMode.Normal;
     }
 }

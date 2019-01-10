@@ -29,23 +29,21 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
     }
 
     // IHitboxResponder
-    public virtual void Hit(Collider hurtbox)
+    public virtual void Hit(Collider2D hurtbox)
     {
-        // Check hurtbox blockstate
-        bool? success = false;
-        success = hurtbox.GetComponent<Hurtbox>()?.
-            CheckHit(Attacks[0].BlockStun, Attacks[0].HitStun);
-
-
         // On successful hit, deal damage and other effects to the character attatched to the hurtbox
         // Disable hitbox on hit.
-        if ((bool)success)
+        var hb = hurtbox.GetComponent<Hurtbox>();
+        if (hb != null)
         {
-            hurtbox.GetComponent<Hurtbox>().Health.Damage(Attacks[0]);
-            //hurtbox.GetComponent<Hurtbox>().Health.LogHp();
+            if (hb.CheckHit(Attacks[0].BlockStun, Attacks[0].HitStun))
+            {
+                hurtbox.GetComponent<Hurtbox>().Health.Damage(Attacks[0]);
+                //hurtbox.GetComponent<Hurtbox>().Health.LogHp();
 
-            Hitbox.SetInactive();
-        } 
+                Hitbox.SetInactive();
+            }
+        }
     }
     /*
     protected void SetAtkState(AttackState newState)
