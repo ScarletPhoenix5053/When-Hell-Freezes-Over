@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce885065bcf102e44af53c2c4ec135bc, type: 3}
   m_Name: td1
   m_EditorClassIdentifier: 
-  Damage: 300
+  Damage: 30000
   Startup: 12
   Active: 4
   Recovery: 20
