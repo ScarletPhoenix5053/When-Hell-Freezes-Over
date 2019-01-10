@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: BlobLeapAttackData
   m_EditorClassIdentifier: 
   Damage: 1
-  Startup: 46
-  Active: 22
+  Startup: 44
+  Active: 21
   Recovery: 32
   BlockStun: 12
   HitStun: 38
