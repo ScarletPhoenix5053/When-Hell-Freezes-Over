@@ -260,12 +260,6 @@ GameObject:
   - component: {fileID: 529603314}
   - component: {fileID: 529603313}
   - component: {fileID: 529603312}
-  - component: {fileID: 529603311}
-  - component: {fileID: 529603310}
-  - component: {fileID: 529603309}
-  - component: {fileID: 529603318}
-  - component: {fileID: 529603319}
-  - component: {fileID: 529603320}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -273,56 +267,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &529603309
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 529603308}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2dd492f51ae5dcc4fac1a76d676d502b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &529603310
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 529603308}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0682da8876652e44e8cb34f04e479023, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Motion:
-    Speed: 10
-    JumpHeight: 20
-    Acceleration: 0.2
-    DragX: 0.05
-    DragY: 0
-    DragZ: 0.05
-  XVel: 0
-  YVel: 0
-  ZVel: 0
---- !u!114 &529603311
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 529603308}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe874299a87395146a288b3217b52d5d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Attacking: 0
-  Hitbox: {fileID: 2112425915}
-  Attacks:
-  - {fileID: 11400000, guid: 0180718240ef1b14c9bfecc9501915f3, type: 2}
 --- !u!70 &529603312
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -439,52 +383,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &529603318
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 529603308}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9eb68626a007f9341b1617b13292db9e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  WeaponData: {fileID: 0}
---- !u!114 &529603319
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 529603308}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f00d48600754b8441a8268b2e20814f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Hp: 6
-  HpMax: 6
---- !u!114 &529603320
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 529603308}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 29db9a5f2fb0c0d42a15bfe8664472bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Health: {fileID: 529603319}
-  ColliderMain: {fileID: 529603312}
-  ColliderColour:
-    Inactive: {r: 0.5, g: 0.5, b: 0.5, a: 0.25}
-    Active: {r: 0, g: 0.8, b: 0, a: 0.25}
-    Blocking: {r: 0.2, g: 0, b: 0.8, a: 0.75}
-    ThrowInvulnerable: {r: 0.8, g: 0.7, b: 0.05, a: 0.25}
 --- !u!1 &1098631600
 GameObject:
   m_ObjectHideFlags: 0
@@ -536,7 +434,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AxisCount: 2
   ButtonCount: 3
-  controller: {fileID: 529603309}
+  controller: {fileID: 0}
 --- !u!4 &1098631603
 Transform:
   m_ObjectHideFlags: 0

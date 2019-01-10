@@ -18,5 +18,5 @@ MonoBehaviour:
   Recovery: 32
   BlockStun: 12
   HitStun: 38
-  KnockBack: 12
-  KnockUp: 0
+  KnockBack: 30
+  KnockUp: 30
