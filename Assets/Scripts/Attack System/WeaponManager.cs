@@ -2,19 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(AttackManager))]
+[RequireComponent(typeof(PlayerAttackManager))]
 public class WeaponManager : MonoBehaviour
 {
     public WeaponItem WeaponData;
 
-    private AttackManager am;
+    private PlayerAttackManager am;
 
     private void Awake()
     {
-        am = GetComponent<AttackManager>();
+        am = GetComponent<PlayerAttackManager>();
     }
     /// <summary>
-    /// Resets <see cref="AttackManager.Attacks"/> attatched to this gameobject. 
+    /// Resets <see cref="PlayerAttackManager.Attacks"/> attatched to this gameobject. 
     /// Sets first entry to special attack data, and the remainder to the normal chain, in order.
     /// </summary>
     public void UpdateAttackManager()
