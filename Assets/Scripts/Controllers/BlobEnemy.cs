@@ -35,10 +35,7 @@ public class BlobEnemy : MonoBehaviour
 
         DecideAction();
         Act();
-        Debug.Log(distToPlayer);
-    }
-    private void LateUpdate()
-    {
+
         mc.ApplyMovement();
         mc.ResetVelocity();
     }
@@ -57,13 +54,13 @@ public class BlobEnemy : MonoBehaviour
         if (distToPlayer < MinDistToPlayer)
         {
             // Attack
-            SetBehaviour(Behaviour.Attacking);
+            if (currentBehaviour != Behaviour.Attacking) SetBehaviour(Behaviour.Attacking);
         }
         // Else
         else
         {
             // Move closer
-            SetBehaviour(Behaviour.Chasing);
+            if (currentBehaviour != Behaviour.Chasing) SetBehaviour(Behaviour.Chasing);
         }        
     }
     private void Act()
@@ -79,7 +76,11 @@ public class BlobEnemy : MonoBehaviour
             case Behaviour.Chasing:
                 if (plr.transform.position.x < transform.position.x)
                 {
-                    
+                    mc.UpdateVelocity(new Vector2(-mc.Motion.Speed * Time.fixedDeltaTime * 50, mc.YVel));
+                }
+                else
+                {
+                    mc.UpdateVelocity(new Vector2(mc.Motion.Speed * Time.fixedDeltaTime * 50, mc.YVel));
                 }
                 break;
 
@@ -87,8 +88,9 @@ public class BlobEnemy : MonoBehaviour
                 break;
         }
     }
-    private void SetBehaviour(Behaviour newState)
+    private void SetBehaviour(Behaviour newBehaviour)
     {
-        currentBehaviour = newState;
+        Debug.Log(name + " changed behaviour state from " + currentBehaviour + " to " + newBehaviour);
+        currentBehaviour = newBehaviour;
     }
 }

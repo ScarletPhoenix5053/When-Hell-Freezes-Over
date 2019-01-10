@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce885065bcf102e44af53c2c4ec135bc, type: 3}
   m_Name: td1
   m_EditorClassIdentifier: 
-  Damage: 30000
-  Startup: 12
-  Active: 4
-  Recovery: 20
-  BlockStun: 14
+  Damage: 10
+  Startup: 19
+  Active: 2
+  Recovery: 18
+  BlockStun: 20
   HitStun: 32
   KnockBack: 8
   KnockUp: 3

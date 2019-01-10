@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
         am = GetComponent<AttackManager>();
         mc = GetComponent<MotionController>();
     }
-    private void LateUpdate()
+    private void FixedUpdate()
     {
         mc.ApplyMovement();
         mc.ResetVelocity();
@@ -60,14 +60,14 @@ public class PlayerController : MonoBehaviour
         if (data.axes[0] > 0.5 && IsGrounded && jumpLimitTimer <= 0)
         {
             jumpLimitTimer = jumpLimitSeconds;
-            mc.UpdateVelocity(new Vector3(mc.XVel, mc.Motion.JumpHeight, 0));
+            mc.UpdateVelocity(new Vector3(mc.XVel, mc.Motion.JumpHeight * Time.fixedDeltaTime * 50, 0));
         }
         // Walk
         if (data.axes[1] !=  0)
         {            
             mc.UpdateVelocity(
                 new Vector3(
-                    data.axes[1] * mc.Motion.Speed,
+                    data.axes[1] * mc.Motion.Speed * Time.fixedDeltaTime * 50,
                     mc.YVel, 0));
         }
     }

@@ -11,7 +11,7 @@ public class KeyboardTracker : DeviceTracker
         ButtonKeys = new KeyCode[im.ButtonCount];
         AxisKeys = new AxisKeys[im.AxisCount];
     }
-    protected void Update()
+    protected void FixedUpdate()
     {
         // check for inputs
         CheckNewAxisInput();
