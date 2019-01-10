@@ -314,17 +314,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 529603308}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2f276f558fde1f44a17c497a4ac2df2, type: 3}
+  m_Script: {fileID: 11500000, guid: 47b1fed37c4c45641b315df93f07cef5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Attacking: 0
   Hitbox: {fileID: 2112425915}
   Attacks:
   - {fileID: 11400000, guid: 0180718240ef1b14c9bfecc9501915f3, type: 2}
-  - {fileID: 11400000, guid: 0180718240ef1b14c9bfecc9501915f3, type: 2}
-  - {fileID: 11400000, guid: 0180718240ef1b14c9bfecc9501915f3, type: 2}
-  - {fileID: 11400000, guid: 0180718240ef1b14c9bfecc9501915f3, type: 2}
   AtkState: -1
+  atkType: 0
 --- !u!70 &529603312
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -637,8 +635,9 @@ GameObject:
   - component: {fileID: 1856425867}
   - component: {fileID: 1856425874}
   - component: {fileID: 1856425873}
-  - component: {fileID: 1856425872}
   - component: {fileID: 1856425871}
+  - component: {fileID: 1856425875}
+  - component: {fileID: 1856425872}
   m_Layer: 0
   m_Name: Blob
   m_TagString: Untagged
@@ -753,16 +752,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1856425866}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2f276f558fde1f44a17c497a4ac2df2, type: 3}
+  m_Script: {fileID: 11500000, guid: 8b3bbb4bc8503fc438cafb168e1912c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Attacking: 0
-  Hitbox: {fileID: 451300697}
+  Hitbox: {fileID: 0}
   Attacks:
-  - {fileID: 11400000, guid: 0180718240ef1b14c9bfecc9501915f3, type: 2}
-  - {fileID: 11400000, guid: 0180718240ef1b14c9bfecc9501915f3, type: 2}
-  - {fileID: 11400000, guid: 0180718240ef1b14c9bfecc9501915f3, type: 2}
-  - {fileID: 11400000, guid: 0180718240ef1b14c9bfecc9501915f3, type: 2}
+  - {fileID: 11400000, guid: bba4b7eac96e69f46bab3679443f2eac, type: 2}
   AtkState: -1
 --- !u!114 &1856425873
 MonoBehaviour:
@@ -798,6 +794,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!111 &1856425875
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1856425866}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: b312905da3b8d9a48aabfbdf151eeff2, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: b312905da3b8d9a48aabfbdf151eeff2, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 1
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &1950755428
 GameObject:
   m_ObjectHideFlags: 0

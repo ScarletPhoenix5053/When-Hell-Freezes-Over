@@ -1,15 +1,15 @@
 ﻿using UnityEngine;
 using System;
 
-[RequireComponent(typeof(AttackManager))]
+[RequireComponent(typeof(PlayerAttackManager))]
 [RequireComponent(typeof(MotionController))]
-public class BlobEnemy : MonoBehaviour
+public class BlobController : MonoBehaviour
 {
     public float MinDistToPlayer = 1.2f;
 
     public bool IsGrounded { get { return Physics2D.Raycast(transform.position, -Vector2.up, GetComponent<Collider2D>().bounds.extents.y + 0.05f, LayerMask.GetMask("Environment")); } }
     
-    private AttackManager am;
+    private PlayerAttackManager am;
     private MotionController mc;
     private PlayerController plr;
     private Behaviour currentBehaviour;
@@ -23,7 +23,7 @@ public class BlobEnemy : MonoBehaviour
 
     private void Awake()
     {
-        am = GetComponent<AttackManager>();
+        am = GetComponent<PlayerAttackManager>();
         mc = GetComponent<MotionController>();
         plr = FindObjectOfType<PlayerController>();
     }
@@ -71,6 +71,7 @@ public class BlobEnemy : MonoBehaviour
                 break;
 
             case Behaviour.Attacking:
+                
                 break;
 
             case Behaviour.Chasing:

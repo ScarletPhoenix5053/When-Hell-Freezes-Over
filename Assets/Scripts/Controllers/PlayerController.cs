@@ -1,26 +1,21 @@
 ﻿using UnityEngine;
 using System;
 
-[RequireComponent(typeof(AttackManager))]
+[RequireComponent(typeof(PlayerAttackManager))]
 [RequireComponent(typeof(MotionController))]
 public class PlayerController : MonoBehaviour
 {
     public bool IsGrounded { get { return Physics2D.Raycast(transform.position, -Vector2.up, GetComponent<Collider2D>().bounds.extents.y + 0.05f, LayerMask.GetMask("Environment")); } }
     
-    private AttackManager am;
+    private PlayerAttackManager am;
     private MotionController mc;
     private float jumpLimitSeconds = 0.2f;
     private float jumpLimitTimer = 0; 
-
-    private enum AttackState
-    {
-
-    }
     
 
     private void Awake()
     {
-        am = GetComponent<AttackManager>();
+        am = GetComponent<PlayerAttackManager>();
         mc = GetComponent<MotionController>();
     }
     private void FixedUpdate()
@@ -38,22 +33,10 @@ public class PlayerController : MonoBehaviour
     public void ReadInput(InputData data)
     {
         // Light attack button
-        if (data.buttons[0])
+        if (data.buttons[0] && 
+            !am.Attacking)
         {
-            if (am.LightAttack())
-            {
-            }
-            else
-            {
-                Debug.LogWarning("Cannot chain from " + am.AtkState);            
-            }
-        }
-        // Launcher attack button
-        if (data.buttons[1])
-        {
-            if (am.LauncherAttack())
-            {
-            }
+            am.LightAttack();
         }
 
         // Jump
