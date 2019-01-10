@@ -10,8 +10,7 @@ public class PlayerController : MonoBehaviour
     private PlayerAttackManager am;
     private MotionController mc;
     private float jumpLimitSeconds = 0.2f;
-    private float jumpLimitTimer = 0; 
-    
+    private float jumpLimitTimer = 0;    
 
     private void Awake()
     {
@@ -47,13 +46,11 @@ public class PlayerController : MonoBehaviour
         }
         // Walk
         if (data.axes[1] !=  0)
-        {            
+        {
             mc.UpdateVelocity(
                 new Vector3(
                     data.axes[1] * mc.Motion.Speed * Time.fixedDeltaTime * 50,
                     mc.YVel, 0));
         }
-    }
-
-   
+    }   
 }

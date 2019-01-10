@@ -34,7 +34,6 @@ public class Health : MonoBehaviour
         }
     }
 
-
     public void LogHp()
     {
         Debug.Log(name + ": " + Hp + "/ " + HpMax);
