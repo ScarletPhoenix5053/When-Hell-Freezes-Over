@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Attack Data", menuName = "AttackData")]
+[CreateAssetMenu(fileName = "New Attack Data", menuName = "Combat/AttackData")]
 public class AttackData : ScriptableObject
 {
     public int Damage = 300;
