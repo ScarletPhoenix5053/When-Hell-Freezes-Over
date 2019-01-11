@@ -19,4 +19,4 @@ MonoBehaviour:
   BlockStun: 12
   HitStun: 38
   KnockBack: 30
-  KnockUp: 30
+  KnockUp: 20

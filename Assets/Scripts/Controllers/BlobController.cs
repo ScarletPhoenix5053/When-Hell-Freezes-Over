@@ -118,7 +118,7 @@ public class BlobController : MonoBehaviour
     {
         if (newBehaviour == currentBehaviour) return;
 
-        Debug.Log(name + " changed behaviour state from " + currentBehaviour + " to " + newBehaviour);
+        //Debug.Log(name + " changed behaviour state from " + currentBehaviour + " to " + newBehaviour);
         currentBehaviour = newBehaviour;
     }
     private IEnumerator ApplyLeapVelocity()

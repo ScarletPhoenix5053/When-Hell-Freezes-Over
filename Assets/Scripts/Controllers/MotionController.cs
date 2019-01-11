@@ -10,6 +10,10 @@ public class MotionController : MonoBehaviour
     /// Used to move player along X axis. Is reset with each call of <see cref="UpdateMotion"/>.
     /// </summary>
     public float InputMotion { get; set; }
+    /// <summary>
+    /// Stops movement calculations based on <see cref="InputMotion"/> when <see cref="true"/>.
+    /// </summary>
+    public bool InputOverride { get; private set; }
     #region Protected Vars
     protected float XDrag = 0.02f;
     protected float YDrag = 0.02f;
@@ -47,31 +51,33 @@ public class MotionController : MonoBehaviour
         if (velocity.x < impulse.x) velocity.x = impulse.x;
         if (velocity.y < impulse.y) velocity.y = impulse.y;
         impulseLastFrame = true;
-        Debug.Log("read"+velocity.y);
     }
     /// <summary>
     /// Main update method for <see cref="MotionController"/>.
     /// </summary>
     public void UpdateMotion()
     {
-
         // X AXIS
-        InputMotion =Mathf.Clamp(InputMotion, -1, 1);
-        
-        if (InputMotion < -zeroThreshold || InputMotion > zeroThreshold)
+        if (!InputOverride)
         {
-            // Left/Right
-            velocity.x = InputMotion * Speed * Time.deltaTime * deltaMultiplicationFactor;
-        }
-        else
-        {
-            // Drag
-            velocity.x = 0;
-        }
+            InputMotion = Mathf.Clamp(InputMotion, -1, 1);
 
-        InputMotion = 0;
+            if (InputMotion < -zeroThreshold || InputMotion > zeroThreshold)
+            {
+                // Left/Right
+                velocity.x = InputMotion * Speed * Time.deltaTime * deltaMultiplicationFactor;
+            }
+            else
+            {
+                // Drag
+                velocity.x = 0;
+            }
+
+            InputMotion = 0;
+        }
 
         ApplyMovement();
+
         // IMPULSE
         if (impulseLastFrame)
         {
@@ -94,13 +100,18 @@ public class MotionController : MonoBehaviour
     {
         velocity = Vector2.zero;
     }
+    public void SetInputOverride(bool status)
+    {
+        InputOverride = status;
+    }
 
     /// <summary>
     /// Move the charater
     /// </summary>
     protected void ApplyMovement()
     {
-        rb.velocity = new Vector2(velocity.x , velocity.y + rb.velocity.y);
+        if (!InputOverride) rb.velocity = new Vector2(velocity.x, velocity.y + rb.velocity.y);
+        else rb.velocity = new Vector2(rb.velocity.x + velocity.x, rb.velocity.y + velocity.y);            
     }
     /// <summary>
     /// Apply drag to the character's X axis exclusivley.

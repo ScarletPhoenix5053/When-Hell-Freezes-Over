@@ -23,11 +23,11 @@ public class BlobAnimator : MonoBehaviour
 
     private IEnumerator AnimatePhysicsFor(int frames)
     {
-        Debug.Log("Starting Physics anim");
+        //Debug.Log("Starting Physics anim");
         an.updateMode = AnimatorUpdateMode.AnimatePhysics;
         yield return new WaitForSeconds(Utility.FramesToSeconds(frames));
     
-        Debug.Log("Stopping Physics anim");
+        //Debug.Log("Stopping Physics anim");
         an.updateMode = AnimatorUpdateMode.Normal;
     }
 }

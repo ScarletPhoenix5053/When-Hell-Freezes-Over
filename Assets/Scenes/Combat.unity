@@ -262,6 +262,8 @@ GameObject:
   - component: {fileID: 529603312}
   - component: {fileID: 529603310}
   - component: {fileID: 529603309}
+  - component: {fileID: 529603318}
+  - component: {fileID: 529603311}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -282,6 +284,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   JumpHeight: 12
+  CurrentState: 0
 --- !u!114 &529603310
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -295,6 +298,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 10
+--- !u!114 &529603311
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 529603308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29db9a5f2fb0c0d42a15bfe8664472bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Health: {fileID: 529603318}
+  ColliderMain: {fileID: 529603312}
+  ColliderColour:
+    Inactive: {r: 0.5, g: 0.5, b: 0.5, a: 0.25}
+    Active: {r: 0, g: 0.8, b: 0, a: 0.25}
+    Blocking: {r: 0.2, g: 0, b: 0.8, a: 0.75}
+    ThrowInvulnerable: {r: 0.8, g: 0.7, b: 0.05, a: 0.25}
 --- !u!70 &529603312
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -411,6 +433,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &529603318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 529603308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f00d48600754b8441a8268b2e20814f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Hp: 6
+  HpMax: 6
 --- !u!1 &1098631600
 GameObject:
   m_ObjectHideFlags: 0
