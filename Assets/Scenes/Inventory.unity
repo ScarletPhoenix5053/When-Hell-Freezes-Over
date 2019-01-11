@@ -314,10 +314,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   items:
   - {fileID: 11400000, guid: 97e4cc3fed0a11f48bf42850fa6adc53, type: 2}
-  - {fileID: 11400000, guid: cffe84e01b01e0840898170edde7f144, type: 2}
-  - {fileID: 11400000, guid: e4efc42d11ed92d49bb968a819e4b915, type: 2}
-  - {fileID: 11400000, guid: 2551ce5bd6827d14fbd7ec07abb82cb4, type: 2}
-  - {fileID: 11400000, guid: 61efcd6fee436a749bec907c8a6123eb, type: 2}
   itemsParent: {fileID: 324373559}
   itemSlots:
   - {fileID: 1262966114}
@@ -432,7 +428,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 179414459}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
@@ -1034,7 +1030,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 367945954}
-  tooltip: {fileID: 0}
+  tooltip: {fileID: 1942148552}
   EquipmentType: 2
 --- !u!114 &367945954
 MonoBehaviour:
@@ -1522,7 +1518,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 496663408}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
@@ -2964,7 +2960,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1257240613
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3559,7 +3555,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1481763135}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
@@ -3640,7 +3636,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 1597444005}
-  tooltip: {fileID: 0}
+  tooltip: {fileID: 1942148552}
   EquipmentType: 1
 --- !u!114 &1597444005
 MonoBehaviour:
@@ -3878,7 +3874,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   image: {fileID: 1681526492}
-  tooltip: {fileID: 0}
+  tooltip: {fileID: 1942148552}
   EquipmentType: 0
 --- !u!114 &1681526492
 MonoBehaviour:
@@ -4396,7 +4392,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2142131729}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 

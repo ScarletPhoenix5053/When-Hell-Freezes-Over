@@ -40,6 +40,7 @@ public class Inventory : MonoBehaviour, IItemContainer
             itemSlots[i].item = null;
         }
     }
+    
 
     public bool AddItem(GenericItem item)
     {
@@ -49,30 +50,18 @@ public class Inventory : MonoBehaviour, IItemContainer
         items.Add(item);
         RefreshUI();
         return true;
+
     }
 
     public bool RemoveItem(GenericItem item)
     {
         if (items.Remove(item))
         {
-            RefreshUI();
-            return true;
+        RefreshUI();
+        return true;
         }
         return false;
-    }
-
-    public GenericItem RemoveItem(string itemID)
-    {
-        for (int i = 0; i < itemSlots.Length; i++)
-        {
-            GenericItem item = itemSlots[i].item;
-            if(item != null && item.ID == itemID)
-            {
-                itemSlots[i].item = null;
-                return item;
-            }
-        }
-        return null;
+        
     }
 
     public bool IsFull()
@@ -93,12 +82,12 @@ public class Inventory : MonoBehaviour, IItemContainer
         return false;
     }
 
-    public int ItemCount(string itemID)
+    public int ItemCount(GenericItem item)
     {
         int number = 0;
         for (int i = 0; i < itemSlots.Length; i++)
         {
-            if (itemSlots[i].item.ID == itemID)
+            if (itemSlots[i].item == item)
             {
                 number++;
             }

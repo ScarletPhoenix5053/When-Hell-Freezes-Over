@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 127a0611cc5b4b64188ad5e694a823e0, type: 3}
   m_Name: ArmorTest
   m_EditorClassIdentifier: 
-  ID: 0
+  ID: 1
   Name: hat
   Desc: howdy
   Icon: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}

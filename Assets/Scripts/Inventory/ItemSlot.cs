@@ -35,14 +35,23 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
     {
         if (image == null)
             image = GetComponent<Image>();
+
+        if(tooltip == null)
+        { 
+            tooltip = FindObjectOfType<ItemTooltip>();
+        }
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        
         if(eventData != null && eventData.button == PointerEventData.InputButton.Left)
         {
-            if(item != null && OnLeftClickEvent != null)
+            Debug.Log(OnLeftClickEvent == null); //So the event is equal to null.
+            //THE ERROR IS HERE.
+            if (item != null && OnLeftClickEvent != null)
             {
+                Debug.Log("Equipping");
                 OnLeftClickEvent(item);
             }
         }

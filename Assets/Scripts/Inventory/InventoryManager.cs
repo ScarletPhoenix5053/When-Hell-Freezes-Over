@@ -16,6 +16,7 @@ public class InventoryManager : MonoBehaviour
 
     private void EquipFromInventory(GenericItem item)
     {
+        Debug.Log("oof");
         if(item is WeaponItem)
         {
             Equip((WeaponItem)item);
@@ -50,6 +51,7 @@ public class InventoryManager : MonoBehaviour
                 if(previousItem != null)
                 {
                     inventory.AddItem(previousItem);
+                    Debug.Log("here?");
                 }
             }
             else

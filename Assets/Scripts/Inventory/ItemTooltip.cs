@@ -13,13 +13,16 @@ public class ItemTooltip : MonoBehaviour
 
     public void ShowTooltip(GenericItem item, Vector3 position)
     {
-        itemNameText.text = item.Name;
-        descText.text = item.Desc;
-        slotText.text = item.equipmentType.ToString();
+        if (item != null)
+        {
+            itemNameText.text = item.Name;
+            descText.text = item.Desc;
+            slotText.text = item.equipmentType.ToString();
 
-        gameObject.SetActive(true);
+            gameObject.SetActive(true);
 
-        tooltip.transform.position = position;
+            tooltip.transform.position = position;
+        }
         
     }
 
