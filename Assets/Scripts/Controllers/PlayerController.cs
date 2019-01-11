@@ -3,6 +3,8 @@ using System;
 
 
 [RequireComponent(typeof(MotionController))]
+[RequireComponent(typeof(AttackManager))]
+[RequireComponent(typeof(Health))]
 public class PlayerController : MonoBehaviour
 {
     public bool IsGrounded { get { return Physics2D.Raycast(transform.position, -Vector2.up, GetComponent<Collider2D>().bounds.extents.y + 0.05f, LayerMask.GetMask("Environment")); } }
@@ -72,7 +74,7 @@ public class PlayerController : MonoBehaviour
         if (currentInputData.buttons[0] &&
             !am.Attacking)
         {
-            am.LightAttack();
+            am.NormalAttack();
         }
 
         // Jump

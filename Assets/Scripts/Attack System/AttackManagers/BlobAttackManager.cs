@@ -4,9 +4,9 @@ using System.Collections;
 using Tutorial.NahuelG_Fighter;
 using UnityEngine;
 
-public class PlayerAttackManager : AttackManager, IHitboxResponder
+public class BlobAttackManager : AttackManager, IHitboxResponder
 {
-    public bool LightAttack()
+    public bool Attack()
     {
         var success = false;
         

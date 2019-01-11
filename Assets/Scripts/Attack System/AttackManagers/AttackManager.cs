@@ -15,7 +15,7 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
     
     
 
-    protected virtual void Awake()
+    protected virtual void OnEnable()
     {
         if (Attacks.Length < numOfAttacks)
             throw new NullReferenceException(
