@@ -30,7 +30,7 @@ public class Health : MonoBehaviour
 
         if (mc != null)
         {
-            mc.UpdateVelocity(new Vector3(data.KnockBack, data.KnockUp, 0));
+            mc.SetVelocity(new Vector3(data.KnockBack, data.KnockUp, 0));
         }
     }
 

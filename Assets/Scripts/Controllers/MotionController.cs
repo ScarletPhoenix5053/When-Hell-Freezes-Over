@@ -1,19 +1,22 @@
-﻿using UnityEngine;
-using System;
-using System.Collections;
+﻿using System;
+using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class MotionController : MonoBehaviour
 {
-    public BaseMotionVars Motion = new BaseMotionVars();
-
-    public float XVel = 0f;
-    public float YVel = 0f;
-    public float ZVel = 0f;
-
+    //public BaseMotionVars Motion = new BaseMotionVars();
+    public float Speed = 10f;
+    public float InputMotion { get; set; }
+    #region Protected Vars
+    protected float XDrag = 0.02f;
+    protected float YDrag = 0.02f;
     protected const float zeroThreshold = 0.005f;
+    protected const int deltaMultiplicationFactor = 50;
+    protected bool impulseLastFrame = false;
     protected Rigidbody2D rb;
-    
+    protected Vector2 velocity;
+    #endregion
+    /*
     // update to be struct: will need an accompanying propertydrawer sctipt
     [Serializable]
     public class BaseMotionVars
@@ -25,69 +28,89 @@ public class MotionController : MonoBehaviour
         public float DragX = 0.05f;
         public float DragY = 0.00f;
         public float DragZ = 0.05f;
-    }
+    }*/
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
     }
 
-    // update char movement
+    /// <summary>
+    /// currentley the same as SetVelocity(V2). update later!
+    /// </summary>
+    /// <param name="impulse"></param>
+    public void Impulse(Vector2 impulse)
+    {
+        if (velocity.x < impulse.x) velocity.x = impulse.x;
+        if (velocity.y < impulse.y) velocity.y = impulse.y;
+        impulseLastFrame = true;
+    }
+    /// <summary>
+    /// Main update method for <see cref="MotionController"/>.
+    /// </summary>
+    public void UpdateMotion()
+    {
+        // IMPULSE
+        if (impulseLastFrame)
+        {
+            impulseLastFrame = false;
+            velocity = Vector2.zero;
+        }
+
+        // X AXIS
+        InputMotion =Mathf.Clamp(InputMotion, -1, 1);
+        if (InputMotion < -zeroThreshold || InputMotion > zeroThreshold)
+        {
+            // Left/Right
+            velocity.x = InputMotion * Speed * Time.deltaTime * deltaMultiplicationFactor;
+        }
+        else
+        {
+            // Drag
+            velocity.x = 0;
+        }
+    }    
     /// <summary>
     /// Immediatley set velocities to this force
     /// </summary>
     /// <remarks>
     /// Ignores MaxSpeed
     /// </remarks>
-    /// <param name="force"></param>
-    public void UpdateVelocity(Vector3 force)
+    /// <param name="newVelocity"></param>
+    public void SetVelocity(Vector2 newVelocity)
     {
-        XVel = force.x;
-        YVel = force.y;
-        ZVel = force.z;
+        velocity = newVelocity;
     }
-    /// <summary>
-    /// resets velocity on ALL axes!
-    /// </summary>
-    public void ResetVelocity()
+    public void Stop()
     {
-        XVel = 0;
-        YVel = 0;
-        ZVel = 0;
+        velocity = Vector2.zero;
     }
-    /// <summary>
-    /// resets velocity on ALL axes!
-    /// </summary>
-    public void ResetVelocityHor()
-    {
-        XVel = 0;
-        ZVel = 0;
-    }
+
     /// <summary>
     /// Move the charater
     /// </summary>
-    public void ApplyMovement()
+    protected void ApplyMovement()
     {
-        rb.velocity = new Vector3(XVel, rb.velocity.y + YVel, ZVel);
+        velocity.y += rb.velocity.y;
+        rb.velocity = velocity;
     }
     /// <summary>
-    /// Apply drag to the character's Z axis exclusivley.
+    /// Apply drag to the character's X axis exclusivley.
     /// </summary>
-    public void ApplyDrag()
+    protected void ApplyDrag()
     {
-        // apply X drag
-        if (Motion.DragX != 0)
+        if (XDrag != 0)
         {
-            if (XVel != 0)
+            if (velocity.x != 0)
             {
-                if ((XVel < zeroThreshold && XVel > 0) ||
-                    (XVel > -zeroThreshold && XVel < 0))
+                if ((velocity.x < zeroThreshold && velocity.x > 0) ||
+                    (velocity.x > -zeroThreshold && velocity.x < 0))
                 {
-                    XVel = 0;
+                    velocity.x = 0;
                 }
                 else
                 {
-                    XVel -= (Motion.DragX*XVel) * Math.Sign(XVel);
+                    velocity.x -= (XDrag*velocity.x) * Math.Sign(velocity.x);
                 }
             }
         }

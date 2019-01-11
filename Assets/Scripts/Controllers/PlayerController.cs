@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 using System;
 
-[RequireComponent(typeof(PlayerAttackManager))]
+
 [RequireComponent(typeof(MotionController))]
 public class PlayerController : MonoBehaviour
 {
     public bool IsGrounded { get { return Physics2D.Raycast(transform.position, -Vector2.up, GetComponent<Collider2D>().bounds.extents.y + 0.05f, LayerMask.GetMask("Environment")); } }
-    
+    public float JumpHeight = 12f;
+
     private PlayerAttackManager am;
     private MotionController mc;
     private float jumpLimitSeconds = 0.2f;
@@ -19,9 +20,6 @@ public class PlayerController : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        mc.ApplyMovement();
-        mc.ResetVelocity();
-
         if (jumpLimitTimer > 0) jumpLimitTimer -= Time.deltaTime;
     }
 
@@ -42,15 +40,12 @@ public class PlayerController : MonoBehaviour
         if (data.axes[0] > 0.5 && IsGrounded && jumpLimitTimer <= 0)
         {
             jumpLimitTimer = jumpLimitSeconds;
-            mc.UpdateVelocity(new Vector3(mc.XVel, mc.Motion.JumpHeight * Time.fixedDeltaTime * 50, 0));
+            mc.Impulse(new Vector2(0, JumpHeight));
         }
         // Walk
         if (data.axes[1] !=  0)
         {
-            mc.UpdateVelocity(
-                new Vector3(
-                    data.axes[1] * mc.Motion.Speed * Time.fixedDeltaTime * 50,
-                    mc.YVel, 0));
+            mc.InputMotion = data.axes[1];
         }
     }   
 }

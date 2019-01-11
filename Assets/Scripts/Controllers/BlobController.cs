@@ -39,9 +39,6 @@ public class BlobController : MonoBehaviour
     {
         DecideAction();
         Act();
-
-        mc.ApplyMovement();
-        mc.ResetVelocity();
     }
     
     private void DecideAction()
@@ -92,11 +89,11 @@ public class BlobController : MonoBehaviour
             case Behaviour.Chasing:
                 if (playerToLeft)
                 {
-                    mc.UpdateVelocity(new Vector2(-mc.Motion.Speed * Time.fixedDeltaTime * 50, mc.YVel));
+                    mc.InputMotion = -1;
                 }
                 else
                 {
-                    mc.UpdateVelocity(new Vector2(mc.Motion.Speed * Time.fixedDeltaTime * 50, mc.YVel));
+                    mc.InputMotion = 1;
                 }
                 break;
 
@@ -125,8 +122,8 @@ public class BlobController : MonoBehaviour
     private IEnumerator ApplyLeapVelocity()
     {
         yield return new WaitForSeconds(Sierra.Utility.FramesToSeconds(am.Attacks[0].Startup));
-        
-        mc.UpdateVelocity(new Vector2(mc.XVel, LeapHeight));
+
+        mc.Impulse(new Vector2(0, LeapHeight));
 
         var frameCount = am.Attacks[0].Startup;
     }

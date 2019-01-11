@@ -260,6 +260,8 @@ GameObject:
   - component: {fileID: 529603314}
   - component: {fileID: 529603313}
   - component: {fileID: 529603312}
+  - component: {fileID: 529603310}
+  - component: {fileID: 529603309}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -267,6 +269,32 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &529603309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 529603308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dd492f51ae5dcc4fac1a76d676d502b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  JumpHeight: 12
+--- !u!114 &529603310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 529603308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0682da8876652e44e8cb34f04e479023, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Speed: 10
 --- !u!70 &529603312
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -434,7 +462,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AxisCount: 2
   ButtonCount: 3
-  controller: {fileID: 0}
+  controller: {fileID: 529603309}
 --- !u!4 &1098631603
 Transform:
   m_ObjectHideFlags: 0
@@ -748,16 +776,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0682da8876652e44e8cb34f04e479023, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Motion:
-    Speed: 7
-    JumpHeight: 10
-    Acceleration: 0.2
-    DragX: 0.05
-    DragY: 0
-    DragZ: 0.05
-  XVel: 0
-  YVel: 0
-  ZVel: 0
+  Speed: 10
 --- !u!114 &1856425872
 MonoBehaviour:
   m_ObjectHideFlags: 0
