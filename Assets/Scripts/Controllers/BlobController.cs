@@ -5,7 +5,8 @@ using System.Collections;
 [RequireComponent(typeof(MotionController))]
 public class BlobController : MonoBehaviour
 {
-    public float MinDistToPlayer = 1.2f;
+    public float AttackRange = 2f;
+    public float ChaseRange = 10f;
     public float LeapHeight = 10f;
 
     public bool IsGrounded { get { return Physics2D.Raycast(transform.position, -Vector2.up, GetComponent<Collider2D>().bounds.extents.y + 0.05f, LayerMask.GetMask("Environment")); } }
@@ -14,7 +15,7 @@ public class BlobController : MonoBehaviour
     private BlobAttackManager am;
     private MotionController mc;
     private PlayerController plr;
-    private Behaviour currentBehaviour;
+    private Behaviour currentBehaviour = Behaviour.Idle;
 
     private enum Behaviour
     {
@@ -39,12 +40,13 @@ public class BlobController : MonoBehaviour
     {
         DecideAction();
         Act();
+        mc.UpdateMotion();
     }
     
     private void DecideAction()
     {
-        // if player doesn't exist
-        if (plr == null)
+        // if player doesn't exist or is too far away
+        if (plr == null || distToPlayer > ChaseRange)
         {
             SetBehaviour(Behaviour.Idle);
             return;
@@ -58,7 +60,7 @@ public class BlobController : MonoBehaviour
         }
 
         // If player is close enough
-        if (distToPlayer < MinDistToPlayer)
+        if (distToPlayer < AttackRange)
         {
             // Attack
             SetBehaviour(Behaviour.Attacking);

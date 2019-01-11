@@ -776,7 +776,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0682da8876652e44e8cb34f04e479023, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 10
+  Speed: 7
 --- !u!114 &1856425872
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -805,7 +805,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e7749fbdcb31ef34da09b0db49671bf1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MinDistToPlayer: 3
+  AttackRange: 2
+  ChaseRange: 10
   LeapHeight: 15
 --- !u!50 &1856425874
 Rigidbody2D:
@@ -840,7 +841,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: b83ac9c64322e79429cd549c50f67bf7, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 1
+  m_UpdateMode: 0
   m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
