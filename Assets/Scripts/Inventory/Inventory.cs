@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Inventory : MonoBehaviour, IItemContainer
+public class Inventory : MonoBehaviour , IItemContainer
 {
     [SerializeField] List<GenericItem> items;
     [SerializeField] Transform itemsParent;
@@ -69,6 +69,7 @@ public class Inventory : MonoBehaviour, IItemContainer
         return items.Count >= itemSlots.Length;
     }
 
+    
     public bool ContainsItem(GenericItem item)
     {
         for (int i = 0; i < itemSlots.Length; i++)
@@ -95,5 +96,7 @@ public class Inventory : MonoBehaviour, IItemContainer
         }
         return number;
     }
+
+    
 }
 

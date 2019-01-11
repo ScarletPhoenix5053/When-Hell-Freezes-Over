@@ -47,7 +47,6 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
         
         if(eventData != null && eventData.button == PointerEventData.InputButton.Left)
         {
-            Debug.Log(OnLeftClickEvent == null); //So the event is equal to null.
             //THE ERROR IS HERE.
             if (item != null && OnLeftClickEvent != null)
             {
