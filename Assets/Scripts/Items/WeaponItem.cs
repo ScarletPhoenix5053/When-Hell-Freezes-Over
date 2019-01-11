@@ -7,6 +7,8 @@ public class WeaponItem : GenericItem
     public AttackData SpecialAtkData;
     public WeaponType Type;
 
+    //public EquipmentType equipmentType;
+
     public enum WeaponType
     {
         LongSword, GreatSword, Mace, Warhammer
