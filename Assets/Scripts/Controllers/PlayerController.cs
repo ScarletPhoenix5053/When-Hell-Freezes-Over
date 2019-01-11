@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour
     private PlayerAttackManager am;
     private MotionController mc;
     private float jumpLimitSeconds = 0.2f;
-    private float jumpLimitTimer = 0;    
+    private float jumpLimitTimer = 0;
 
     private void Awake()
     {
@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        mc.UpdateMotion();
+
         if (jumpLimitTimer > 0) jumpLimitTimer -= Time.deltaTime;
     }
 

@@ -6,6 +6,9 @@ public class MotionController : MonoBehaviour
 {
     //public BaseMotionVars Motion = new BaseMotionVars();
     public float Speed = 10f;
+    /// <summary>
+    /// Used to move player along X axis. Is reset with each call of <see cref="UpdateMotion"/>.
+    /// </summary>
     public float InputMotion { get; set; }
     #region Protected Vars
     protected float XDrag = 0.02f;
@@ -44,21 +47,17 @@ public class MotionController : MonoBehaviour
         if (velocity.x < impulse.x) velocity.x = impulse.x;
         if (velocity.y < impulse.y) velocity.y = impulse.y;
         impulseLastFrame = true;
+        Debug.Log("read"+velocity.y);
     }
     /// <summary>
     /// Main update method for <see cref="MotionController"/>.
     /// </summary>
     public void UpdateMotion()
     {
-        // IMPULSE
-        if (impulseLastFrame)
-        {
-            impulseLastFrame = false;
-            velocity = Vector2.zero;
-        }
 
         // X AXIS
         InputMotion =Mathf.Clamp(InputMotion, -1, 1);
+        
         if (InputMotion < -zeroThreshold || InputMotion > zeroThreshold)
         {
             // Left/Right
@@ -68,6 +67,16 @@ public class MotionController : MonoBehaviour
         {
             // Drag
             velocity.x = 0;
+        }
+
+        InputMotion = 0;
+
+        ApplyMovement();
+        // IMPULSE
+        if (impulseLastFrame)
+        {
+            impulseLastFrame = false;
+            velocity = Vector2.zero;
         }
     }    
     /// <summary>
@@ -91,8 +100,7 @@ public class MotionController : MonoBehaviour
     /// </summary>
     protected void ApplyMovement()
     {
-        velocity.y += rb.velocity.y;
-        rb.velocity = velocity;
+        rb.velocity = new Vector2(velocity.x , velocity.y + rb.velocity.y);
     }
     /// <summary>
     /// Apply drag to the character's X axis exclusivley.
