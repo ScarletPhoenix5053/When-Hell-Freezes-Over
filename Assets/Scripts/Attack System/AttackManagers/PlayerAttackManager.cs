@@ -43,6 +43,7 @@ public class PlayerAttackManager : AttackManager, IHitboxResponder
         {
             case AttackState.None: // Allow attack
                 DoAttack(normalAttack[1]);
+                Debug.Log(Attacks[normalAttack[1]].Damage);
                 SetAtkState(AttackState.N1);
                 break;
 

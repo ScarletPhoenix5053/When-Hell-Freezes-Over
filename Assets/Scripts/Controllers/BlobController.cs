@@ -8,6 +8,12 @@ public class BlobController : MonoBehaviour
     public float AttackRange = 2f;
     public float ChaseRange = 10f;
     public float LeapHeight = 10f;
+    public Behaviour currentBehaviour = Behaviour.Idle;
+
+    public enum Behaviour
+    {
+        Idle, Attacking, Chasing, Hit
+    }
 
     public bool IsGrounded { get { return Physics2D.Raycast(transform.position, -Vector2.up, GetComponent<Collider2D>().bounds.extents.y + 0.05f, LayerMask.GetMask("Environment")); } }
     
@@ -15,12 +21,7 @@ public class BlobController : MonoBehaviour
     private BlobAttackManager am;
     private MotionController mc;
     private PlayerController plr;
-    private Behaviour currentBehaviour = Behaviour.Idle;
 
-    private enum Behaviour
-    {
-        Idle, Attacking, Chasing, Hit
-    }
 
     private float distToPlayer {  get { return Vector2.Distance(transform.position, plr.transform.position); } }
     private bool playerToLeft { get { return plr.transform.position.x < transform.position.x; } }
@@ -38,11 +39,19 @@ public class BlobController : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        DecideAction();
+        //DecideAction();
         Act();
         mc.UpdateMotion();
     }
-    
+
+    public void SetBehaviour(Behaviour newBehaviour)
+    {
+        if (newBehaviour == currentBehaviour) return;
+
+        //Debug.Log(name + " changed behaviour state from " + currentBehaviour + " to " + newBehaviour);
+        currentBehaviour = newBehaviour;
+    }
+
     private void DecideAction()
     {
         // if player doesn't exist or is too far away
@@ -117,13 +126,6 @@ public class BlobController : MonoBehaviour
         {
             transform.localScale = new Vector3(-1, transform.localScale.y, 1);
         }
-    }
-    private void SetBehaviour(Behaviour newBehaviour)
-    {
-        if (newBehaviour == currentBehaviour) return;
-
-        //Debug.Log(name + " changed behaviour state from " + currentBehaviour + " to " + newBehaviour);
-        currentBehaviour = newBehaviour;
     }
     private IEnumerator ApplyLeapVelocity()
     {

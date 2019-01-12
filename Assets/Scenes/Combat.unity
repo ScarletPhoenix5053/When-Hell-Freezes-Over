@@ -159,7 +159,7 @@ MonoBehaviour:
   Rotation: {x: 0, y: 0, z: 0, w: 1}
   LayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 512
   BoxColour:
     Inactive: {r: 0.5, g: 0.5, b: 0.5, a: 0.25}
     Active: {r: 0.8, g: 0, b: 0, a: 0.25}
@@ -299,6 +299,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Speed: 10
+  velocity: {x: 0, y: 0}
 --- !u!114 &529603311
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -837,7 +838,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0682da8876652e44e8cb34f04e479023, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Speed: 7
+  Speed: 3
+  velocity: {x: 0, y: 0}
 --- !u!114 &1856425872
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -870,6 +872,7 @@ MonoBehaviour:
   AttackRange: 2
   ChaseRange: 10
   LeapHeight: 15
+  currentBehaviour: 0
 --- !u!50 &1856425874
 Rigidbody2D:
   serializedVersion: 4
@@ -1069,7 +1072,7 @@ MonoBehaviour:
   Rotation: {x: 0, y: 0, z: 0, w: 1}
   LayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1024
   BoxColour:
     Inactive: {r: 0.5, g: 0.5, b: 0.5, a: 0.25}
     Active: {r: 0.8, g: 0, b: 0, a: 0.25}

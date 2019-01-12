@@ -12,6 +12,7 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
     public AttackStage AtkStage = AttackStage.Ready;
     public enum AttackStage { Ready, Startup, Active, Recovery }
 
+    protected int currentAttack = 0;
     protected const int numOfAttacks = 1;
     protected IEnumerator activeCoroutine = null;
 
@@ -38,7 +39,7 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
         {
             if (hb.CheckHit(Attacks[0].HitStun))
             {
-                hurtbox.GetComponent<Hurtbox>().hp.Remove(Attacks[0]);
+                hurtbox.GetComponent<Hurtbox>().hp.Remove(Attacks[currentAttack]);
                 //hurtbox.GetComponent<Hurtbox>().Health.LogHp();
 
                 Hitbox.SetInactive();
@@ -51,6 +52,9 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
         if (activeCoroutine != null) StopCoroutine(activeCoroutine);
         activeCoroutine = IE_DoAttack(0);
         StartCoroutine(activeCoroutine);
+
+        // set int to track which attack is ongoing
+        currentAttack = attackIndex;
     }
     protected virtual IEnumerator IE_DoAttack(int attackIndex)
     {

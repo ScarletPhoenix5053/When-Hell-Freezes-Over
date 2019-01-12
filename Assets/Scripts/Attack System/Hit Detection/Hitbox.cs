@@ -68,10 +68,8 @@ namespace Sierra.Combat2D
             Collider2D[] colliders = GetOverlappingColliders();
 
             // Perform interaction on hit
-            if (colliders.Length == 0) Debug.LogWarning("No colliders");
             for (int i = 0; i < colliders.Length; i++)
             {
-                Debug.Log(colliders[i].name);
                 Collider2D collider = colliders[i];
                 _responder?.Hit(collider);
             }
@@ -116,7 +114,7 @@ namespace Sierra.Combat2D
         protected Collider2D[] GetOverlappingColliders()
         {
             var size = new Vector3(Size.x, Size.y, Size.z);
-            return Physics2D.OverlapBoxAll(transform.position, size, LayerMask);
+            return Physics2D.OverlapBoxAll(transform.position, size, 0, LayerMask);
         }
     }
     public interface IHitboxResponder

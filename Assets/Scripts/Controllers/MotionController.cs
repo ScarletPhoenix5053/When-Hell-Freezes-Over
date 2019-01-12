@@ -21,7 +21,7 @@ public class MotionController : MonoBehaviour
     protected const int deltaMultiplicationFactor = 50;
     protected bool impulseLastFrame = false;
     protected Rigidbody2D rb;
-    protected Vector2 velocity;
+    public Vector2 velocity;
     #endregion
     /*
     // update to be struct: will need an accompanying propertydrawer sctipt
@@ -57,9 +57,11 @@ public class MotionController : MonoBehaviour
     /// </summary>
     public void UpdateMotion()
     {
+
         // X AXIS
         if (!InputOverride)
         {
+            
             InputMotion = Mathf.Clamp(InputMotion, -1, 1);
 
             if (InputMotion < -zeroThreshold || InputMotion > zeroThreshold)
@@ -110,8 +112,16 @@ public class MotionController : MonoBehaviour
     /// </summary>
     protected void ApplyMovement()
     {
-        if (!InputOverride) rb.velocity = new Vector2(velocity.x, velocity.y + rb.velocity.y);
-        else rb.velocity = new Vector2(rb.velocity.x + velocity.x, rb.velocity.y + velocity.y);            
+        if (name == "Blob" && InputOverride) Debug.Log("v"+velocity.x);
+        if (!InputOverride)
+        {
+            rb.velocity = new Vector2(velocity.x, velocity.y + rb.velocity.y);
+        }
+        else
+        {
+            rb.velocity = new Vector2(rb.velocity.x + velocity.x, rb.velocity.y + velocity.y);
+            Debug.Log("r" + rb.velocity.x);
+        }    
     }
     /// <summary>
     /// Apply drag to the character's X axis exclusivley.

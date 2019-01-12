@@ -56,15 +56,20 @@ public class Health : MonoBehaviour
     {
         Debug.Log("Knockback!");
         var plr = GetComponent<PlayerController>();
+        var enm = GetComponent<BlobController>();
         var sign = Mathf.Sign(transform.localScale.x);
 
-        mc?.Impulse(new Vector2(atkData.KnockBack * -sign, atkData.KnockUp));
         mc?.SetInputOverride(true);
         plr?.SetState(PlayerController.State.Hit);
+        enm?.SetBehaviour(BlobController.Behaviour.Hit);
+        mc?.Impulse(new Vector2(atkData.KnockBack, atkData.KnockUp));
+        Debug.Log(sign);
+        Debug.Log(mc?.velocity);
         yield return new WaitForSeconds(Sierra.Utility.FramesToSeconds(atkData.HitStun));
 
         mc?.SetInputOverride(false);
         plr?.SetState(PlayerController.State.Normal);
-        
+        enm?.SetBehaviour(BlobController.Behaviour.Idle);
+
     }
 }
