@@ -21,7 +21,7 @@ public class CraftingRecipe : ScriptableObject
     {
         foreach (ItemAmount itemAmount in Materials)
         {
-            if(itemContainer.ItemCount(itemAmount.Item) < itemAmount.Amount)
+            if(itemContainer.ItemCount(itemAmount.Item.ID) < itemAmount.Amount)
             {
                 return false;
             }
@@ -37,7 +37,9 @@ public class CraftingRecipe : ScriptableObject
             {
                 for(int i = 0; i < itemAmount.Amount; i++)
                 {
-                    itemContainer.RemoveItem(itemAmount.Item);
+                    //itemContainer.RemoveItem(itemAmount.Item);
+                    GenericItem oldItem = itemContainer.RemoveItem(itemAmount.Item.ID);
+                    Destroy(oldItem);
                 }
             }
 
@@ -45,7 +47,7 @@ public class CraftingRecipe : ScriptableObject
             {
                 for (int i = 0; i < itemAmount.Amount; i++)
                 {
-                    itemContainer.AddItem(itemAmount.Item);
+                    itemContainer.AddItem(Instantiate(itemAmount.Item));
                 }
             }
         }

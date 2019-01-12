@@ -9,6 +9,7 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
 {
     public event Action<GenericItem> OnLeftClickEvent;
 
+    [SerializeField]
     private GenericItem _item;
     public GenericItem item
     {
@@ -40,6 +41,11 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
         { 
             tooltip = FindObjectOfType<ItemTooltip>();
         }
+    }
+
+    public void Update()
+    {
+        
     }
 
     public void OnPointerClick(PointerEventData eventData)
