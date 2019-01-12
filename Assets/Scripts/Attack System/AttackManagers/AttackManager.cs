@@ -1,7 +1,7 @@
 ﻿using Sierra;
 using System;
 using System.Collections;
-using Tutorial.NahuelG_Fighter;
+using Sierra.Combat2D;
 using UnityEngine;
 
 public abstract class AttackManager : MonoBehaviour, IHitboxResponder
@@ -38,7 +38,7 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
         {
             if (hb.CheckHit(Attacks[0].HitStun))
             {
-                hurtbox.GetComponent<Hurtbox>().Health.Damage(Attacks[0]);
+                hurtbox.GetComponent<Hurtbox>().hp.Remove(Attacks[0]);
                 //hurtbox.GetComponent<Hurtbox>().Health.LogHp();
 
                 Hitbox.SetInactive();

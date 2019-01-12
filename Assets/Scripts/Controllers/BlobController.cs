@@ -19,7 +19,7 @@ public class BlobController : MonoBehaviour
 
     private enum Behaviour
     {
-        Idle, Attacking, Chasing
+        Idle, Attacking, Chasing, Hit
     }
 
     private float distToPlayer {  get { return Vector2.Distance(transform.position, plr.transform.position); } }
@@ -97,6 +97,10 @@ public class BlobController : MonoBehaviour
                 {
                     mc.InputMotion = 1;
                 }
+                break;
+
+            case Behaviour.Hit:
+                mc.SetInputOverride(true);
                 break;
 
             default:

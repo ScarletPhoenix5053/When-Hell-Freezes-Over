@@ -1,7 +1,7 @@
 ﻿using Sierra;
 using System;
 using System.Collections;
-using Tutorial.NahuelG_Fighter;
+using Sierra.Combat2D;
 using UnityEngine;
 
 public class BlobAttackManager : AttackManager, IHitboxResponder

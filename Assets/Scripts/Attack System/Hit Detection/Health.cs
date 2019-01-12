@@ -19,7 +19,7 @@ public class Health : MonoBehaviour
         mc = GetComponent<MotionController>();
     }
 
-    public void Damage(AttackData data)
+    public void Remove(AttackData data)
     {
         atkData = data;
         // Log warning and return if dead

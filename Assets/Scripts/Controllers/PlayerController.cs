@@ -64,7 +64,7 @@ public class PlayerController : MonoBehaviour
         if (newState != CurrentState)
         {
             CurrentState = newState;
-            Debug.Log(name + " changed state from " + CurrentState + " to " + newState);
+            //Debug.Log(name + " changed state from " + CurrentState + " to " + newState);
         }
     }
     

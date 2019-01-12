@@ -1,7 +1,7 @@
 ﻿using Sierra;
 using System;
 using System.Collections;
-using Tutorial.NahuelG_Fighter;
+using Sierra.Combat2D;
 using UnityEngine;
 
 public class PlayerAttackManager : AttackManager, IHitboxResponder
@@ -109,7 +109,7 @@ public class PlayerAttackManager : AttackManager, IHitboxResponder
         if (AtkState == newState) Debug.LogWarning("Tried to set state to " + newState + " when it already was " + newState + "!");
         else
         {
-            Debug.Log("Changing state from " + AtkState + " to " + newState + ".");
+            //Debug.Log("Changing state from " + AtkState + " to " + newState + ".");
             AtkState = newState;
         }
 
