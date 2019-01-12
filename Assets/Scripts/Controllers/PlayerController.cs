@@ -71,8 +71,7 @@ public class PlayerController : MonoBehaviour
     private void CheckInputAsNormal()
     {
         // Light attack button
-        if (currentInputData.buttons[0] &&
-            !am.Attacking)
+        if (currentInputData.buttons[0])
         {
             am.NormalAttack();
         }

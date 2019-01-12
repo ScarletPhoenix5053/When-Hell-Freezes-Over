@@ -152,30 +152,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 451300695}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a1e4b854b372664ca4f56146944ce1c, type: 3}
+  m_Script: {fileID: 11500000, guid: d7aa368dc39c6334fbac30b8ef61c689, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Size: {x: 0.8, y: 0.8, z: 1}
+  Size: {x: 0.8, y: 0.8, z: 1.5}
   Rotation: {x: 0, y: 0, z: 0, w: 1}
   LayerMask:
+    serializedVersion: 2
     m_Bits: 0
   BoxColour:
-    Inactive:
-      r: 0.5
-      g: 0.5
-      b: 0.5
-      a: 0.25
-    Active:
-      r: 0.8
-      g: 0
-      b: 0
-      a: 0.25
-    Colliding:
-      r: 1
-      g: 0
-      b: 0
-      a: 0.75
-  _state: 0
+    Inactive: {r: 0.5, g: 0.5, b: 0.5, a: 0.25}
+    Active: {r: 0.8, g: 0, b: 0, a: 0.25}
+    Colliding: {r: 1, g: 0, b: 0, a: 0.75}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -480,8 +468,10 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 25dfdfa3b27bf8b4091941dbffa5d671, type: 2}
   - {fileID: 11400000, guid: 6d381fdf2c129664f9582e8da87ab9b0, type: 2}
   - {fileID: 11400000, guid: a4823146f75c62d449650c8eddb09be1, type: 2}
+  AtkStage: 0
   MeleeWeapon: {fileID: 11400000, guid: 69b9ff052498ef247ba4ff2eb4aefbd2, type: 2}
   RangedWeapon: {fileID: 11400000, guid: 00cec8ad545caf44b97fcb42cbdcc884, type: 2}
+  AtkState: 0
 --- !u!1 &1098631600
 GameObject:
   m_ObjectHideFlags: 0
@@ -752,6 +742,8 @@ GameObject:
   - component: {fileID: 1856425872}
   - component: {fileID: 1856425876}
   - component: {fileID: 1856425871}
+  - component: {fileID: 1856425878}
+  - component: {fileID: 1856425877}
   m_Layer: 8
   m_Name: Blob
   m_TagString: Untagged
@@ -864,6 +856,7 @@ MonoBehaviour:
   Hitbox: {fileID: 451300697}
   Attacks:
   - {fileID: 11400000, guid: bba4b7eac96e69f46bab3679443f2eac, type: 2}
+  AtkStage: 0
 --- !u!114 &1856425873
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -931,6 +924,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6763db770e0918d4db9f3d11af32f5a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1856425877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1856425866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71724ca2f847a254192f74aad186e238, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Health: {fileID: 0}
+  ColliderMain: {fileID: 0}
+  ColliderColour:
+    Inactive: {r: 0.5, g: 0.5, b: 0.5, a: 0.25}
+    Active: {r: 0, g: 0.8, b: 0, a: 0.25}
+    Blocking: {r: 0.2, g: 0, b: 0.8, a: 0.75}
+    ThrowInvulnerable: {r: 0.8, g: 0.7, b: 0.05, a: 0.25}
+--- !u!114 &1856425878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1856425866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9ad26a3b661e214faa899fcb780df73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Hp: 6
+  HpMax: 6
 --- !u!1 &1950755428
 GameObject:
   m_ObjectHideFlags: 0
@@ -1040,27 +1066,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 2112425913}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a1e4b854b372664ca4f56146944ce1c, type: 3}
+  m_Script: {fileID: 11500000, guid: d7aa368dc39c6334fbac30b8ef61c689, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Size: {x: 1.5, y: 1.5, z: 2}
+  Size: {x: 1.5, y: 1.5, z: 1.5}
   Rotation: {x: 0, y: 0, z: 0, w: 1}
   LayerMask:
+    serializedVersion: 2
     m_Bits: 0
   BoxColour:
-    Inactive:
-      r: 0.5
-      g: 0.5
-      b: 0.5
-      a: 0.25
-    Active:
-      r: 0.8
-      g: 0
-      b: 0
-      a: 0.25
-    Colliding:
-      r: 1
-      g: 0
-      b: 0
-      a: 0.75
-  _state: 0
+    Inactive: {r: 0.5, g: 0.5, b: 0.5, a: 0.25}
+    Active: {r: 0.8, g: 0, b: 0, a: 0.25}
+    Colliding: {r: 1, g: 0, b: 0, a: 0.75}

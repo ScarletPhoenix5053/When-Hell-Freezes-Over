@@ -11,7 +11,7 @@ public class BlobAttackManager : AttackManager, IHitboxResponder
         var success = false;
         
         if (activeCoroutine != null) StopCoroutine(activeCoroutine);
-        activeCoroutine = DoAttack(0);
+        activeCoroutine = IE_DoAttack(0);
         StartCoroutine(activeCoroutine);
 
         return success;
