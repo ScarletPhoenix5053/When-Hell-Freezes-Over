@@ -9,14 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ce885065bcf102e44af53c2c4ec135bc, type: 3}
-  m_Name: BlacksmithHammer_AttackData_Hit1
-  m_EditorClassIdentifier: 
+  m_Script: {fileID: 0}
+  m_Name: StarterBow.rAData
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectileAttackData
   Damage: 1
-  Startup: 19
-  Active: 2
-  Recovery: 18
-  BlockStun: 10
+  Startup: 38
+  Active: 1
+  Recovery: 43
   HitStun: 32
   KnockBack: 8
   KnockUp: 3
+  Speed: 0
+  StartDirection: {x: 0, y: 0}

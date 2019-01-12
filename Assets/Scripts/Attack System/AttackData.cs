@@ -3,11 +3,10 @@
 [CreateAssetMenu(fileName = "New Attack Data", menuName = "Combat/AttackData")]
 public class AttackData : ScriptableObject
 {
-    public int Damage = 300;
+    public int Damage = 1;
     public int Startup = 12;
     public int Active = 4;
     public int Recovery = 20;
-    public int BlockStun = 14;
     public int HitStun = 32;
 
     public float KnockBack = 8f;

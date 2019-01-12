@@ -36,7 +36,7 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
         var hb = hurtbox.GetComponent<Hurtbox>();
         if (hb != null)
         {
-            if (hb.CheckHit(Attacks[0].BlockStun, Attacks[0].HitStun))
+            if (hb.CheckHit(Attacks[0].HitStun))
             {
                 hurtbox.GetComponent<Hurtbox>().Health.Damage(Attacks[0]);
                 //hurtbox.GetComponent<Hurtbox>().Health.LogHp();

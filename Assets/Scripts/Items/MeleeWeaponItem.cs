@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Weapon Data", menuName = "Item/Weapon")]
-public class WeaponItem : GenericItem
+public class MeleeWeaponItem : GenericItem
 {
     public AttackData[] NormalAtkData;
     public AttackData SpecialAtkData;

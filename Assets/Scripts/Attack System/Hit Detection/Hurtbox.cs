@@ -40,7 +40,7 @@ namespace Tutorial.NahuelG_Fighter
                     ));
         }
         
-        public bool CheckHit(int blockStunFrames, int hitStunFrames)
+        public bool CheckHit(int hitStunFrames)
         {
             if (_state != State.Inactive)
             {

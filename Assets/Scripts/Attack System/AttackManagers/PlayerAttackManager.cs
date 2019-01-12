@@ -6,13 +6,15 @@ using UnityEngine;
 
 public class PlayerAttackManager : AttackManager, IHitboxResponder
 {
-    public WeaponItem CurrentWeapon;
+    public MeleeWeaponItem MeleeWeapon;
+    public RangedWeaponItem RangedWeapon;
     public AttackData SpecialAttackData { get { return Attacks[0]; } }
     public AttackData ArrowAttackData { get { return Attacks[1]; } }
     
     protected override void OnEnable()
     {
-        if (CurrentWeapon == null) throw new NullReferenceException("Please assign an object to CurrentWeapon");
+        if (MeleeWeapon == null) throw new NullReferenceException("Please assign an object to MeleeWeapon");
+        if (RangedWeapon == null) throw new NullReferenceException("Please assign an object to RangedWeapon");
         else AssignWeaponAttackData();
     }
 
@@ -26,15 +28,30 @@ public class PlayerAttackManager : AttackManager, IHitboxResponder
 
         return success;
     }
-
-    private void AssignWeaponAttackData()
+    /// <summary>
+    /// Re-populates <see cref="Attacks"/> array based on
+    /// <see cref="MeleeWeapon"/> and <see cref="RangedWeapon"/>
+    /// </summary>
+    public void AssignWeaponAttackData()
     {
-        var newAttacks = new AttackData[CurrentWeapon.NormalAtkData.Length + 2];
+        AttackData[] newAttacks = null;
 
-        newAttacks[0] = CurrentWeapon.SpecialAtkData;
-        for (int i = 0; i < CurrentWeapon.NormalAtkData.Length; i++)
+        // Melee
+        if (MeleeWeapon != null)
         {
-            newAttacks[i + 2] = CurrentWeapon.NormalAtkData[i];
+            newAttacks = new AttackData[MeleeWeapon.NormalAtkData.Length + 2];
+            newAttacks[1] = MeleeWeapon.SpecialAtkData;
+            for (int i = 0; i < MeleeWeapon.NormalAtkData.Length; i++)
+            {
+                newAttacks[i + 2] = MeleeWeapon.NormalAtkData[i];
+            }
+        }
+
+        // Ranged
+        if (RangedWeapon != null)
+        {
+            if (newAttacks == null) newAttacks = new AttackData[1];
+            newAttacks[0] = RangedWeapon.ProjectileAttackData;
         }
 
         Attacks = newAttacks;

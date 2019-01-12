@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ce885065bcf102e44af53c2c4ec135bc, type: 3}
-  m_Name: BlacksmithHammer_AttackData_Hit3
+  m_Name: BlacksmithHammer_Special.aData
   m_EditorClassIdentifier: 
-  Damage: 2
-  Startup: 16
-  Active: 1
-  Recovery: 28
+  Damage: 1
+  Startup: 14
+  Active: 6
+  Recovery: 38
   BlockStun: 10
-  HitStun: 32
-  KnockBack: 34
-  KnockUp: 8
+  HitStun: 43
+  KnockBack: 18
+  KnockUp: 14
