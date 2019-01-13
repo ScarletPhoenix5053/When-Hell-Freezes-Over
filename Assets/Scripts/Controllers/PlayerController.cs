@@ -78,6 +78,7 @@ public class PlayerController : MonoBehaviour
         // Jump
         if (currentInputData.axes[0] > 0.5 && mc.IsGrounded && jumpLimitTimer <= 0)
         {
+            Debug.Log("Jmp!");
             jumpLimitTimer = jumpLimitSeconds;
             mc.DoImpulse(new Vector2(0, JumpHeight));
         }

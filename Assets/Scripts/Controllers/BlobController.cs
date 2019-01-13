@@ -39,7 +39,7 @@ public class BlobController : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        //DecideAction();
+        DecideAction();
         Act();
         mc.UpdatePosition();
     }
@@ -120,11 +120,11 @@ public class BlobController : MonoBehaviour
     {
         if (playerToLeft)
         {
-            transform.localScale = new Vector3(1, transform.localScale.y, 1);
+            transform.localScale = new Vector3(-1, transform.localScale.y, 1);
         }
         else
         {
-            transform.localScale = new Vector3(-1, transform.localScale.y, 1);
+            transform.localScale = new Vector3(1, transform.localScale.y, 1);
         }
     }
     private IEnumerator ApplyLeapVelocity()

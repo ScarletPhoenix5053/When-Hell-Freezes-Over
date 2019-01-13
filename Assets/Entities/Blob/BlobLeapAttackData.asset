@@ -16,7 +16,7 @@ MonoBehaviour:
   Startup: 44
   Active: 21
   Recovery: 32
-  BlockStun: 12
   HitStun: 38
-  KnockBack: 30
+  Sign: -1
+  KnockBack: 12
   KnockUp: 12

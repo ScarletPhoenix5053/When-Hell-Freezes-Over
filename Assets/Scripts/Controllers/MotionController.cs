@@ -10,6 +10,18 @@ public class MotionController : MonoBehaviour
     /// </summary>
     public float Speed = 10f;
     /// <summary>
+    /// Linear gravity acceleration
+    /// </summary>
+    public float Gravity = 1f;
+    /// <summary>
+    /// Maximum gravity velocity.
+    /// </summary>
+    public float GravityMax = 20f;
+    /// <summary>
+    /// Linear drag deceletration on the X axis
+    /// </summary>
+    public float DragX = 0.5f;
+    /// <summary>
     /// Stops movement when <see cref="true"/>.
     /// </summary>
     public bool InputOverride { get; protected set; }
@@ -41,13 +53,13 @@ public class MotionController : MonoBehaviour
     protected Rigidbody2D rb;
     protected Collider2D col;
 
-    protected const float groundBuffer = 0.05f;
-    protected const float zeroThreshold = 0.005f;
+    protected const float groundBuffer = 0.1f;
+    protected const float zeroThreshold = 0.05f;
     protected const int deltaMultiplicationFactor = 50;
 
     protected bool impulseLastFrame = false;
     protected Vector2 moveVector;
-    protected Vector2 frameMotion;
+    protected Vector2 contMotionVector;
     #endregion
 
     private void Awake()
@@ -61,32 +73,35 @@ public class MotionController : MonoBehaviour
     /// </summary>
     public void UpdatePosition()
     {
-
-        // X AXIS
-        if (!InputOverride)
+        // apply gravity to cont motion vector
+        if (IsGrounded)
         {
-            if (MoveVector.x < -zeroThreshold || MoveVector.x > zeroThreshold)
-            {
-                // Left/Right
-                frameMotion.x = MoveVector.x * Speed * Time.deltaTime * deltaMultiplicationFactor;
-            }
-            else
-            {
-                // Drag
-                frameMotion.x = 0;
-            }
-
-            // REMEMBER TO RESET MOVEVECTOR
-            //MoveVector.x = 0;
+            if (contMotionVector.y < 0f) contMotionVector.y = -0.5f;
+        }
+        else if (contMotionVector.y < GravityMax)
+        {
+            contMotionVector.y -= Gravity;
         }
 
-        ApplyMovement();
 
-        // IMPULSE
-        if (impulseLastFrame)
+        // create combined motion vector
+        var combinedMotion = moveVector * Speed + contMotionVector;
+
+        // update position
+        rb.velocity = combinedMotion;
+
+        // reset movevector for next cycle
+        moveVector = Vector2.zero;
+
+        // apply drag to cont motion for next cycle
+        Debug.Log(name + " " + contMotionVector);
+        if (contMotionVector.x <= -zeroThreshold || contMotionVector.x >= zeroThreshold)
         {
-            impulseLastFrame = false;
-            frameMotion = Vector2.zero;
+            contMotionVector.x -= Math.Sign(contMotionVector.x) * DragX;
+        }
+        else
+        {
+            contMotionVector.x = 0;
         }
     }
     /// <summary>
@@ -95,28 +110,10 @@ public class MotionController : MonoBehaviour
     /// <param name="impulse"></param>
     public void DoImpulse(Vector2 impulse)
     {
-        if (frameMotion.x < impulse.x) frameMotion.x = impulse.x;
-        if (frameMotion.y < impulse.y) frameMotion.y = impulse.y;
+        contMotionVector = impulse;
         impulseLastFrame = true;
     }
 
     public void EnableInputOverride() => InputOverride = true;
     public void DisableInputOverride() => InputOverride = false;
-
-    /// <summary>
-    /// Move the charater
-    /// </summary>
-    protected void ApplyMovement()
-    {
-        if (name == "Blob" && InputOverride) Debug.Log("v"+frameMotion.x);
-        if (!InputOverride)
-        {
-            rb.velocity = new Vector2(frameMotion.x, frameMotion.y + rb.velocity.y);
-        }
-        else
-        {
-            rb.velocity = new Vector2(rb.velocity.x + frameMotion.x, rb.velocity.y + frameMotion.y);
-            Debug.Log("r" + rb.velocity.x);
-        }    
-    }
 }

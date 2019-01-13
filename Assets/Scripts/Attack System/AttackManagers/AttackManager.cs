@@ -37,8 +37,10 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
         var hb = hurtbox.GetComponent<Hurtbox>();
         if (hb != null)
         {
-            if (hb.CheckHit(Attacks[0].HitStun))
+            if (hb.CheckHit(Attacks[currentAttack].HitStun))
             {
+                // set sign of attack
+                Attacks[currentAttack].Sign = Math.Sign(transform.localScale.x);
                 hurtbox.GetComponent<Hurtbox>().hp.Remove(Attacks[currentAttack]);
                 //hurtbox.GetComponent<Hurtbox>().Health.LogHp();
 

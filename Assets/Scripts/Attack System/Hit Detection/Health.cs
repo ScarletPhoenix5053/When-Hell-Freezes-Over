@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 
 [RequireComponent(typeof(MotionController))]
@@ -62,7 +63,7 @@ public class Health : MonoBehaviour
         mc?.EnableInputOverride();
         plr?.SetState(PlayerController.State.Hit);
         enm?.SetBehaviour(BlobController.Behaviour.Hit);
-        mc?.DoImpulse(new Vector2(atkData.KnockBack, atkData.KnockUp));
+        mc?.DoImpulse(new Vector2(atkData.KnockBack * atkData.Sign, atkData.KnockUp));
         yield return new WaitForSeconds(Sierra.Utility.FramesToSeconds(atkData.HitStun));
 
         mc?.DisableInputOverride();
