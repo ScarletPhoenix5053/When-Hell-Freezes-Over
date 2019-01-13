@@ -17,7 +17,7 @@ public class KeyboardTrackerEditor : Editor
         EditorGUILayout.LabelField("Axes", EditorStyles.boldLabel);
         if (keyTracker.AxisKeys.Length == 0)
         {
-            EditorGUILayout.HelpBox("No axes defined in input manager!", MessageType.Info); ;
+            EditorGUILayout.HelpBox("No axes defined in input manager!", MessageType.Warning); ;
         }
         else
         {
@@ -36,7 +36,7 @@ public class KeyboardTrackerEditor : Editor
         EditorGUILayout.LabelField("Buttons", EditorStyles.boldLabel);
         if (keyTracker.ButtonKeys.Length == 0)
         {
-            EditorGUILayout.HelpBox("No buttons defined in input manager!", MessageType.Info); ;
+            EditorGUILayout.HelpBox("No buttons defined in input manager!", MessageType.Warning); ;
         }
         else
         {

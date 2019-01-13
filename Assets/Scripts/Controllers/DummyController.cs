@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System;
 
 /// <summary>
 /// Takes a beating from other attacking controllers. Has gravity and knockback/up weight options? or will this be decided by the health component? TBD
@@ -16,8 +16,6 @@ public class DummyController : MonoBehaviour
     }
     private void LateUpdate()
     {
-        mc.ApplyMovement();
-        mc.UpdateVelocity(new Vector3(mc.XVel, 0, 0));
-        mc.ApplyDrag();
+        throw new NotImplementedException();
     }
 }

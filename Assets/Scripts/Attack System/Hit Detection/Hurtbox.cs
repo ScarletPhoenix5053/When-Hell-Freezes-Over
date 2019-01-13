@@ -3,13 +3,18 @@ using Sierra;
 using System;
 using System.Collections;
 
-namespace Tutorial.NahuelG_Fighter
+namespace Sierra.Combat2D
 {
+    /// <summary>
+    /// Interacts with <see cref="Hitbox"/>es to for hit detection.
+    /// Must point to a <see cref="Health"/> component for attack system to work.
+    /// </summary>
+    [RequireComponent(typeof(Collider2D))]    
     public class Hurtbox : MonoBehaviour
     {
-        public Health Health;
+        public Health hp;
         // Colldier array/list instead?
-        public Collider2D ColliderMain;
+        public Collider2D col;
         public Colours ColliderColour = new Colours();
 
         protected State _state = State.Active;
@@ -21,12 +26,27 @@ namespace Tutorial.NahuelG_Fighter
         {
             public Color Inactive = new Color(0.5f, 0.5f, 0.5f, 0.25f);
             public Color Active = new Color(0, 0.8f, 0, 0.25f);
-            public Color Blocking = new Color(0.2f, 0, 0.8f, 0.75f);
-            public Color ThrowInvulnerable = new Color(0.8f, 0.7f, 0.05f, 0.25f);
         }
-        
+
+        protected void Reset()
+        {
+            col = GetComponent<Collider2D>();
+        }
+        protected void Awake()
+        {
+            if (col == null) throw new NullReferenceException("This component needs a collider 2D attatched to " +
+                "the same game object to work!");
+            if (hp == null) throw new NullReferenceException("This component needs to refer to a health script for " +
+                "attack system to work!");
+        }
         protected void OnDrawGizmos()
         {
+            // Make sure a collider is attatched
+            if (col == null)
+            {                
+                return;
+            }
+
             SetGizmoColor();
             Gizmos.matrix = Matrix4x4.TRS(transform.position, transform.rotation, transform.localScale);
 
@@ -34,13 +54,13 @@ namespace Tutorial.NahuelG_Fighter
             Gizmos.DrawCube(
                 Vector3.zero,
                 new Vector3(
-                    ColliderMain.bounds.extents.x * 2,
-                    ColliderMain.bounds.extents.y * 2,
+                    col.bounds.extents.x * 2,
+                    col.bounds.extents.y * 2,
                     2
                     ));
         }
         
-        public bool CheckHit(int blockStunFrames, int hitStunFrames)
+        public bool CheckHit(int hitStunFrames)
         {
             if (_state != State.Inactive)
             {

@@ -1,7 +1,7 @@
 ﻿using Sierra;
 using System;
 using System.Collections;
-using Tutorial.NahuelG_Fighter;
+using Sierra.Combat2D;
 using UnityEngine;
 
 public abstract class AttackManager : MonoBehaviour, IHitboxResponder
@@ -9,13 +9,14 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
     public bool Attacking = false;
     public Hitbox Hitbox;
     public AttackData[] Attacks;
+    public AttackStage AtkStage = AttackStage.Ready;
+    public enum AttackStage { Ready, Startup, Active, Recovery }
 
+    protected int currentAttack = 0;
     protected const int numOfAttacks = 1;
     protected IEnumerator activeCoroutine = null;
-    
-    
 
-    protected virtual void Awake()
+    protected virtual void OnEnable()
     {
         if (Attacks.Length < numOfAttacks)
             throw new NullReferenceException(
@@ -36,42 +37,47 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
         var hb = hurtbox.GetComponent<Hurtbox>();
         if (hb != null)
         {
-            if (hb.CheckHit(Attacks[0].BlockStun, Attacks[0].HitStun))
+            if (hb.CheckHit(Attacks[currentAttack].HitStun))
             {
-                hurtbox.GetComponent<Hurtbox>().Health.Damage(Attacks[0]);
+                // set sign of attack
+                Attacks[currentAttack].Sign = Math.Sign(transform.localScale.x);
+                hurtbox.GetComponent<Hurtbox>().hp.Remove(Attacks[currentAttack]);
                 //hurtbox.GetComponent<Hurtbox>().Health.LogHp();
 
                 Hitbox.SetInactive();
             }
         }
     }
-    /*
-    protected void SetAtkState(AttackState newState)
+
+    protected virtual void DoAttack(int attackIndex)
     {
-        if (AtkState == newState) Debug.LogWarning("Tried to set state to " + newState + " when it already was " + newState + "!");
-        else
-        {
-            Debug.Log("Changing state from " + AtkState + " to " + newState + ".");
-            AtkState = newState;
-        }
-        
-    }*/
-    protected virtual IEnumerator DoAttack(int attackIndex)
+        if (activeCoroutine != null) StopCoroutine(activeCoroutine);
+        activeCoroutine = IE_DoAttack(0);
+        StartCoroutine(activeCoroutine);
+
+        // set int to track which attack is ongoing
+        currentAttack = attackIndex;
+    }
+    protected virtual IEnumerator IE_DoAttack(int attackIndex)
     {
         // Startup
         Attacking = true;
         Hitbox.SetResponder(this);
+        AtkStage = AttackStage.Startup;
         yield return new WaitForSeconds(Utility.FramesToSeconds(Attacks[attackIndex].Startup));
 
         // Active
         Hitbox.SetActive();
+        AtkStage = AttackStage.Active;
         yield return new WaitForSeconds(Utility.FramesToSeconds(Attacks[attackIndex].Active));
 
         // Recovery
         Hitbox.SetInactive();
+        AtkStage = AttackStage.Recovery;
         yield return new WaitForSeconds(Utility.FramesToSeconds(Attacks[attackIndex].Recovery));
 
         // End
+        AtkStage = AttackStage.Ready;
         Attacking = false;
     }
 }

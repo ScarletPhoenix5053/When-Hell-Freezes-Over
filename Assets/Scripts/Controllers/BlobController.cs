@@ -5,8 +5,15 @@ using System.Collections;
 [RequireComponent(typeof(MotionController))]
 public class BlobController : MonoBehaviour
 {
-    public float MinDistToPlayer = 1.2f;
+    public float AttackRange = 2f;
+    public float ChaseRange = 10f;
     public float LeapHeight = 10f;
+    public Behaviour currentBehaviour = Behaviour.Idle;
+
+    public enum Behaviour
+    {
+        Idle, Attacking, Chasing, Hit
+    }
 
     public bool IsGrounded { get { return Physics2D.Raycast(transform.position, -Vector2.up, GetComponent<Collider2D>().bounds.extents.y + 0.05f, LayerMask.GetMask("Environment")); } }
     
@@ -14,12 +21,7 @@ public class BlobController : MonoBehaviour
     private BlobAttackManager am;
     private MotionController mc;
     private PlayerController plr;
-    private Behaviour currentBehaviour;
 
-    private enum Behaviour
-    {
-        Idle, Attacking, Chasing
-    }
 
     private float distToPlayer {  get { return Vector2.Distance(transform.position, plr.transform.position); } }
     private bool playerToLeft { get { return plr.transform.position.x < transform.position.x; } }
@@ -39,15 +41,21 @@ public class BlobController : MonoBehaviour
     {
         DecideAction();
         Act();
-
-        mc.ApplyMovement();
-        mc.ResetVelocity();
+        mc.UpdatePosition();
     }
-    
+
+    public void SetBehaviour(Behaviour newBehaviour)
+    {
+        if (newBehaviour == currentBehaviour) return;
+
+        //Debug.Log(name + " changed behaviour state from " + currentBehaviour + " to " + newBehaviour);
+        currentBehaviour = newBehaviour;
+    }
+
     private void DecideAction()
     {
-        // if player doesn't exist
-        if (plr == null)
+        // if player doesn't exist or is too far away
+        if (plr == null || distToPlayer > ChaseRange)
         {
             SetBehaviour(Behaviour.Idle);
             return;
@@ -61,7 +69,7 @@ public class BlobController : MonoBehaviour
         }
 
         // If player is close enough
-        if (distToPlayer < MinDistToPlayer)
+        if (distToPlayer < AttackRange)
         {
             // Attack
             SetBehaviour(Behaviour.Attacking);
@@ -92,12 +100,16 @@ public class BlobController : MonoBehaviour
             case Behaviour.Chasing:
                 if (playerToLeft)
                 {
-                    mc.UpdateVelocity(new Vector2(-mc.Motion.Speed * Time.fixedDeltaTime * 50, mc.YVel));
+                    mc.MoveVector = Vector2.left;
                 }
                 else
                 {
-                    mc.UpdateVelocity(new Vector2(mc.Motion.Speed * Time.fixedDeltaTime * 50, mc.YVel));
+                    mc.MoveVector = Vector2.right;
                 }
+                break;
+
+            case Behaviour.Hit:
+                mc.EnableInputOverride();
                 break;
 
             default:
@@ -108,25 +120,18 @@ public class BlobController : MonoBehaviour
     {
         if (playerToLeft)
         {
-            transform.localScale = new Vector3(1, transform.localScale.y, 1);
+            transform.localScale = new Vector3(-1, transform.localScale.y, 1);
         }
         else
         {
-            transform.localScale = new Vector3(-1, transform.localScale.y, 1);
+            transform.localScale = new Vector3(1, transform.localScale.y, 1);
         }
-    }
-    private void SetBehaviour(Behaviour newBehaviour)
-    {
-        if (newBehaviour == currentBehaviour) return;
-
-        Debug.Log(name + " changed behaviour state from " + currentBehaviour + " to " + newBehaviour);
-        currentBehaviour = newBehaviour;
     }
     private IEnumerator ApplyLeapVelocity()
     {
         yield return new WaitForSeconds(Sierra.Utility.FramesToSeconds(am.Attacks[0].Startup));
-        
-        mc.UpdateVelocity(new Vector2(mc.XVel, LeapHeight));
+
+        mc.DoImpulse(new Vector2(0, LeapHeight));
 
         var frameCount = am.Attacks[0].Startup;
     }
