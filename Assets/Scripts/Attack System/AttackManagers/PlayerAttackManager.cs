@@ -16,7 +16,7 @@ public class PlayerAttackManager : AttackManager, IHitboxResponder
         None, N1, N2, N3, N4, N5, Special, Ranged, RangedSpecial
     }
     
-    protected override void OnEnable()
+    protected virtual void OnEnable()
     {
         if (MeleeWeapon == null) throw new NullReferenceException("Please assign an object to MeleeWeapon");
         if (RangedWeapon == null) throw new NullReferenceException("Please assign an object to RangedWeapon");

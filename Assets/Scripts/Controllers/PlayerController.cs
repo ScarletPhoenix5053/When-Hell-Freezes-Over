@@ -25,12 +25,17 @@ public class PlayerController : MonoBehaviour
         am = GetComponent<PlayerAttackManager>();
         mc = GetComponent<MotionController>();
     }
+    private void LateUpdate()
+    {
+        OrientByMotion();
+    }
     private void FixedUpdate()
     {
         mc.UpdatePosition();
 
         if (jumpLimitTimer > 0) jumpLimitTimer -= Time.deltaTime;
     }
+
 
     /// <summary>
     /// Checks a <see cref="InputData"/> struct and determines what actions to make based on the data contained.
@@ -58,6 +63,10 @@ public class PlayerController : MonoBehaviour
                 throw new NotImplementedException("State " + CurrentState + " is not valid!");
         }
     }   
+    /// <summary>
+    /// Updates <see cref="CurrentState"/>
+    /// </summary>
+    /// <param name="newState"></param>
     public void SetState(State newState)
     {
         if (newState != CurrentState)
@@ -67,6 +76,19 @@ public class PlayerController : MonoBehaviour
         }
     }
     
+    /// <summary>
+    /// Makes the player face x input direction
+    /// </summary>
+    private void OrientByMotion()
+    {
+        if (mc.MoveVector.x != 0)
+        {
+            transform.localScale = new Vector3(Math.Sign(mc.MoveVector.x), transform.localScale.y, transform.localScale.z);
+        }
+    }
+    /// <summary>
+    /// Performs input checks as if the character is unaffected by anything.
+    /// </summary>
     private void CheckInputAsNormal()
     {
         // Light attack button

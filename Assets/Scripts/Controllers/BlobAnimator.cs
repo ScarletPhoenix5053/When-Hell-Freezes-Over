@@ -2,15 +2,14 @@
 using Sierra;
 using UnityEngine;
 
-public class BlobAnimator : MonoBehaviour
+public class AnimationControler : MonoBehaviour
 {
     private Animator an;
-    private Vector3 currentPos;
     private IEnumerator animPhysCoroutine = null;
 
     private void Awake()
     {
-        an = GetComponent<Animator>();
+        an = GetComponent<UnityEngine.Animator>();
     }
 
     public void PlayAttack()

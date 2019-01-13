@@ -61,12 +61,16 @@ public class Health : MonoBehaviour
         var sign = Mathf.Sign(transform.localScale.x);
 
         mc?.EnableInputOverride();
+        // Tidy with inheritance
         plr?.SetState(PlayerController.State.Hit);
+        // behaviour > state for HIT
         enm?.SetBehaviour(BlobController.Behaviour.Hit);
         mc?.DoImpulse(new Vector2(atkData.KnockBack * atkData.Sign, atkData.KnockUp));
         yield return new WaitForSeconds(Sierra.Utility.FramesToSeconds(atkData.HitStun));
 
         mc?.DisableInputOverride();
+        // Tidy with inheritance
+        // behaviour > state for HIT
         plr?.SetState(PlayerController.State.Normal);
         enm?.SetBehaviour(BlobController.Behaviour.Idle);
 

@@ -15,9 +15,7 @@ public class BlobController : MonoBehaviour
         Idle, Attacking, Chasing, Hit
     }
 
-    public bool IsGrounded { get { return Physics2D.Raycast(transform.position, -Vector2.up, GetComponent<Collider2D>().bounds.extents.y + 0.05f, LayerMask.GetMask("Environment")); } }
-    
-    private BlobAnimator an;
+    private Animator an;
     private BlobAttackManager am;
     private MotionController mc;
     private PlayerController plr;
@@ -28,7 +26,7 @@ public class BlobController : MonoBehaviour
 
     private void Awake()
     {
-        an = GetComponent<BlobAnimator>();
+        an = GetComponent<Animator>();
         am = GetComponent<BlobAttackManager>();
         mc = GetComponent<MotionController>();
         plr = FindObjectOfType<PlayerController>();
