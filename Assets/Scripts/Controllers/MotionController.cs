@@ -13,15 +13,18 @@ public class MotionController : MonoBehaviour
     /// Stops movement when <see cref="true"/>.
     /// </summary>
     public bool InputOverride { get; protected set; }
+    /// <summary>
+    /// Returns true when touching the ground.
+    /// </summary>
     public bool IsGrounded
     {
         get
         {
-            //Debug.Log(col.bounds.center.y - col.bounds.extents.y);
-            var origin = new Vector2(col.bounds.center.x, col.bounds.center.y - col.bounds.extents.y);
-            var hit = Physics2D.Raycast(origin, Vector2.down, groundBuffer, LayerMask.GetMask("Environment"));
-            Debug.Log(hit.point);
-            return false;
+            return Physics2D.Raycast(
+                new Vector2(col.bounds.center.x, col.bounds.center.y - col.bounds.extents.y),
+                Vector2.down,
+                groundBuffer,
+                LayerMask.GetMask("Environment"));
         }
     }
     /// <summary>
@@ -38,7 +41,7 @@ public class MotionController : MonoBehaviour
     protected Rigidbody2D rb;
     protected Collider2D col;
 
-    protected const float groundBuffer = 0.01f;
+    protected const float groundBuffer = 0.05f;
     protected const float zeroThreshold = 0.005f;
     protected const int deltaMultiplicationFactor = 50;
 

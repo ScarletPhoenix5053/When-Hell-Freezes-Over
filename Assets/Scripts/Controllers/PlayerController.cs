@@ -7,7 +7,6 @@ using System;
 [RequireComponent(typeof(Health))]
 public class PlayerController : MonoBehaviour
 {
-    public bool IsGrounded { get { return Physics2D.Raycast(transform.position, -Vector2.up, GetComponent<Collider2D>().bounds.extents.y + 0.05f, LayerMask.GetMask("Environment")); } }
     public float JumpHeight = 12f;
     public State CurrentState = State.Normal;
 
@@ -28,7 +27,6 @@ public class PlayerController : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        Debug.Log(mc.IsGrounded);
         mc.UpdatePosition();
 
         if (jumpLimitTimer > 0) jumpLimitTimer -= Time.deltaTime;
@@ -78,7 +76,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // Jump
-        if (currentInputData.axes[0] > 0.5 && IsGrounded && jumpLimitTimer <= 0)
+        if (currentInputData.axes[0] > 0.5 && mc.IsGrounded && jumpLimitTimer <= 0)
         {
             jumpLimitTimer = jumpLimitSeconds;
             mc.DoImpulse(new Vector2(0, JumpHeight));
