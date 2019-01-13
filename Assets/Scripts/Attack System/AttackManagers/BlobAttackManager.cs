@@ -1,17 +1,17 @@
 ﻿using Sierra;
 using System;
 using System.Collections;
-using Tutorial.NahuelG_Fighter;
+using Sierra.Combat2D;
 using UnityEngine;
 
-public class PlayerAttackManager : AttackManager, IHitboxResponder
+public class BlobAttackManager : AttackManager, IHitboxResponder
 {
-    public bool LightAttack()
+    public bool Attack()
     {
         var success = false;
         
         if (activeCoroutine != null) StopCoroutine(activeCoroutine);
-        activeCoroutine = DoAttack(0);
+        activeCoroutine = IE_DoAttack(0);
         StartCoroutine(activeCoroutine);
 
         return success;

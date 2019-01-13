@@ -3,9 +3,10 @@ using System;
 
 
 [RequireComponent(typeof(MotionController))]
+[RequireComponent(typeof(AttackManager))]
+[RequireComponent(typeof(Health))]
 public class PlayerController : MonoBehaviour
 {
-    public bool IsGrounded { get { return Physics2D.Raycast(transform.position, -Vector2.up, GetComponent<Collider2D>().bounds.extents.y + 0.05f, LayerMask.GetMask("Environment")); } }
     public float JumpHeight = 12f;
     public State CurrentState = State.Normal;
 
@@ -26,7 +27,7 @@ public class PlayerController : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        mc.UpdateMotion();
+        mc.UpdatePosition();
 
         if (jumpLimitTimer > 0) jumpLimitTimer -= Time.deltaTime;
     }
@@ -62,29 +63,29 @@ public class PlayerController : MonoBehaviour
         if (newState != CurrentState)
         {
             CurrentState = newState;
-            Debug.Log(name + " changed state from " + CurrentState + " to " + newState);
+            //Debug.Log(name + " changed state from " + CurrentState + " to " + newState);
         }
     }
     
     private void CheckInputAsNormal()
     {
         // Light attack button
-        if (currentInputData.buttons[0] &&
-            !am.Attacking)
+        if (currentInputData.buttons[0])
         {
-            am.LightAttack();
+            am.NormalAttack();
         }
 
         // Jump
-        if (currentInputData.axes[0] > 0.5 && IsGrounded && jumpLimitTimer <= 0)
+        if (currentInputData.axes[0] > 0.5 && mc.IsGrounded && jumpLimitTimer <= 0)
         {
+            Debug.Log("Jmp!");
             jumpLimitTimer = jumpLimitSeconds;
-            mc.Impulse(new Vector2(0, JumpHeight));
+            mc.DoImpulse(new Vector2(0, JumpHeight));
         }
         // Walk
         if (currentInputData.axes[1] != 0)
         {
-            mc.InputMotion = currentInputData.axes[1];
+            mc.MoveVector = new Vector2(currentInputData.axes[1], 0);
         }
     }
 }

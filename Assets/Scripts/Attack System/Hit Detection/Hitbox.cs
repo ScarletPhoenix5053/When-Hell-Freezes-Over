@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Tutorial.NahuelG_Fighter
+namespace Sierra.Combat2D
 {
     public class Hitbox : MonoBehaviour
     {
@@ -44,7 +44,7 @@ namespace Tutorial.NahuelG_Fighter
             if (_state == State.Inactive) { return; }
 
             // Check Hitbox
-            Collider2D[] colliders = GetOverlappingHurtboxes();
+            Collider2D[] colliders = GetOverlappingColliders();
 
             if (colliders.Length > 0)
             {
@@ -65,7 +65,7 @@ namespace Tutorial.NahuelG_Fighter
             if (_state == State.Inactive) { return; }
 
             // Check Hitbox
-            Collider2D[] colliders = GetOverlappingHurtboxes();
+            Collider2D[] colliders = GetOverlappingColliders();
 
             // Perform interaction on hit
             for (int i = 0; i < colliders.Length; i++)
@@ -111,10 +111,10 @@ namespace Tutorial.NahuelG_Fighter
                     break;
             }
         }
-        protected Collider2D[] GetOverlappingHurtboxes()
+        protected Collider2D[] GetOverlappingColliders()
         {
-            var size = new Vector3(Size.x / 2, Size.y / 2, Size.z / 2);
-            return Physics2D.OverlapBoxAll(transform.position, size, LayerMask);
+            var size = new Vector3(Size.x, Size.y, Size.z);
+            return Physics2D.OverlapBoxAll(transform.position, size, 0, LayerMask);
         }
     }
     public interface IHitboxResponder

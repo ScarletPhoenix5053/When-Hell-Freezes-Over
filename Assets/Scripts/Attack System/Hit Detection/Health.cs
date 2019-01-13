@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System;
 using System.Collections;
 
 [RequireComponent(typeof(MotionController))]
@@ -19,7 +20,7 @@ public class Health : MonoBehaviour
         mc = GetComponent<MotionController>();
     }
 
-    public void Damage(AttackData data)
+    public void Remove(AttackData data)
     {
         atkData = data;
         // Log warning and return if dead
@@ -56,15 +57,18 @@ public class Health : MonoBehaviour
     {
         Debug.Log("Knockback!");
         var plr = GetComponent<PlayerController>();
+        var enm = GetComponent<BlobController>();
         var sign = Mathf.Sign(transform.localScale.x);
 
-        mc?.Impulse(new Vector2(atkData.KnockBack * -sign, atkData.KnockUp));
-        mc?.SetInputOverride(true);
+        mc?.EnableInputOverride();
         plr?.SetState(PlayerController.State.Hit);
+        enm?.SetBehaviour(BlobController.Behaviour.Hit);
+        mc?.DoImpulse(new Vector2(atkData.KnockBack * atkData.Sign, atkData.KnockUp));
         yield return new WaitForSeconds(Sierra.Utility.FramesToSeconds(atkData.HitStun));
 
-        mc?.SetInputOverride(false);
+        mc?.DisableInputOverride();
         plr?.SetState(PlayerController.State.Normal);
-        
+        enm?.SetBehaviour(BlobController.Behaviour.Idle);
+
     }
 }

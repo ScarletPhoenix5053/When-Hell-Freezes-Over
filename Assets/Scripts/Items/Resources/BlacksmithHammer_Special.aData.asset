@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce885065bcf102e44af53c2c4ec135bc, type: 3}
+  m_Name: BlacksmithHammer_Special.aData
+  m_EditorClassIdentifier: 
+  Damage: 1
+  Startup: 14
+  Active: 6
+  Recovery: 38
+  BlockStun: 10
+  HitStun: 43
+  KnockBack: 18
+  KnockUp: 14

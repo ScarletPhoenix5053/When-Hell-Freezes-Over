@@ -4,136 +4,116 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class MotionController : MonoBehaviour
 {
-    //public BaseMotionVars Motion = new BaseMotionVars();
+    #region Public Vars
+    /// <summary>
+    /// Speed of this character.
+    /// </summary>
     public float Speed = 10f;
     /// <summary>
-    /// Used to move player along X axis. Is reset with each call of <see cref="UpdateMotion"/>.
+    /// Linear gravity acceleration
     /// </summary>
-    public float InputMotion { get; set; }
+    public float Gravity = 1f;
     /// <summary>
-    /// Stops movement calculations based on <see cref="InputMotion"/> when <see cref="true"/>.
+    /// Maximum gravity velocity.
     /// </summary>
-    public bool InputOverride { get; private set; }
-    #region Protected Vars
-    protected float XDrag = 0.02f;
-    protected float YDrag = 0.02f;
-    protected const float zeroThreshold = 0.005f;
-    protected const int deltaMultiplicationFactor = 50;
-    protected bool impulseLastFrame = false;
-    protected Rigidbody2D rb;
-    protected Vector2 velocity;
-    #endregion
-    /*
-    // update to be struct: will need an accompanying propertydrawer sctipt
-    [Serializable]
-    public class BaseMotionVars
+    public float GravityMax = 20f;
+    /// <summary>
+    /// Linear drag deceletration on the X axis
+    /// </summary>
+    public float DragX = 0.5f;
+    /// <summary>
+    /// Stops movement when <see cref="true"/>.
+    /// </summary>
+    public bool InputOverride { get; protected set; }
+    /// <summary>
+    /// Returns true when touching the ground.
+    /// </summary>
+    public bool IsGrounded
     {
-        public float Speed = 5f;
-        public float JumpHeight = 10f;
-        public float Acceleration = 0.2f;
-        [Range(0, 1)]
-        public float DragX = 0.05f;
-        public float DragY = 0.00f;
-        public float DragZ = 0.05f;
-    }*/
+        get
+        {
+            return Physics2D.Raycast(
+                new Vector2(col.bounds.center.x, col.bounds.center.y - col.bounds.extents.y),
+                Vector2.down,
+                groundBuffer,
+                LayerMask.GetMask("Environment"));
+        }
+    }
+    /// <summary>
+    /// A normalized vector used to determine which direction the character should be moving.
+    /// Use <see cref="Speed"/> to affect movement speed.
+    /// </summary>
+    public Vector2 MoveVector
+    {
+        get { return moveVector; }
+        set { moveVector = value.normalized; }
+    }
+    #endregion
+    #region Protected Vars
+    protected Rigidbody2D rb;
+    protected Collider2D col;
+
+    protected const float groundBuffer = 0.1f;
+    protected const float zeroThreshold = 0.05f;
+    protected const int deltaMultiplicationFactor = 50;
+
+    protected bool impulseLastFrame = false;
+    protected Vector2 moveVector;
+    protected Vector2 contMotionVector;
+    #endregion
 
     private void Awake()
     {
+        col = GetComponent<Collider2D>();
         rb = GetComponent<Rigidbody2D>();
     }
 
     /// <summary>
-    /// currentley the same as SetVelocity(V2). update later!
-    /// </summary>
-    /// <param name="impulse"></param>
-    public void Impulse(Vector2 impulse)
-    {
-        if (velocity.x < impulse.x) velocity.x = impulse.x;
-        if (velocity.y < impulse.y) velocity.y = impulse.y;
-        impulseLastFrame = true;
-    }
-    /// <summary>
     /// Main update method for <see cref="MotionController"/>.
     /// </summary>
-    public void UpdateMotion()
+    public void UpdatePosition()
     {
-        // X AXIS
-        if (!InputOverride)
+        // apply gravity to cont motion vector
+        if (IsGrounded)
         {
-            InputMotion = Mathf.Clamp(InputMotion, -1, 1);
-
-            if (InputMotion < -zeroThreshold || InputMotion > zeroThreshold)
-            {
-                // Left/Right
-                velocity.x = InputMotion * Speed * Time.deltaTime * deltaMultiplicationFactor;
-            }
-            else
-            {
-                // Drag
-                velocity.x = 0;
-            }
-
-            InputMotion = 0;
+            if (contMotionVector.y < 0f) contMotionVector.y = -0.5f;
+        }
+        else if (contMotionVector.y < GravityMax)
+        {
+            contMotionVector.y -= Gravity;
         }
 
-        ApplyMovement();
 
-        // IMPULSE
-        if (impulseLastFrame)
+        // create combined motion vector
+        var combinedMotion = moveVector * Speed + contMotionVector;
+
+        // update position
+        rb.velocity = combinedMotion;
+
+        // reset movevector for next cycle
+        moveVector = Vector2.zero;
+
+        // apply drag to cont motion for next cycle
+        Debug.Log(name + " " + contMotionVector);
+        if (contMotionVector.x <= -zeroThreshold || contMotionVector.x >= zeroThreshold)
         {
-            impulseLastFrame = false;
-            velocity = Vector2.zero;
+            contMotionVector.x -= Math.Sign(contMotionVector.x) * DragX;
         }
-    }    
+        else
+        {
+            contMotionVector.x = 0;
+        }
+    }
     /// <summary>
-    /// Immediatley set velocities to this force
+    /// Apply a force that decays over time.
     /// </summary>
-    /// <remarks>
-    /// Ignores MaxSpeed
-    /// </remarks>
-    /// <param name="newVelocity"></param>
-    public void SetVelocity(Vector2 newVelocity)
+    /// <param name="impulse"></param>
+    public void DoImpulse(Vector2 impulse)
     {
-        velocity = newVelocity;
-    }
-    public void Stop()
-    {
-        velocity = Vector2.zero;
-    }
-    public void SetInputOverride(bool status)
-    {
-        InputOverride = status;
+        contMotionVector = impulse;
+        impulseLastFrame = true;
     }
 
-    /// <summary>
-    /// Move the charater
-    /// </summary>
-    protected void ApplyMovement()
-    {
-        if (!InputOverride) rb.velocity = new Vector2(velocity.x, velocity.y + rb.velocity.y);
-        else rb.velocity = new Vector2(rb.velocity.x + velocity.x, rb.velocity.y + velocity.y);            
-    }
-    /// <summary>
-    /// Apply drag to the character's X axis exclusivley.
-    /// </summary>
-    protected void ApplyDrag()
-    {
-        if (XDrag != 0)
-        {
-            if (velocity.x != 0)
-            {
-                if ((velocity.x < zeroThreshold && velocity.x > 0) ||
-                    (velocity.x > -zeroThreshold && velocity.x < 0))
-                {
-                    velocity.x = 0;
-                }
-                else
-                {
-                    velocity.x -= (XDrag*velocity.x) * Math.Sign(velocity.x);
-                }
-            }
-        }
-        
-        
-    }
+    public void EnableInputOverride() => InputOverride = true;
+    public void DisableInputOverride() => InputOverride = false;
 }
