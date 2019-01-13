@@ -15,7 +15,7 @@ public class BlobController : MonoBehaviour
         Idle, Attacking, Chasing, Hit
     }
 
-    private Animator an;
+    private AnimationControler an;
     private BlobAttackManager am;
     private MotionController mc;
     private PlayerController plr;
@@ -26,7 +26,7 @@ public class BlobController : MonoBehaviour
 
     private void Awake()
     {
-        an = GetComponent<Animator>();
+        an = GetComponent<AnimationControler>();
         am = GetComponent<BlobAttackManager>();
         mc = GetComponent<MotionController>();
         plr = FindObjectOfType<PlayerController>();
