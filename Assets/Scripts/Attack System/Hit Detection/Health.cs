@@ -59,15 +59,13 @@ public class Health : MonoBehaviour
         var enm = GetComponent<BlobController>();
         var sign = Mathf.Sign(transform.localScale.x);
 
-        mc?.SetInputOverride(true);
+        mc?.EnableInputOverride();
         plr?.SetState(PlayerController.State.Hit);
         enm?.SetBehaviour(BlobController.Behaviour.Hit);
-        mc?.Impulse(new Vector2(atkData.KnockBack, atkData.KnockUp));
-        Debug.Log(sign);
-        Debug.Log(mc?.velocity);
+        mc?.DoImpulse(new Vector2(atkData.KnockBack, atkData.KnockUp));
         yield return new WaitForSeconds(Sierra.Utility.FramesToSeconds(atkData.HitStun));
 
-        mc?.SetInputOverride(false);
+        mc?.DisableInputOverride();
         plr?.SetState(PlayerController.State.Normal);
         enm?.SetBehaviour(BlobController.Behaviour.Idle);
 

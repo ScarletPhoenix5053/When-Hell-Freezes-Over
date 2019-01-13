@@ -41,7 +41,7 @@ public class BlobController : MonoBehaviour
     {
         //DecideAction();
         Act();
-        mc.UpdateMotion();
+        mc.UpdatePosition();
     }
 
     public void SetBehaviour(Behaviour newBehaviour)
@@ -100,16 +100,16 @@ public class BlobController : MonoBehaviour
             case Behaviour.Chasing:
                 if (playerToLeft)
                 {
-                    mc.InputMotion = -1;
+                    mc.MoveVector = Vector2.left;
                 }
                 else
                 {
-                    mc.InputMotion = 1;
+                    mc.MoveVector = Vector2.right;
                 }
                 break;
 
             case Behaviour.Hit:
-                mc.SetInputOverride(true);
+                mc.EnableInputOverride();
                 break;
 
             default:
@@ -131,7 +131,7 @@ public class BlobController : MonoBehaviour
     {
         yield return new WaitForSeconds(Sierra.Utility.FramesToSeconds(am.Attacks[0].Startup));
 
-        mc.Impulse(new Vector2(0, LeapHeight));
+        mc.DoImpulse(new Vector2(0, LeapHeight));
 
         var frameCount = am.Attacks[0].Startup;
     }

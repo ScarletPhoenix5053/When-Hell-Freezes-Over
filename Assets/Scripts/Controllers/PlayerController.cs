@@ -28,7 +28,8 @@ public class PlayerController : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        mc.UpdateMotion();
+        Debug.Log(mc.IsGrounded);
+        mc.UpdatePosition();
 
         if (jumpLimitTimer > 0) jumpLimitTimer -= Time.deltaTime;
     }
@@ -80,12 +81,12 @@ public class PlayerController : MonoBehaviour
         if (currentInputData.axes[0] > 0.5 && IsGrounded && jumpLimitTimer <= 0)
         {
             jumpLimitTimer = jumpLimitSeconds;
-            mc.Impulse(new Vector2(0, JumpHeight));
+            mc.DoImpulse(new Vector2(0, JumpHeight));
         }
         // Walk
         if (currentInputData.axes[1] != 0)
         {
-            mc.InputMotion = currentInputData.axes[1];
+            mc.MoveVector = new Vector2(currentInputData.axes[1], 0);
         }
     }
 }
