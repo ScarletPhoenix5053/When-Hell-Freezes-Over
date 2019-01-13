@@ -13,17 +13,8 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
     public enum AttackStage { Ready, Startup, Active, Recovery }
 
     protected int currentAttack = 0;
-    protected const int numOfAttacks = 1;
     protected IEnumerator activeCoroutine = null;
 
-    protected virtual void OnEnable()
-    {
-        if (Attacks.Length < numOfAttacks)
-            throw new NullReferenceException(
-                "Please make sure there are at least " 
-                + numOfAttacks 
-                + " attacks in Attacks array!");
-    }
     protected virtual void FixedUpdate()
     {
         Hitbox.UpdateHitbox();
@@ -49,13 +40,24 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
         }
     }
 
-    protected virtual void DoAttack(int attackIndex)
+    /// <summary>
+    /// Generic Attack Method. <see cref="AttackData"/> used is determined by attackIndex.
+    /// </summary>
+    /// <param name="attackIndex"></param>
+    public virtual void DoAttack(int attackIndex)
     {
+        // Ensure index is in range
+        if (attackIndex > Attacks.Length)
+            throw new IndexOutOfRangeException(
+                "Index " + attackIndex + " is out of range!" +
+                name + "'s Attack's array size is " + Attacks.Length);
+
+        // Start Coroutine
         if (activeCoroutine != null) StopCoroutine(activeCoroutine);
         activeCoroutine = IE_DoAttack(0);
         StartCoroutine(activeCoroutine);
 
-        // set int to track which attack is ongoing
+        // Track which attack is ongoing
         currentAttack = attackIndex;
     }
     protected virtual IEnumerator IE_DoAttack(int attackIndex)

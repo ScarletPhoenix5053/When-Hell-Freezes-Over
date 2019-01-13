@@ -6,14 +6,8 @@ using UnityEngine;
 
 public class BlobAttackManager : AttackManager, IHitboxResponder
 {
-    public bool Attack()
+    public void Attack()
     {
-        var success = false;
-        
-        if (activeCoroutine != null) StopCoroutine(activeCoroutine);
-        activeCoroutine = IE_DoAttack(0);
-        StartCoroutine(activeCoroutine);
-
-        return success;
+        DoAttack(0);
     }
 }
