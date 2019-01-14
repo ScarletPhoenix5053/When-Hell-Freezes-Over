@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerAttackManager))]
 public class WeaponManager : MonoBehaviour
 {
-    public WeaponItem WeaponData;
+    public MeleeWeaponItem WeaponData;
 
     private PlayerAttackManager am;
 

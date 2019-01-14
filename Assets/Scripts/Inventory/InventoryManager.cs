@@ -18,9 +18,9 @@ public class InventoryManager : MonoBehaviour
     private void EquipFromInventory(GenericItem item)
     {
         Debug.Log("oof");
-        if(item is WeaponItem)
+        if(item is MeleeWeaponItem)
         {
-            Equip((WeaponItem)item);
+            Equip((MeleeWeaponItem)item);
         }
 
         if(item is ArmorItem)
@@ -31,9 +31,9 @@ public class InventoryManager : MonoBehaviour
 
     private void UnequipFromEquipPanel(GenericItem item)
     {
-        if (item is WeaponItem)
+        if (item is MeleeWeaponItem)
         {
-            Unequip((WeaponItem)item);
+            Unequip((MeleeWeaponItem)item);
         }
 
         if (item is ArmorItem)
