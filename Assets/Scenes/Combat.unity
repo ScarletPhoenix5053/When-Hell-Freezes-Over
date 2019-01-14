@@ -859,7 +859,7 @@ MonoBehaviour:
   Attacking: 0
   Hitbox: {fileID: 451300697}
   Attacks:
-  - {fileID: 11400000, guid: bba4b7eac96e69f46bab3679443f2eac, type: 2}
+  - {fileID: 11400000, guid: feaac99f885b69a4f90c2c276a806108, type: 2}
   AtkStage: 0
 --- !u!114 &1856425873
 MonoBehaviour:
