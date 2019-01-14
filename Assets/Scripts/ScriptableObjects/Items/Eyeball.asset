@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5ad01d769757bae419be10c18adbc317, type: 3}
-  m_Name: Bone
+  m_Name: Eyeball
   m_EditorClassIdentifier: 
-  id: cdfc058d3abb5b741904190ffd43a259
-  Name: Bone
-  Desc: A new item.
-  Icon: {fileID: 10915, guid: 0000000000000000f000000000000000, type: 0}
+  id: cffe84e01b01e0840898170edde7f144
+  Name: Eyeball
+  Desc: Ew, it's squishy. Good for crafting.
+  Icon: {fileID: 0}
   equipmentType: 3

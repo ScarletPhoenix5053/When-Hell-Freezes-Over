@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5ad01d769757bae419be10c18adbc317, type: 3}
-  m_Name: Eyeball
+  m_Name: Demon Chunk
   m_EditorClassIdentifier: 
-  id: cffe84e01b01e0840898170edde7f144
-  Name: Eyeball
-  Desc: oof
-  Icon: {fileID: 10901, guid: 0000000000000000f000000000000000, type: 0}
+  id: 65bea82868ef4db438ead9be9ae80da0
+  Name: Demon Chunk
+  Desc: A hunk of flesh from a demon. Good for weaponry.
+  Icon: {fileID: 0}
   equipmentType: 3
