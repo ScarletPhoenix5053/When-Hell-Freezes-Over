@@ -1,12 +1,18 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System;
+using Sierra.Combat2D;
 
+[RequireComponent(typeof(EnemyAnimationController))]
+[RequireComponent(typeof(EnemyAttackManager))]
+[RequireComponent(typeof(MotionController))]
+[RequireComponent(typeof(Health))]
 public abstract class EnemyController : BaseController
 {
     public Behaviour CurrentBehaviour = Behaviour.Idle;
     public enum Behaviour { Idle, Attacking, Chasing }
 
     protected PlayerController plr;
+    protected Health hp;
 
     protected float distToPlayer { get { return Vector2.Distance(transform.position, plr.transform.position); } }
     protected bool playerToLeft { get { return plr.transform.position.x < transform.position.x; } }
@@ -15,15 +21,16 @@ public abstract class EnemyController : BaseController
     {
         base.Awake();
         plr = FindObjectOfType<PlayerController>();
+        hp = GetComponent<Health>();
     }
     protected virtual void FixedUpdate()
     {
-        if (CurrentState != State.InHitstun &&
-            CurrentState != State.Dead)
+        if (CurrentState == State.Ready || CurrentState == State.InAction)
         {
             DecideAction();
             Act();
         }
+
         mc.UpdatePosition();
     }
 
@@ -33,6 +40,27 @@ public abstract class EnemyController : BaseController
 
         //Debug.Log(name + " changed behaviour state from " + currentBehaviour + " to " + newBehaviour);
         CurrentBehaviour = newBehaviour;
+    }
+    /// <summary>
+    /// Perform death actions for this enemy.
+    /// </summary>
+    public override void Die()
+    {
+        Debug.Log(name + "Is Dead.");
+        SetState(State.Dead);
+        StopAllCoroutines();
+
+        // Death anim
+        GetComponent<EnemyAnimationController>().PlayDeath();
+
+        // Deactivate hurtbox
+        foreach (Hurtbox hurtbox in hp.Hurtboxes)
+        {
+            hurtbox.SetInactive();
+        }
+
+        // Despawn after delay
+        Destroy(gameObject, 3f);
     }
 
     protected void FacePlayer()

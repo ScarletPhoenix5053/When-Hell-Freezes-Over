@@ -70,9 +70,17 @@ namespace Sierra.Combat2D
             }
             else
             {
-                Debug.Log("Blocked!");
+                Debug.Log(name + " is inactive!");
                 return false;
             }
+        }
+        public void SetActive()
+        {
+            _state = State.Active;
+        }
+        public void SetInactive()
+        {
+            _state = State.Inactive;
         }
 
         /// <summary>

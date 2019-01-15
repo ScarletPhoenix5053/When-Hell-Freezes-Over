@@ -18,8 +18,8 @@ GameObject:
   - component: {fileID: 3094655183015339561}
   - component: {fileID: 5943313796745476032}
   - component: {fileID: 3094655183015339574}
-  - component: {fileID: 3094655183015339567}
   - component: {fileID: 3094655183015339564}
+  - component: {fileID: 3094655183015339567}
   m_Layer: 10
   m_Name: Blob
   m_TagString: Untagged
@@ -156,10 +156,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentState: 0
+  CurrentBehaviour: 0
   AttackRange: 2
   ChaseRange: 10
   LeapHeight: 15
-  CurrentBehaviour: 0
 --- !u!114 &3094655183015339561
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -205,6 +205,20 @@ MonoBehaviour:
   Gravity: 1
   GravityMax: 20
   DragX: 0.5
+--- !u!114 &3094655183015339564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3094655183015339571}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9ad26a3b661e214faa899fcb780df73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Hp: 6
+  HpMax: 6
 --- !u!114 &3094655183015339567
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -222,20 +236,6 @@ MonoBehaviour:
   ColliderColour:
     Inactive: {r: 0.5, g: 0.5, b: 0.5, a: 0.25}
     Active: {r: 0, g: 0.8, b: 0, a: 0.25}
---- !u!114 &3094655183015339564
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3094655183015339571}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9ad26a3b661e214faa899fcb780df73, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Hp: 6
-  HpMax: 6
 --- !u!1 &3094655183749375214
 GameObject:
   m_ObjectHideFlags: 0

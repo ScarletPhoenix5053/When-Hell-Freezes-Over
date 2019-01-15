@@ -3,7 +3,7 @@ using System;
 
 
 [RequireComponent(typeof(MotionController))]
-[RequireComponent(typeof(AttackManager))]
+[RequireComponent(typeof(PlayerAttackManager))]
 [RequireComponent(typeof(Health))]
 public class PlayerController : BaseController
 {
@@ -30,7 +30,7 @@ public class PlayerController : BaseController
     {
         mc.UpdatePosition();
 
-        if (jumpLimitTimer > 0) jumpLimitTimer -= Time.deltaTime;
+        IncrimentJumpTimer();
     }
 
 
@@ -41,22 +41,15 @@ public class PlayerController : BaseController
     public void ReadInput(InputData data)
     {
         currentInputData = data;
-        switch (CurrentState)
-        {
-            case State.Ready:
-                CheckInputAsNormal();
-                break;
-
-            case State.InHitstun:
-                break;
-
-            case State.InAction:
-                break;
-
-            default:
-                throw new NotImplementedException("State " + CurrentState + " is not valid!");
-        }
-    }   
+        if (CurrentState == State.Ready) CheckInputAsNormal();
+    }
+    /// <summary>
+    /// Perform death actions for this character.
+    /// </summary>
+    public override void Die()
+    {
+        throw new NotImplementedException();
+    }
 
     /// <summary>
     /// Makes the player face x input direction
@@ -90,5 +83,9 @@ public class PlayerController : BaseController
         {
             mc.MoveVector = new Vector2(currentInputData.axes[1], 0);
         }
+    }
+    private void IncrimentJumpTimer()
+    {
+        if (jumpLimitTimer > 0) jumpLimitTimer -= Time.deltaTime;
     }
 }

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections;
+using Sierra.Combat2D;
 
 [RequireComponent(typeof(MotionController))]
 public class Health : MonoBehaviour
@@ -8,9 +9,12 @@ public class Health : MonoBehaviour
     public int Hp = 6;
     public int HpMax = 6;
 
+    public Hurtbox[] Hurtboxes;
+
     public bool Dead { get { return Hp <= 0; } }
 
     private MotionController mc;
+    private BaseController chr;
 
     private AttackData atkData;
     private IEnumerator currentKbRoutine;
@@ -18,13 +22,14 @@ public class Health : MonoBehaviour
 
     private void Awake()
     {
+        chr = GetComponent<BaseController>();
         mc = GetComponent<MotionController>();
     }
 
     public void Damage(AttackData data)
     {
         atkData = data;
-        // Log warning and return if dead
+        // Log warning and return if ALREADY dead
         if (Dead)
         {
             Debug.LogWarning(name + " is already dead");
@@ -33,11 +38,21 @@ public class Health : MonoBehaviour
 
         // Adjust Hp
         if (data.Damage != 0) Hp -= data.Damage;
-        if (Hp < 0) Hp = 0;
 
-        // Apply Knockback/Stun
-        ApplyHitStun();
-        ApplyKnockBack();
+        // Check if died this frame
+        if (Hp <= 0)
+        {
+            Hp = 0;
+            chr.Die();
+            StopAllCoroutines();
+        }
+        else
+        {
+            // Apply Knockback/Stun
+            ApplyHitStun();
+            ApplyKnockBack();
+        }
+
     }
 
     public void LogHp()

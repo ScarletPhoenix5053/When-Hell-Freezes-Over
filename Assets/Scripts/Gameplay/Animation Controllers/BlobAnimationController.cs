@@ -11,16 +11,4 @@ public class BlobAnimationController : EnemyAnimationController
         animPhysCoroutine = AnimatePhysicsFor(100);
         StartCoroutine(animPhysCoroutine);
     }
-    public void PlayHitStun()
-    {
-        an.SetBool("InHitStun", true);
-        if (animPhysCoroutine != null) StopCoroutine(animPhysCoroutine);
-        an.updateMode = AnimatorUpdateMode.Normal;
-    }
-    public void StopHitStun()
-    {        
-        an.SetBool("InHitStun", false);
-        if (animPhysCoroutine != null) StopCoroutine(animPhysCoroutine);
-        an.updateMode = AnimatorUpdateMode.Normal;
-    }
 }

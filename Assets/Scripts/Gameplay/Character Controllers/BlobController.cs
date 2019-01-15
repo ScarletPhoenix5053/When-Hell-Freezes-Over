@@ -1,8 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(EnemyAttackManager))]
-[RequireComponent(typeof(MotionController))]
+/// <summary>
+/// Core Controller component for blob type enemy.
+/// </summary>
 public class BlobController : EnemyController
 {
     public float AttackRange = 2f;
@@ -32,7 +33,6 @@ public class BlobController : EnemyController
             am.StopAttack();
         }
     }
-
     protected override void DecideAction()
     {
         // if player doesn't exist or is too far away
@@ -64,6 +64,8 @@ public class BlobController : EnemyController
     }
     protected override void Act()
     {
+        if (CurrentState == State.Dead) return;
+
         if (CurrentState == State.Ready)
         {
             switch (CurrentBehaviour)
@@ -96,10 +98,6 @@ public class BlobController : EnemyController
                 default:
                     break;
             }
-        }
-        else if (CurrentState == State.InHitstun    )
-        {
-            mc.EnableInputOverride();
         }
     }
 

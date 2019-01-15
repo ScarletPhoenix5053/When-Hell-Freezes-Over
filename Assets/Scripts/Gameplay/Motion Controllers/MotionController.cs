@@ -24,7 +24,7 @@ public class MotionController : MonoBehaviour
     /// <summary>
     /// Stops movement when <see cref="true"/>.
     /// </summary>
-    public bool InputOverride { get; protected set; }
+    public bool Disbled { get; protected set; }
     /// <summary>
     /// Returns true when touching the ground.
     /// </summary>
@@ -50,6 +50,7 @@ public class MotionController : MonoBehaviour
     }
     #endregion
     #region Protected Vars
+    protected BaseController chr;
     protected Rigidbody2D rb;
     protected Collider2D col;
 
@@ -64,6 +65,7 @@ public class MotionController : MonoBehaviour
 
     private void Awake()
     {
+        chr = GetComponent<BaseController>();
         col = GetComponent<Collider2D>();
         rb = GetComponent<Rigidbody2D>();
     }
@@ -83,21 +85,11 @@ public class MotionController : MonoBehaviour
             contMotionVector.y -= Gravity;
         }
 
-
         // create combined motion vector
         var combinedMotion = moveVector * Speed + contMotionVector;
-
-        // deebug
-        if (name == "Blob")
-        {
-            Debug.Log("MV: " + MoveVector);
-            Debug.Log("ContMV: " + contMotionVector);
-            Debug.Log("CombMV: " + combinedMotion);
-        }
-
-        // update position
-        rb.velocity = combinedMotion;
         
+        // update position
+        rb.velocity = combinedMotion;        
 
         // reset movevector for next cycle
         moveVector = Vector2.zero;
@@ -121,7 +113,4 @@ public class MotionController : MonoBehaviour
         contMotionVector = impulse;
         impulseLastFrame = true;
     }
-
-    public void EnableInputOverride() => InputOverride = true;
-    public void DisableInputOverride() => InputOverride = false;
 }

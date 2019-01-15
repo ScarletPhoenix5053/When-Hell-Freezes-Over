@@ -21,8 +21,12 @@ public abstract class BaseController : MonoBehaviour
     {
         if (newState != CurrentState)
         {
+            if (name == "Blob") Debug.Log(name + " changed state from " + CurrentState + " to " + newState);
             CurrentState = newState;
-            //Debug.Log(name + " changed state from " + CurrentState + " to " + newState);
         }
     }
+    /// <summary>
+    /// Perform death actions for this character.
+    /// </summary>
+    public abstract void Die();
 }
