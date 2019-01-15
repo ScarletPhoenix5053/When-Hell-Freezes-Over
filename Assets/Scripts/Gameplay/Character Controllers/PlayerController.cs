@@ -10,9 +10,10 @@ using Sierra.Combat2D;
 public class PlayerController : BaseController
 {
     public float JumpHeight = 12f;
-    public int RollFrames = 45;
+    public int RollFrames = 45;    
     public Action CurrentAction = Action.None;
     public enum Action { None, Attacking, Rolling, Climbing }
+    public int Sign { get { if (mc.MoveVector.x == 0) return sign; else return sign = Math.Sign(mc.MoveVector.x); } }
 
     public Canvas TempDeathCanvas;
 
@@ -24,6 +25,7 @@ public class PlayerController : BaseController
     private IEnumerator currentRollRoutine;
     private float jumpLimitSeconds = 0.2f;
     private float jumpLimitTimer = 0;
+    private int sign = 1;
 
 
     protected override void Awake()
@@ -93,10 +95,7 @@ public class PlayerController : BaseController
     /// </summary>
     private void OrientByMotion()
     {
-        if (mc.MoveVector.x != 0)
-        {
-            transform.localScale = new Vector3(Math.Sign(mc.MoveVector.x), transform.localScale.y, transform.localScale.z);
-        }
+        transform.localScale = new Vector3(Sign, transform.localScale.y, transform.localScale.z);
     }
     /// <summary>
     /// Performs input checks as if the character is unaffected by anything.

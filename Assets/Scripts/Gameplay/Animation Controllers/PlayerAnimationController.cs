@@ -17,6 +17,7 @@ public class PlayerAnimationController : AnimationController
     {
         rn.material.color = Color.yellow;
         an.SetBool("Rolling", true);
+        an.SetInteger("Sign", Math.Sign(transform.localScale.x));
     }
     /// <summary>
     /// Temporary method. Currentley resets this <see cref="Renderer.material.color"/>
