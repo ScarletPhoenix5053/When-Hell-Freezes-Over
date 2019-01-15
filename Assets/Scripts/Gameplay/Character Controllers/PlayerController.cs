@@ -84,7 +84,7 @@ public class PlayerController : BaseController
     {
         if (CurrentAction == newAction) return;
 
-        Debug.Log("Changing player action from " + CurrentAction + " to " + newAction);
+        //Debug.Log("Changing player action from " + CurrentAction + " to " + newAction);
         CurrentAction = newAction;
     }
 
@@ -112,7 +112,6 @@ public class PlayerController : BaseController
         // Dodge roll
         if (currentInputData.buttons[2])
         {            
-            Debug.Log("Roll");
             if (currentRollRoutine != null) StopCoroutine(currentRollRoutine);
             currentRollRoutine = RollRoutine();
             StartCoroutine(currentRollRoutine);
