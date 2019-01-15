@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Blob_Leap.aData
   m_EditorClassIdentifier: 
   Damage: 1
-  Startup: 12
-  Active: 4
-  Recovery: 20
-  HitStun: 32
+  Startup: 44
+  Active: 21
+  Recovery: 32
+  HitStun: 22
   Sign: 1
   KnockBack: 8
   KnockUp: 3

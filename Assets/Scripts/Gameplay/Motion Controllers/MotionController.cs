@@ -87,14 +87,22 @@ public class MotionController : MonoBehaviour
         // create combined motion vector
         var combinedMotion = moveVector * Speed + contMotionVector;
 
+        // deebug
+        if (name == "Blob")
+        {
+            Debug.Log("MV: " + MoveVector);
+            Debug.Log("ContMV: " + contMotionVector);
+            Debug.Log("CombMV: " + combinedMotion);
+        }
+
         // update position
         rb.velocity = combinedMotion;
+        
 
         // reset movevector for next cycle
         moveVector = Vector2.zero;
 
         // apply drag to cont motion for next cycle
-        Debug.Log(name + " " + contMotionVector);
         if (contMotionVector.x <= -zeroThreshold || contMotionVector.x >= zeroThreshold)
         {
             contMotionVector.x -= Math.Sign(contMotionVector.x) * DragX;
