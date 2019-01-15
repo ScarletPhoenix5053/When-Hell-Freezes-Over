@@ -1,56 +1,39 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent(typeof(BlobAttackManager))]
+[RequireComponent(typeof(EnemyAttackManager))]
 [RequireComponent(typeof(MotionController))]
-public class BlobController : MonoBehaviour
+public class BlobController : EnemyController
 {
     public float AttackRange = 2f;
     public float ChaseRange = 10f;
     public float LeapHeight = 10f;
-    public Behaviour currentBehaviour = Behaviour.Idle;
 
-    public enum Behaviour
+    protected BlobAnimationController an;
+    protected BlobAttackManager am;
+
+    protected override void Awake()
     {
-        Idle, Attacking, Chasing, Hit
-    }
-
-    private AnimationController an;
-    private BlobAttackManager am;
-    private MotionController mc;
-    private PlayerController plr;
-
-
-    private float distToPlayer {  get { return Vector2.Distance(transform.position, plr.transform.position); } }
-    private bool playerToLeft { get { return plr.transform.position.x < transform.position.x; } }
-
-    private void Awake()
-    {
-        an = GetComponent<AnimationController>();
+        base.Awake();
+        an = GetComponent<BlobAnimationController>();
         am = GetComponent<BlobAttackManager>();
-        mc = GetComponent<MotionController>();
-        plr = FindObjectOfType<PlayerController>();
     }
-    private void LateUpdate()
+    protected virtual void LateUpdate()
     {
         FacePlayer();
     }
-    private void FixedUpdate()
+
+    public override void SetState(State newState)
     {
-        DecideAction();
-        Act();
-        mc.UpdatePosition();
+        base.SetState(newState);
+        if (newState == State.InHitstun)
+        {
+            an.PlayHitStun();
+            am.StopAttack();
+        }
     }
 
-    public void SetBehaviour(Behaviour newBehaviour)
-    {
-        if (newBehaviour == currentBehaviour) return;
-
-        //Debug.Log(name + " changed behaviour state from " + currentBehaviour + " to " + newBehaviour);
-        currentBehaviour = newBehaviour;
-    }
-
-    private void DecideAction()
+    protected override void DecideAction()
     {
         // if player doesn't exist or is too far away
         if (plr == null || distToPlayer > ChaseRange)
@@ -79,52 +62,47 @@ public class BlobController : MonoBehaviour
             SetBehaviour(Behaviour.Chasing);
         }        
     }
-    private void Act()
+    protected override void Act()
     {
-        switch (currentBehaviour)
+        if (CurrentState == State.Ready)
         {
-            case Behaviour.Idle:
-                break;
+            switch (CurrentBehaviour)
+            {
+                case Behaviour.Idle:
+                    an.StopHitStun();
+                    break;
 
-            case Behaviour.Attacking:
-                if (!am.Attacking)
-                {
-                    an.PlayAttack();
-                    am.Attack();
-                    StartCoroutine(ApplyLeapVelocity());
-                }
-                break;
+                case Behaviour.Attacking:
+                    if (!am.Attacking)
+                    {
+                        an.PlayAttack();
+                        am.Attack();
+                        StartCoroutine(ApplyLeapVelocity());
+                    }
+                    break;
 
-            case Behaviour.Chasing:
-                if (playerToLeft)
-                {
-                    mc.MoveVector = Vector2.left;
-                }
-                else
-                {
-                    mc.MoveVector = Vector2.right;
-                }
-                break;
+                case Behaviour.Chasing:
+                    an.StopHitStun();
+                    if (playerToLeft)
+                    {
+                        mc.MoveVector = Vector2.left;
+                    }
+                    else
+                    {
+                        mc.MoveVector = Vector2.right;
+                    }
+                    break;
 
-            case Behaviour.Hit:
-                mc.EnableInputOverride();
-                break;
-
-            default:
-                break;
+                default:
+                    break;
+            }
+        }
+        else if (CurrentState == State.InHitstun    )
+        {
+            mc.EnableInputOverride();
         }
     }
-    private void FacePlayer()
-    {
-        if (playerToLeft)
-        {
-            transform.localScale = new Vector3(-1, transform.localScale.y, 1);
-        }
-        else
-        {
-            transform.localScale = new Vector3(1, transform.localScale.y, 1);
-        }
-    }
+
     private IEnumerator ApplyLeapVelocity()
     {
         yield return new WaitForSeconds(Sierra.Utility.FramesToSeconds(am.Attacks[0].Startup));

@@ -12,8 +12,8 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
     public AttackStage AtkStage = AttackStage.Ready;
     public enum AttackStage { Ready, Startup, Active, Recovery }
 
-    protected int currentAttack = 0;
-    protected IEnumerator activeCoroutine = null;
+    protected int currentAttackIndex = 0;
+    protected IEnumerator currentAttackRoutine = null;
 
     protected virtual void FixedUpdate()
     {
@@ -28,11 +28,11 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
         var hb = hurtbox.GetComponent<Hurtbox>();
         if (hb != null)
         {
-            if (hb.CheckHit(Attacks[currentAttack].HitStun))
+            if (hb.CheckHit(Attacks[currentAttackIndex].HitStun))
             {
                 // set sign of attack
-                Attacks[currentAttack].Sign = Math.Sign(transform.localScale.x);
-                hurtbox.GetComponent<Hurtbox>().hp.Remove(Attacks[currentAttack]);
+                Attacks[currentAttackIndex].Sign = Math.Sign(transform.localScale.x);
+                hurtbox.GetComponent<Hurtbox>().hp.Damage(Attacks[currentAttackIndex]);
                 //hurtbox.GetComponent<Hurtbox>().Health.LogHp();
 
                 Hitbox.SetInactive();
@@ -53,12 +53,19 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
                 name + "'s Attack's array size is " + Attacks.Length);
 
         // Start Coroutine
-        if (activeCoroutine != null) StopCoroutine(activeCoroutine);
-        activeCoroutine = IE_DoAttack(0);
-        StartCoroutine(activeCoroutine);
+        if (currentAttackRoutine != null) StopCoroutine(currentAttackRoutine);
+        currentAttackRoutine = IE_DoAttack(attackIndex);
+        StartCoroutine(currentAttackRoutine);
 
         // Track which attack is ongoing
-        currentAttack = attackIndex;
+        currentAttackIndex = attackIndex;
+    }
+    public virtual void StopAttack()
+    {
+        StopCoroutine(currentAttackRoutine);
+        Hitbox.SetInactive();
+        AtkStage = AttackStage.Ready;
+        Attacking = false;
     }
     protected virtual IEnumerator IE_DoAttack(int attackIndex)
     {

@@ -4,9 +4,9 @@ using System.Collections;
 using Sierra.Combat2D;
 using UnityEngine;
 
-public class BlobAttackManager : EnemyAttackManager, IHitboxResponder
+public class EnemyAttackManager : AttackManager, IHitboxResponder
 {
-    public override void Attack()
+    public virtual void Attack()
     {
         DoAttack(0);
     }

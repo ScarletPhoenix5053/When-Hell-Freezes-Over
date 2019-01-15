@@ -5,25 +5,22 @@ using System;
 [RequireComponent(typeof(MotionController))]
 [RequireComponent(typeof(AttackManager))]
 [RequireComponent(typeof(Health))]
-public class PlayerController : MonoBehaviour
+public class PlayerController : BaseController
 {
     public float JumpHeight = 12f;
-    public State CurrentState = State.Normal;
-
-    public enum State { Normal, Hit, Attacking, Rolling }
+    public enum Action { Attacking, Rolling, Climbing }
 
     private PlayerAttackManager am;
-    private MotionController mc;
 
     private InputData currentInputData;
     private float jumpLimitSeconds = 0.2f;
     private float jumpLimitTimer = 0;
 
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         am = GetComponent<PlayerAttackManager>();
-        mc = GetComponent<MotionController>();
     }
     private void LateUpdate()
     {
@@ -46,36 +43,21 @@ public class PlayerController : MonoBehaviour
         currentInputData = data;
         switch (CurrentState)
         {
-            case State.Normal:
+            case State.Ready:
                 CheckInputAsNormal();
                 break;
 
-            case State.Hit:
+            case State.InHitstun:
                 break;
 
-            case State.Attacking:
-                break;
-
-            case State.Rolling:
+            case State.InAction:
                 break;
 
             default:
                 throw new NotImplementedException("State " + CurrentState + " is not valid!");
         }
     }   
-    /// <summary>
-    /// Updates <see cref="CurrentState"/>
-    /// </summary>
-    /// <param name="newState"></param>
-    public void SetState(State newState)
-    {
-        if (newState != CurrentState)
-        {
-            CurrentState = newState;
-            //Debug.Log(name + " changed state from " + CurrentState + " to " + newState);
-        }
-    }
-    
+
     /// <summary>
     /// Makes the player face x input direction
     /// </summary>
@@ -100,7 +82,6 @@ public class PlayerController : MonoBehaviour
         // Jump
         if (currentInputData.axes[0] > 0.5 && mc.IsGrounded && jumpLimitTimer <= 0)
         {
-            Debug.Log("Jmp!");
             jumpLimitTimer = jumpLimitSeconds;
             mc.DoImpulse(new Vector2(0, JumpHeight));
         }
