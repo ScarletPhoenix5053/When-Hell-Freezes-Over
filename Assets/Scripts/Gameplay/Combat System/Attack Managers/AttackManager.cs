@@ -12,7 +12,10 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
     public AttackStage AtkStage = AttackStage.Ready;
     public enum AttackStage { Ready, Startup, Active, Recovery }
 
-    protected int currentAttackIndex = 0;
+    protected GameObject projectilePrefab;
+    protected GameObject[] projectiles;
+
+    protected int currentMeleeAttackIndex = 0;
     protected IEnumerator currentAttackRoutine = null;
 
     protected virtual void FixedUpdate()
@@ -28,11 +31,11 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
         var hb = hurtbox.GetComponent<Hurtbox>();
         if (hb != null)
         {
-            if (hb.CheckHit(Attacks[currentAttackIndex].HitStun))
+            if (hb.CheckHit(Attacks[currentMeleeAttackIndex].HitStun))
             {
                 // set sign of attack
-                Attacks[currentAttackIndex].Sign = Math.Sign(transform.localScale.x);
-                hurtbox.GetComponent<Hurtbox>().hp.Damage(Attacks[currentAttackIndex]);
+                Attacks[currentMeleeAttackIndex].Sign = Math.Sign(transform.localScale.x);
+                hurtbox.GetComponent<Hurtbox>().hp.Damage(Attacks[currentMeleeAttackIndex]);
                 //hurtbox.GetComponent<Hurtbox>().Health.LogHp();
 
                 Hitbox.SetInactive();
@@ -58,7 +61,25 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
         StartCoroutine(currentAttackRoutine);
 
         // Track which attack is ongoing
-        currentAttackIndex = attackIndex;
+        currentMeleeAttackIndex = attackIndex;
+    }
+    /// <summary>
+    /// Generic ranged attack method. Launches a projectile after a delay.
+    /// </summary>
+    /// <param name="attackIndex"></param>
+    public virtual void DoRangedAttack(int attackIndex)
+    {
+        // Create Projectile
+        projectiles = new GameObject[1];
+        projectiles[0] = Instantiate(projectilePrefab, transform.position, projectilePrefab.transform.rotation);
+
+        // Set projectile hitbox responder
+        projectiles[0].GetComponent<ProjectileController>().SetHitboxResponder(this);
+
+        // Start attack routine        
+        if (currentAttackRoutine != null) StopCoroutine(currentAttackRoutine);
+        currentAttackRoutine = IE_DoRangedAttack(attackIndex);
+        StartCoroutine(currentAttackRoutine);
     }
     public virtual void StopAttack()
     {
@@ -82,6 +103,26 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
 
         // Recovery
         Hitbox.SetInactive();
+        AtkStage = AttackStage.Recovery;
+        yield return new WaitForSeconds(Utility.FramesToSeconds(Attacks[attackIndex].Recovery));
+
+        // End
+        AtkStage = AttackStage.Ready;
+        Attacking = false;
+    }
+    protected virtual IEnumerator IE_DoRangedAttack(int attackIndex)
+    {
+        // Startup
+        Attacking = true;
+        AtkStage = AttackStage.Startup;
+        yield return new WaitForSeconds(Utility.FramesToSeconds(Attacks[attackIndex].Startup));
+
+        // Active
+        projectiles[0].SetActive(true);
+        AtkStage = AttackStage.Active;
+        yield return new WaitForSeconds(Utility.FramesToSeconds(Attacks[attackIndex].Active));
+
+        // Recovery
         AtkStage = AttackStage.Recovery;
         yield return new WaitForSeconds(Utility.FramesToSeconds(Attacks[attackIndex].Recovery));
 

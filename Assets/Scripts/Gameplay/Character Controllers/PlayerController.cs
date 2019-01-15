@@ -101,19 +101,23 @@ public class PlayerController : BaseController
     /// Performs input checks as if the character is unaffected by anything.
     /// </summary>
     private void CheckInputAsNormal()
-    {     
-        // Light attack button
-        if (currentInputData.buttons[0])
-        {
-            am.NormalAttack();
-        }
-
+    {
         // Dodge roll
         if (currentInputData.buttons[2])
-        {            
+        {
             if (currentRollRoutine != null) StopCoroutine(currentRollRoutine);
             currentRollRoutine = RollRoutine();
             StartCoroutine(currentRollRoutine);
+        }
+        // Ranged attack button
+        else if (currentInputData.buttons[1])
+        {
+            am.RangedAttack();
+        }
+        // Light attack button
+        else if (currentInputData.buttons[0])
+        {
+            am.NormalAttack();
         }
 
         // Jump

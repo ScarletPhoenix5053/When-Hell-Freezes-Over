@@ -76,14 +76,18 @@ public class MotionController : MonoBehaviour
     public void UpdatePosition()
     {
         // apply gravity to cont motion vector
-        if (IsGrounded)
+        if (col != null)
         {
-            if (contMotionVector.y < 0f) contMotionVector.y = -0.5f;
+            if (IsGrounded)
+            {
+                if (contMotionVector.y < 0f) contMotionVector.y = -0.5f;
+            }
+            else if (contMotionVector.y < GravityMax)
+            {
+                contMotionVector.y -= Gravity;
+            }
         }
-        else if (contMotionVector.y < GravityMax)
-        {
-            contMotionVector.y -= Gravity;
-        }
+
 
         // create combined motion vector
         var combinedMotion = moveVector * Speed + contMotionVector;
