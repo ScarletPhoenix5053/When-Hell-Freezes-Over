@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using System.Collections;
 using Sierra.Combat2D;
 
 
@@ -9,7 +10,9 @@ using Sierra.Combat2D;
 public class PlayerController : BaseController
 {
     public float JumpHeight = 12f;
-    public enum Action { Attacking, Rolling, Climbing }
+    public int RollFrames = 45;
+    public Action CurrentAction = Action.None;
+    public enum Action { None, Attacking, Rolling, Climbing }
 
     public Canvas TempDeathCanvas;
 
@@ -17,6 +20,7 @@ public class PlayerController : BaseController
     private PlayerAnimationController an;
 
     private InputData currentInputData;
+    private IEnumerator currentRollRoutine;
     private float jumpLimitSeconds = 0.2f;
     private float jumpLimitTimer = 0;
 
@@ -37,6 +41,7 @@ public class PlayerController : BaseController
     private void FixedUpdate()
     {
         mc.UpdatePosition();
+        if (CurrentAction == Action.Rolling) mc.MoveVector = new Vector2(Math.Sign(transform.localScale.x), 0);
 
         IncrimentJumpTimer();
     }
@@ -49,7 +54,7 @@ public class PlayerController : BaseController
     public void ReadInput(InputData data)
     {
         currentInputData = data;
-        if (CurrentState == State.Ready) CheckInputAsNormal();
+        if (CurrentState == State.Ready && CurrentAction == Action.None) CheckInputAsNormal();
     }
     /// <summary>
     /// Perform death actions for this character.
@@ -73,6 +78,13 @@ public class PlayerController : BaseController
         // restart game after delay
         GameManager.Instance.ReloadGame(3f);
     }
+    public void SetAction(Action newAction)
+    {
+        if (CurrentAction == newAction) return;
+
+        Debug.Log("Changing player action from " + CurrentAction + " to " + newAction);
+        CurrentAction = newAction;
+    }
 
     /// <summary>
     /// Makes the player face x input direction
@@ -88,11 +100,20 @@ public class PlayerController : BaseController
     /// Performs input checks as if the character is unaffected by anything.
     /// </summary>
     private void CheckInputAsNormal()
-    {
+    {     
         // Light attack button
         if (currentInputData.buttons[0])
         {
             am.NormalAttack();
+        }
+
+        // Dodge roll
+        if (currentInputData.buttons[2])
+        {            
+            Debug.Log("Roll");
+            if (currentRollRoutine != null) StopCoroutine(currentRollRoutine);
+            currentRollRoutine = RollRoutine();
+            StartCoroutine(currentRollRoutine);
         }
 
         // Jump
@@ -110,5 +131,12 @@ public class PlayerController : BaseController
     private void IncrimentJumpTimer()
     {
         if (jumpLimitTimer > 0) jumpLimitTimer -= Time.deltaTime;
+    }
+    private IEnumerator RollRoutine()
+    {
+        SetAction(Action.Rolling);
+        yield return new WaitForSeconds(Sierra.Utility.FramesToSeconds(RollFrames));
+
+        SetAction(Action.None);
     }
 }
