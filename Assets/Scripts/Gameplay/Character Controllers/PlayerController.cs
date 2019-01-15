@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using Sierra.Combat2D;
 
 
 [RequireComponent(typeof(MotionController))]
@@ -10,7 +11,10 @@ public class PlayerController : BaseController
     public float JumpHeight = 12f;
     public enum Action { Attacking, Rolling, Climbing }
 
+    public Canvas TempDeathCanvas;
+
     private PlayerAttackManager am;
+    private PlayerAnimationController an;
 
     private InputData currentInputData;
     private float jumpLimitSeconds = 0.2f;
@@ -21,6 +25,10 @@ public class PlayerController : BaseController
     {
         base.Awake();
         am = GetComponent<PlayerAttackManager>();
+        an = GetComponent<PlayerAnimationController>();
+
+        if (TempDeathCanvas == null)
+            throw new NullReferenceException("Please assign an object to TempDeathCanvas");
     }
     private void LateUpdate()
     {
@@ -48,7 +56,22 @@ public class PlayerController : BaseController
     /// </summary>
     public override void Die()
     {
-        throw new NotImplementedException();
+        SetState(State.Dead);
+
+        // death anim
+        an.PlayDeath();
+
+        // deactivate hurtbox
+        foreach (Hurtbox hurtbox in GetComponent<Health>().Hurtboxes)
+        {
+            hurtbox.SetInactive();
+        }
+
+        // display you died message
+        TempDeathCanvas.gameObject.SetActive(true);
+
+        // restart game after delay
+        GameManager.Instance.ReloadGame(3f);
     }
 
     /// <summary>

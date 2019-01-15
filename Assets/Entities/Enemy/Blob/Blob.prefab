@@ -141,7 +141,7 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.5, y: 1}
+  m_Size: {x: 1, y: 1}
   m_Direction: 0
 --- !u!114 &3094655183015339560
 MonoBehaviour:
@@ -219,6 +219,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Hp: 6
   HpMax: 6
+  Hurtboxes:
+  - {fileID: 3094655183015339567}
 --- !u!114 &3094655183015339567
 MonoBehaviour:
   m_ObjectHideFlags: 0
