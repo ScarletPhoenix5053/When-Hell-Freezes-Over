@@ -753,6 +753,11 @@ PrefabInstance:
       propertyPath: TempDeathCanvas
       value: 
       objectReference: {fileID: 1355049141}
+    - target: {fileID: 8993978443071335220, guid: 299c53565037cd24dacc737c83af3fc5,
+        type: 3}
+      propertyPath: RollFrames
+      value: 28
+      objectReference: {fileID: 0}
     - target: {fileID: 8993978443071335212, guid: 299c53565037cd24dacc737c83af3fc5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -806,6 +811,21 @@ PrefabInstance:
     - target: {fileID: 8993978443071335212, guid: 299c53565037cd24dacc737c83af3fc5,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8993978443071335213, guid: 299c53565037cd24dacc737c83af3fc5,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: a7a4617bdabd372439b1dfa94ca790ca, type: 2}
+    - target: {fileID: 8993978443071335213, guid: 299c53565037cd24dacc737c83af3fc5,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8993978443071335213, guid: 299c53565037cd24dacc737c83af3fc5,
+        type: 3}
+      propertyPath: m_UpdateMode
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

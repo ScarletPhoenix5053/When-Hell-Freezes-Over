@@ -3,12 +3,35 @@ using System;
 
 public class PlayerAnimationController : AnimationController
 {
+    private Renderer rn;
+    private Color defaultColour;
+
+    protected override void Awake()
+    {
+        base.Awake();
+        rn = GetComponent<Renderer>();
+        defaultColour = rn.material.color;
+    }
+
+    public void PlayDodgeRoll()
+    {
+        rn.material.color = Color.yellow;
+        an.SetBool("Rolling", true);
+    }
+    /// <summary>
+    /// Temporary method. Currentley resets this <see cref="Renderer.material.color"/>
+    /// </summary>
+    public void PlayIdle()
+    {
+        rn.material.color = defaultColour;
+        an.SetBool("Rolling", false);
+    }
     /// <summary>
     /// Calls death animation and resets this component to a normal state.
     /// </summary>
     public void PlayDeath()
     {
-        GetComponent<Renderer>().material.color = Color.white;
+        rn.material.color = Color.white;
         /*
         an.SetBool("Dead", true);
         an.updateMode = AnimatorUpdateMode.Normal;

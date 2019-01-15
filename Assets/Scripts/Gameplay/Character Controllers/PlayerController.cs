@@ -18,6 +18,7 @@ public class PlayerController : BaseController
 
     private PlayerAttackManager am;
     private PlayerAnimationController an;
+    private Health hp;
 
     private InputData currentInputData;
     private IEnumerator currentRollRoutine;
@@ -30,6 +31,7 @@ public class PlayerController : BaseController
         base.Awake();
         am = GetComponent<PlayerAttackManager>();
         an = GetComponent<PlayerAnimationController>();
+        hp = GetComponent<Health>();
 
         if (TempDeathCanvas == null)
             throw new NullReferenceException("Please assign an object to TempDeathCanvas");
@@ -40,10 +42,10 @@ public class PlayerController : BaseController
     }
     private void FixedUpdate()
     {
-        mc.UpdatePosition();
         if (CurrentAction == Action.Rolling) mc.MoveVector = new Vector2(Math.Sign(transform.localScale.x), 0);
 
         IncrimentJumpTimer();
+        mc.UpdatePosition();
     }
 
 
@@ -135,8 +137,18 @@ public class PlayerController : BaseController
     private IEnumerator RollRoutine()
     {
         SetAction(Action.Rolling);
+        an.PlayDodgeRoll();
+        foreach (Hurtbox hurtbox in hp.Hurtboxes)
+        {
+            hurtbox.SetInactive();
+        }
         yield return new WaitForSeconds(Sierra.Utility.FramesToSeconds(RollFrames));
-
+        
         SetAction(Action.None);
+        an.PlayIdle();
+        foreach (Hurtbox hurtbox in hp.Hurtboxes)
+        {
+            hurtbox.SetActive();
+        }
     }
 }
