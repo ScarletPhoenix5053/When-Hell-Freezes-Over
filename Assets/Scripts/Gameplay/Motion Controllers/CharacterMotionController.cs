@@ -114,7 +114,6 @@ public class CharacterMotionController : MotionController
         {
             contMotionVector.x = 0;
         }
-    }
-    
+    }   
 
 }
