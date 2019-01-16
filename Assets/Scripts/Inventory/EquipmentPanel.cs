@@ -24,8 +24,8 @@ public class EquipmentPanel : MonoBehaviour
         {
             if(equipmentSlots[i].EquipmentType == item.equipmentType)
             {
-                previousItem = (GenericItem)equipmentSlots[i].item;
-                equipmentSlots[i].item = item;
+                previousItem = (GenericItem)equipmentSlots[i].Item;
+                equipmentSlots[i].Item = item;
                 return true;
             }
         }
@@ -37,9 +37,9 @@ public class EquipmentPanel : MonoBehaviour
     {
         for (int i = 0; i < equipmentSlots.Length; i++)
         {
-            if (equipmentSlots[i].item == item)
+            if (equipmentSlots[i].Item == item)
             {
-                equipmentSlots[i].item = null;
+                equipmentSlots[i].Item = null;
                 return true;
             }
         }

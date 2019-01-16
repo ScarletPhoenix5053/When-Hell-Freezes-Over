@@ -32,32 +32,26 @@ public class Inventory : MonoBehaviour , IItemContainer
         int i = 0;
         for (; i < startingItems.Count && i < itemSlots.Length; i++)
         {
-            itemSlots[i].item = Instantiate(startingItems[i]);
+            itemSlots[i].Item = startingItems[i].GetCopy();
+            itemSlots[i].Amount = 1;
         }
 
         for (; i < itemSlots.Length; i++)
         {
-            itemSlots[i].item = null;
+            itemSlots[i].Item = null;
+            itemSlots[i].Amount = 0;
         }
     }
     
 
     public bool AddItem(GenericItem item)
     {
-        /*
-        if (IsFull())
-            return false;
-
-        items.Add(item);
-        RefreshUI();
-        return true;
-        */
-
         for (int i = 0; i < itemSlots.Length; i++)
         {
-            if(itemSlots[i].item == null)
+            if(itemSlots[i].Item == null || (itemSlots[i].Item.ID == item.ID && itemSlots[i].Amount < item.MaximumStacks))
             {
-                itemSlots[i].item = item;
+                itemSlots[i].Item = item;
+                itemSlots[i].Amount++;
                 return true;
             }
         }
@@ -67,20 +61,17 @@ public class Inventory : MonoBehaviour , IItemContainer
 
     public bool RemoveItem(GenericItem item)
     {
-        /*
-        if (items.Remove(item))
-        {
-        RefreshUI();
-        return true;
-        }
-        return false;
-        */
 
         for (int i = 0; i < itemSlots.Length; i++)
         {
-            if (itemSlots[i].item == item)
+            if (itemSlots[i].Item == item)
             {
-                itemSlots[i].item = null;
+                itemSlots[i].Amount--;
+                if (itemSlots[i].Amount == 0)
+                {
+                    itemSlots[i].Item = null;
+                }
+
                 return true;
             }
         }
@@ -94,7 +85,7 @@ public class Inventory : MonoBehaviour , IItemContainer
         //return items.Count >= itemSlots.Length;
         for (int i = 0; i < itemSlots.Length; i++)
         {
-            if (itemSlots[i].item == null)
+            if (itemSlots[i].Item == null)
             {
                 return false;
             }
@@ -107,10 +98,14 @@ public class Inventory : MonoBehaviour , IItemContainer
     {
         for (int i = 0; i < itemSlots.Length; i++)
         {
-            GenericItem item = itemSlots[i].item;
+            GenericItem item = itemSlots[i].Item;
             if(item != null && item.ID == itemID)
             {
-                itemSlots[i].item = null;
+                itemSlots[i].Amount--;
+                if (itemSlots[i].Amount == 0)
+                {
+                    itemSlots[i].Item = null;
+                }
                 return item;
             }
         }
@@ -122,7 +117,7 @@ public class Inventory : MonoBehaviour , IItemContainer
     {
         for (int i = 0; i < itemSlots.Length; i++)
         {
-            if(itemSlots[i].item == item)
+            if(itemSlots[i].Item == item)
             {
                 return true;
             }
@@ -136,7 +131,7 @@ public class Inventory : MonoBehaviour , IItemContainer
         int number = 0;
         for (int i = 0; i < itemSlots.Length; i++)
         {
-            if (itemSlots[i].item.ID == itemID)
+            if (itemSlots[i].Item.ID == itemID)
             {
                 number++;
             }

@@ -20,6 +20,7 @@ public class GenericItem : ScriptableObject
     public string ID { get { return id; } }
     public string Name = "New Item";
     public string Desc = "A new item.";
+    public int MaximumStacks = 1;
     public Sprite Icon;
 
     public EquipmentType equipmentType;
@@ -28,6 +29,16 @@ public class GenericItem : ScriptableObject
     {
         string path = AssetDatabase.GetAssetPath(this);
         id = AssetDatabase.AssetPathToGUID(path);
+    }
+
+    public virtual GenericItem GetCopy()
+    {
+        return this;
+    }
+
+    public virtual void Destroy()
+    {
+
     }
 
 }

@@ -7,10 +7,19 @@ public class MeleeWeaponItem : GenericItem
     public AttackData SpecialAtkData;
     public WeaponType Type;
 
-    //public EquipmentType equipmentType;
 
     public enum WeaponType
     {
         LongSword, GreatSword, Mace, Warhammer
+    }
+
+    public override GenericItem GetCopy()
+    {
+        return Instantiate(this);
+    }
+
+    public override void Destroy()
+    {
+        Destroy(this);
     }
 }

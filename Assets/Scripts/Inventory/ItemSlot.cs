@@ -11,7 +11,7 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
 
     [SerializeField]
     private GenericItem _item;
-    public GenericItem item
+    public GenericItem Item
     {
         get { return _item; }
         set
@@ -31,6 +31,22 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
 
     [SerializeField] Image image;
     [SerializeField] ItemTooltip tooltip;
+    [SerializeField] Text amountText;
+
+    private int _Amount;
+    public int Amount
+    {
+        get { return _Amount; }
+        set
+        {
+            _Amount = value;
+            amountText.enabled = Item != null && _item.MaximumStacks > 1 && _Amount > 1;
+            if(amountText.enabled)
+            {
+                amountText.text = _Amount.ToString();
+            }
+        }
+    }
 
     protected virtual void OnValidate()
     {
@@ -40,6 +56,11 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
         if(tooltip == null)
         { 
             tooltip = FindObjectOfType<ItemTooltip>();
+        }
+
+        if(amountText == null)
+        {
+            amountText = GetComponentInChildren<Text>();
         }
     }
 
@@ -54,17 +75,17 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
         if(eventData != null && eventData.button == PointerEventData.InputButton.Left)
         {
             //THE ERROR IS HERE.
-            if (item != null && OnLeftClickEvent != null)
+            if (Item != null && OnLeftClickEvent != null)
             {
                 Debug.Log("Equipping");
-                OnLeftClickEvent(item);
+                OnLeftClickEvent(Item);
             }
         }
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        tooltip.ShowTooltip(item, transform.position);
+        tooltip.ShowTooltip(Item, transform.position);
     }
 
     public void OnPointerExit(PointerEventData eventData)
