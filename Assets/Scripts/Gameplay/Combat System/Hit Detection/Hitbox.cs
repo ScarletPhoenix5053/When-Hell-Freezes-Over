@@ -38,7 +38,7 @@ namespace Sierra.Combat2D
         /// <summary>
         /// Check if the hitbox is overlapping a hurtbox
         /// </summary>
-        public void CheckCollision()
+        public virtual void CheckCollision()
         {
             // Cancel if Inactive
             if (_state == State.Inactive) { return; }
@@ -59,7 +59,7 @@ namespace Sierra.Combat2D
         /// <summary>
         /// When state is not <see cref="State.Inactive"/>, checks for an overlap with a hurtbox and calls CollidedWith in <see cref="responder"/>.
         /// </summary>
-        public void UpdateHitbox()
+        public virtual void UpdateHitbox()
         {
             // Cancel if Inactive
             if (_state == State.Inactive) { return; }
@@ -74,11 +74,11 @@ namespace Sierra.Combat2D
                 responder?.Hit(collider);
             }
         }
-        public void SetActive()
+        public virtual void SetActive()
         {
             _state = State.Active;
         }
-        public void SetInactive()
+        public virtual void SetInactive()
         {
             _state = State.Inactive;
         }

@@ -16,8 +16,9 @@ MonoBehaviour:
   Name: Starter Bow
   Desc: A weak bow that's falling apart. Barely good enough to get the job done.
   Icon: {fileID: 21300000, guid: 22f4077d0b693424b8afe6903934025b, type: 3}
-  equipmentType: 0
-  ProjectilePrefab: {fileID: 0}
+  equipmentType: 2
+  ProjectilePrefab: {fileID: 6466724955343105947, guid: 9dd2fd64a6d77354e9eb817171816c2f,
+    type: 3}
   ProjectileAttackData: {fileID: 11400000, guid: 5575af19d988c824fb314bd288aa51b5,
     type: 2}
   Type: 0

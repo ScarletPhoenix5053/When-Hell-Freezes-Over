@@ -9,6 +9,7 @@ public class BlobController : EnemyController
     public float AttackRange = 2f;
     public float ChaseRange = 10f;
     public float LeapHeight = 10f;
+    public bool HoldState = false;
 
     protected BlobAnimationController an;
     protected BlobAttackManager am;
@@ -35,6 +36,8 @@ public class BlobController : EnemyController
     }
     protected override void DecideAction()
     {
+        if (HoldState) return;
+
         // if player doesn't exist or is too far away
         if (plr == null || distToPlayer > ChaseRange)
         {

@@ -38,7 +38,7 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
                 hurtbox.GetComponent<Hurtbox>().hp.Damage(Attacks[currentMeleeAttackIndex]);
                 //hurtbox.GetComponent<Hurtbox>().Health.LogHp();
 
-                Hitbox.SetInactive();
+                Hitbox.SetInactive();                
             }
         }
     }
@@ -73,17 +73,23 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
         projectiles = new GameObject[1];
         projectiles[0] = Instantiate(projectilePrefab, transform.position, projectilePrefab.transform.rotation);
 
-        // Set projectile hitbox responder
-        projectiles[0].GetComponent<ProjectileController>().SetHitboxResponder(this);
+        // Configure projectile
+        var projControl = projectiles[0].GetComponent<ProjectileController>();
+        projControl.SetAttackData(Attacks[0]);
+        projControl.SetHitboxResponder(projControl);
+        projControl.SetSign(Convert.ToInt32(transform.localScale.x));
 
         // Start attack routine        
         if (currentAttackRoutine != null) StopCoroutine(currentAttackRoutine);
         currentAttackRoutine = IE_DoRangedAttack(attackIndex);
         StartCoroutine(currentAttackRoutine);
     }
+    /// <summary>
+    /// Resets the currentley ative attack.
+    /// </summary>
     public virtual void StopAttack()
     {
-        StopCoroutine(currentAttackRoutine);
+        if (currentAttackRoutine != null) StopCoroutine(currentAttackRoutine);
         Hitbox.SetInactive();
         AtkStage = AttackStage.Ready;
         Attacking = false;

@@ -18,7 +18,7 @@ MonoBehaviour:
   Recovery: 43
   HitStun: 32
   Sign: 1
-  KnockBack: 8
+  KnockBack: 4
   KnockUp: 3
   Speed: 0
   StartDirection: {x: 0, y: 0}
