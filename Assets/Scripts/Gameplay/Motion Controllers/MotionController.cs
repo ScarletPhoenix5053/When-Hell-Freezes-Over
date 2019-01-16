@@ -38,10 +38,22 @@ public class MotionController : MonoBehaviour
 
     public virtual void UpdatePosition()
     {
-        // apply motion
-        rb.velocity = new Vector2(moveVector.x * XSpeed, moveVector.y * YSpeed);
+        UpdatePos();
+        ResetMoveVector();
+    }
 
-        // reset movevector for next cycle
+    /// <summary>
+    /// Apply transformation to rigidbody
+    /// </summary>
+    protected virtual void UpdatePos()
+    {
+        rb.velocity = new Vector2(MoveVector.x * XSpeed, MoveVector.y * YSpeed);
+    }
+    /// <summary>
+    /// Reset move vector for next update cycle
+    /// </summary>
+    protected void ResetMoveVector()
+    {
         moveVector = Vector2.zero;
     }
 }

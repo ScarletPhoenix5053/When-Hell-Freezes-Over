@@ -13,10 +13,11 @@ MonoBehaviour:
   m_Name: StarterBow.rAData
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileAttackData
   Damage: 1
-  Startup: 38
+  Startup: 12
   Active: 1
-  Recovery: 43
+  Recovery: 22
   HitStun: 32
+  HitStop: 4
   Sign: 1
   KnockBack: 4
   KnockUp: 3

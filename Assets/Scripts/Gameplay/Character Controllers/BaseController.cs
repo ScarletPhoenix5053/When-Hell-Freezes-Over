@@ -3,14 +3,17 @@ using System.Collections;
 
 public abstract class BaseController : MonoBehaviour
 {
+
     public State CurrentState = State.Ready;
     public enum State { Ready, InAction, InHitstun, Dead }
 
     protected CharacterMotionController mc;
+    private AnimationController _an;
 
     protected virtual void Awake()
     {
         mc = GetComponent<CharacterMotionController>();
+        _an = GetComponent<AnimationController>();
     }
 
     /// <summary>
@@ -21,7 +24,7 @@ public abstract class BaseController : MonoBehaviour
     {
         if (newState != CurrentState)
         {
-            if (name == "Blob") Debug.Log(name + " changed state from " + CurrentState + " to " + newState);
+            //if (name == "Blob") Debug.Log(name + " changed state from " + CurrentState + " to " + newState);
             CurrentState = newState;
         }
     }

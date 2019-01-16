@@ -36,6 +36,7 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
                 // set sign of attack
                 Attacks[currentMeleeAttackIndex].Sign = Math.Sign(transform.localScale.x);
                 hurtbox.GetComponent<Hurtbox>().hp.Damage(Attacks[currentMeleeAttackIndex]);
+                GameManager.Instance.HitStopFor(Attacks[currentMeleeAttackIndex].HitStop);
                 //hurtbox.GetComponent<Hurtbox>().Health.LogHp();
 
                 Hitbox.SetInactive();                

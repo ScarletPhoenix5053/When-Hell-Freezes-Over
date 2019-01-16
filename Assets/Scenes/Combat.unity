@@ -194,18 +194,6 @@ Transform:
   m_Father: {fileID: 1098631603}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &529603309 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8993978443071335220, guid: 299c53565037cd24dacc737c83af3fc5,
-    type: 3}
-  m_PrefabInstance: {fileID: 239044538672106959}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2dd492f51ae5dcc4fac1a76d676d502b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &913530798
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -364,49 +352,14 @@ GameObject:
   m_Component:
   - component: {fileID: 1098631603}
   - component: {fileID: 1098631605}
-  - component: {fileID: 1098631602}
-  - component: {fileID: 1098631601}
   - component: {fileID: 1098631604}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: GameManager with KeyTracker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1098631601
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1098631600}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e24e8a2a6f1b04469ec1207fdf0daaf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AxisKeys:
-  - Positive: 119
-    Negative: 115
-  - Positive: 100
-    Negative: 97
-  ButtonKeys: 6a0000006b0000006c000000
---- !u!114 &1098631602
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1098631600}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a66e48745f840042844ae852e32d27a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AxisCount: 2
-  ButtonCount: 3
-  controller: {fileID: 529603309}
 --- !u!4 &1098631603
 Transform:
   m_ObjectHideFlags: 0
@@ -449,6 +402,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9640895284ed4f2458c11c7fa9e0a7b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HitStopActive: 0
 --- !u!1 &1355049138
 GameObject:
   m_ObjectHideFlags: 0
@@ -886,7 +840,7 @@ PrefabInstance:
     - target: {fileID: 8993978443071335212, guid: 299c53565037cd24dacc737c83af3fc5,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -6
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 8993978443071335212, guid: 299c53565037cd24dacc737c83af3fc5,
         type: 3}
@@ -955,12 +909,12 @@ PrefabInstance:
     - target: {fileID: 3094655183015339571, guid: 774dc8e8a2dbf5e45b005154c655268e,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3094655183015339575, guid: 774dc8e8a2dbf5e45b005154c655268e,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3094655183015339575, guid: 774dc8e8a2dbf5e45b005154c655268e,
         type: 3}

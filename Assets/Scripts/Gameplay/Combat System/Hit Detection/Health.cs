@@ -81,6 +81,7 @@ public class Health : MonoBehaviour
 
         chr.SetState(BaseController.State.InHitstun);
         yield return new WaitForSeconds(Sierra.Utility.FramesToSeconds(atkData.HitStun));
+        yield return GameManager.Instance.UntillHitStopInactive();
 
         chr.SetState(BaseController.State.Ready);
     }

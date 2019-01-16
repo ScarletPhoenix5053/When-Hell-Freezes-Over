@@ -68,8 +68,8 @@ GameObject:
   - component: {fileID: 8993978443071335209}
   - component: {fileID: 8993978443071335220}
   - component: {fileID: 8993978443071335214}
+  - component: {fileID: 247271014943288401}
   - component: {fileID: 2316523160876057037}
-  - component: {fileID: 8993978443071335223}
   - component: {fileID: 8993978443071335215}
   - component: {fileID: 8993978443071335222}
   - component: {fileID: 2171353324114756376}
@@ -237,6 +237,25 @@ MonoBehaviour:
   MeleeWeapon: {fileID: 11400000, guid: 69b9ff052498ef247ba4ff2eb4aefbd2, type: 2}
   RangedWeapon: {fileID: 11400000, guid: 00cec8ad545caf44b97fcb42cbdcc884, type: 2}
   AtkState: 0
+--- !u!114 &247271014943288401
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8993978443071335221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27f9c2c57711cd740b953945190ad3d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  XSpeed: 10
+  YSpeed: 0
+  Gravity: 1
+  GravityMax: 20
+  DragX: 0.5
+  FallMultiplier: 1.5
+  LowJumpMultiplier: 2.5
 --- !u!114 &2316523160876057037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -249,22 +268,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ad21347323f69a4e9e51fb2264547a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &8993978443071335223
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8993978443071335221}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0682da8876652e44e8cb34f04e479023, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Speed: 10
-  Gravity: 1
-  GravityMax: 20
-  DragX: 0.5
 --- !u!114 &8993978443071335215
 MonoBehaviour:
   m_ObjectHideFlags: 0

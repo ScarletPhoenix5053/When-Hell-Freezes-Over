@@ -36,12 +36,13 @@ public class CharacterMotionController : MotionController
     protected BaseController chr;
     protected Collider2D col;
 
-    protected const float groundBuffer = 0.1f;
+    protected const float groundBuffer = 0.05f;
     protected const float zeroThreshold = 0.05f;
     protected const int deltaMultiplicationFactor = 50;
 
     protected bool impulseLastFrame = false;
     protected Vector2 contMotionVector;
+    protected Vector2 combinedMotionVector;
     #endregion
 
     protected override void Awake()
@@ -56,38 +57,13 @@ public class CharacterMotionController : MotionController
     /// </summary>
     public override void UpdatePosition()
     {
-        // apply gravity to cont motion vector
-        if (col != null)
-        {
-            if (IsGrounded)
-            {
-                if (contMotionVector.y < 0f) contMotionVector.y = -0.5f;
-            }
-            else if (contMotionVector.y < GravityMax)
-            {
-                contMotionVector.y -= Gravity;
-            }
-        }
+        ApplyGravity();
 
+        SetCombinedMotionVector();
+        UpdatePos();
 
-        // create combined motion vector
-        var combinedMotion = moveVector * XSpeed + contMotionVector;
-        
-        // update position
-        rb.velocity = combinedMotion;
-
-        // reset movevector for next cycle
-        moveVector = Vector2.zero;
-
-        // apply drag to cont motion for next cycle
-        if (contMotionVector.x <= -zeroThreshold || contMotionVector.x >= zeroThreshold)
-        {
-            contMotionVector.x -= Math.Sign(contMotionVector.x) * DragX;
-        }
-        else
-        {
-            contMotionVector.x = 0;
-        }
+        ApplyDrag();
+        ResetMoveVector();
     }
     /// <summary>
     /// Apply a force that decays over time.
@@ -98,4 +74,47 @@ public class CharacterMotionController : MotionController
         contMotionVector = impulse;
         impulseLastFrame = true;
     }
+
+    protected override void UpdatePos()
+    {
+        rb.velocity = combinedMotionVector;
+    }
+    /// <summary>
+    /// Combine movement vector with continuous motion applied by gravity
+    /// or impulese to create a fintal motion vector.
+    /// </summary>
+    protected virtual void SetCombinedMotionVector()
+    {
+        combinedMotionVector = moveVector * XSpeed + contMotionVector;
+    }
+    /// <summary>
+    /// Applies gravity effect to continuous motion along the Y axis
+    /// </summary>
+    protected virtual void ApplyGravity()
+    {
+        if (IsGrounded)
+        {
+            if (contMotionVector.y < 0f) contMotionVector.y = -0.5f;
+        }
+        else if (contMotionVector.y > -GravityMax)
+        {
+            contMotionVector.y -= Gravity;
+        }
+    }
+    /// <summary>
+    /// Applies drag effects to continuous motion along the X axis
+    /// </summary>
+    protected virtual void ApplyDrag()
+    {
+        if (contMotionVector.x <= -zeroThreshold || contMotionVector.x >= zeroThreshold)
+        {
+            contMotionVector.x -= Math.Sign(contMotionVector.x) * DragX;
+        }
+        else
+        {
+            contMotionVector.x = 0;
+        }
+    }
+    
+
 }

@@ -22,6 +22,7 @@ public class BlobController : EnemyController
     }
     protected virtual void LateUpdate()
     {
+        if (GameManager.Instance.HitStopActive) return;
         FacePlayer();
     }
 
