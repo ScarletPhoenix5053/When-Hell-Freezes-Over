@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 911b52c54ce470740ae628eac3bf9c46, type: 3}
   m_Name: BlacksmithHammer.wep
   m_EditorClassIdentifier: 
-  ID: 1
+  id: 69b9ff052498ef247ba4ff2eb4aefbd2
   Name: Blacksmiths Hammer
   Desc: Chad's trusty hammer. Great for making weapons and pulverizing meatbags.
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 4115c6f1516da114687b2a63cb7c9d06, type: 3}
+  equipmentType: 0
   NormalAtkData:
   - {fileID: 11400000, guid: 25dfdfa3b27bf8b4091941dbffa5d671, type: 2}
   - {fileID: 11400000, guid: 6d381fdf2c129664f9582e8da87ab9b0, type: 2}

@@ -36,7 +36,7 @@ public class CharacterMotionController : MotionController
     protected BaseController chr;
     protected Collider2D col;
 
-    protected const float groundBuffer = 0.1f;
+    protected const float groundBuffer = 0.05f;
     protected const float zeroThreshold = 0.05f;
     protected const int deltaMultiplicationFactor = 50;
 

@@ -47,7 +47,7 @@ public class MotionController : MonoBehaviour
     /// </summary>
     protected virtual void UpdatePos()
     {
-        rb.velocity = moveVector;
+        rb.velocity = new Vector2(MoveVector.x * XSpeed, MoveVector.y * YSpeed);
     }
     /// <summary>
     /// Reset move vector for next update cycle

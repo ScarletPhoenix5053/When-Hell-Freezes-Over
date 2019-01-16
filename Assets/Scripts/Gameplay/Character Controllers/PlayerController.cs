@@ -9,25 +9,35 @@ using Sierra.Combat2D;
 [RequireComponent(typeof(Health))]
 public class PlayerController : BaseController
 {
+    #region Public Variables
     public float JumpHeight = 12f;
+    public int AdditionalJumps = 1;
+
     public int RollFrames = 45;    
+
     public Action CurrentAction = Action.None;
     public enum Action { None, Attacking, Rolling, Climbing }
+
     public int Sign { get { if (mc.MoveVector.x == 0) return sign; else return sign = Math.Sign(mc.MoveVector.x); } }
 
     public Canvas TempDeathCanvas;
-
+    #endregion
+    #region Private Variables
     private PlayerAttackManager am;
     private PlayerAnimationController an;
     private Health hp;
 
     private InputData currentInputData;
     private IEnumerator currentRollRoutine;
+
     private float jumpLimitSeconds = 0.2f;
     private float jumpLimitTimer = 0;
+    private int additionalJumpsUsed = 0;
+
     private int sign = 1;
+    #endregion
 
-
+    #region Unity Runtime Events
     protected override void Awake()
     {
         base.Awake();
@@ -41,18 +51,23 @@ public class PlayerController : BaseController
     private void LateUpdate()
     {
         if (GameManager.Instance.HitStopActive) return;
+
+        if (CurrentState == State.Ready && CurrentAction == Action.None) CheckInputByKeyCode();
+
         OrientByMotion();
     }
     private void FixedUpdate()
     {
         if (GameManager.Instance.HitStopActive) return;
+
         if (CurrentAction == Action.Rolling) mc.MoveVector = new Vector2(Math.Sign(transform.localScale.x), 0);
 
         IncrimentJumpTimer();
         mc.UpdatePosition();
     }
+    #endregion
 
-
+    #region Public Methods
     /// <summary>
     /// Checks a <see cref="InputData"/> struct and determines what actions to make based on the data contained.
     /// </summary>
@@ -60,7 +75,19 @@ public class PlayerController : BaseController
     public void ReadInput(InputData data)
     {
         currentInputData = data;
-        if (CurrentState == State.Ready && CurrentAction == Action.None) CheckInputAsNormal();
+        Debug.LogWarning("ReadInput method disabled");
+        //if (CurrentState == State.Ready && CurrentAction == Action.None) CheckInputAsNormal();
+    }
+    /// <summary>
+    /// Change the player's current action state
+    /// </summary>
+    /// <param name="newAction"></param>
+    public void SetAction(Action newAction)
+    {
+        if (CurrentAction == newAction) return;
+
+        //Debug.Log("Changing player action from " + CurrentAction + " to " + newAction);
+        CurrentAction = newAction;
     }
     /// <summary>
     /// Perform death actions for this character.
@@ -84,14 +111,8 @@ public class PlayerController : BaseController
         // restart game after delay
         GameManager.Instance.ReloadGame(3f);
     }
-    public void SetAction(Action newAction)
-    {
-        if (CurrentAction == newAction) return;
-
-        //Debug.Log("Changing player action from " + CurrentAction + " to " + newAction);
-        CurrentAction = newAction;
-    }
-
+    #endregion
+    #region Private Methods
     /// <summary>
     /// Makes the player face x input direction
     /// </summary>
@@ -104,6 +125,13 @@ public class PlayerController : BaseController
     /// </summary>
     private void CheckInputAsNormal()
     {
+        // Reset additionalJumps if on ground
+        if (additionalJumpsUsed != 0 && mc.IsGrounded)
+        {
+            additionalJumpsUsed = 0;
+            Debug.Log("Resetting Addjumps");
+        }
+
         // Dodge roll
         if (currentInputData.buttons[2])
         {
@@ -123,17 +151,88 @@ public class PlayerController : BaseController
         }
 
         // Jump
-        if (currentInputData.axes[0] > 0.5 && mc.IsGrounded && jumpLimitTimer <= 0)
+        if (currentInputData.axes[0] > 0.5 && jumpLimitTimer <= 0)
         {
+            if (mc.IsGrounded)
+            {
+                Debug.Log("Ground Jump");
+                mc.DoImpulse(new Vector2(0, JumpHeight));
+            }
+            else if (additionalJumpsUsed < AdditionalJumps)
+            {
+                additionalJumpsUsed++;
+
+                Debug.Log("Add Jump");
+                mc.DoImpulse(new Vector2(0, JumpHeight));
+            }
+
             jumpLimitTimer = jumpLimitSeconds;
-            mc.DoImpulse(new Vector2(0, JumpHeight));
         }
         // Walk
         if (currentInputData.axes[1] != 0)
         {
             mc.MoveVector = new Vector2(currentInputData.axes[1], 0);
         }
+    }    
+    /// <summary>
+    /// Performs input checks as if the character is unaffected by anything.
+    /// </summary>
+    private void CheckInputByKeyCode()
+    {
+        // Reset additionalJumps if on ground
+        if (additionalJumpsUsed != 0 && mc.IsGrounded)
+        {
+            additionalJumpsUsed = 0;
+            Debug.Log("Resetting Addjumps");
+        }
+
+        // Dodge roll
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            if (currentRollRoutine != null) StopCoroutine(currentRollRoutine);
+            currentRollRoutine = RollRoutine();
+            StartCoroutine(currentRollRoutine);
+        }
+        // Ranged attack button
+        else if (Input.GetKeyDown(KeyCode.K))
+        {
+            am.RangedAttack();
+        }
+        // Light attack button
+        else if (Input.GetKeyDown(KeyCode.J))
+        {
+            am.NormalAttack();
+        }
+
+        // Jump
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            if (mc.IsGrounded)
+            {
+                Debug.Log("Ground Jump");
+                mc.DoImpulse(new Vector2(0, JumpHeight));
+            }
+            else if (additionalJumpsUsed < AdditionalJumps)
+            {
+                additionalJumpsUsed++;
+
+                Debug.Log("Add Jump");
+                mc.DoImpulse(new Vector2(0, JumpHeight));
+            }
+
+            jumpLimitTimer = jumpLimitSeconds;
+        }
+        // Walk
+        var walkAxis = 0;
+        if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D)){ }
+        else if (Input.GetKey(KeyCode.A)) walkAxis = -1;
+        else if (Input.GetKey(KeyCode.D)) walkAxis = 1;
+        if (walkAxis != 0)
+        {
+            mc.MoveVector = new Vector2(walkAxis, 0);
+        }
     }
+
     private void IncrimentJumpTimer()
     {
         if (jumpLimitTimer > 0) jumpLimitTimer -= Time.deltaTime;
@@ -146,6 +245,7 @@ public class PlayerController : BaseController
         {
             hurtbox.SetInactive();
         }
+        Physics2D.IgnoreLayerCollision(9, 10, true);        
         yield return new WaitForSeconds(Sierra.Utility.FramesToSeconds(RollFrames));
         yield return GameManager.Instance.UntillHitStopInactive();
 
@@ -155,5 +255,7 @@ public class PlayerController : BaseController
         {
             hurtbox.SetActive();
         }
+        Physics2D.IgnoreLayerCollision(9, 10, false);
     }
+    #endregion
 }
