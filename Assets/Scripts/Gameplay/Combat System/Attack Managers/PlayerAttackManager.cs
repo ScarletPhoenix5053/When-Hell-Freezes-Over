@@ -90,7 +90,7 @@ public class PlayerAttackManager : AttackManager, IHitboxResponder
     /// </summary>
     public void RangedAttack()
     {
-        DoRangedAttack(0);
+        if (AtkStage == AttackStage.Ready) DoRangedAttack(0);
     }
     /// <summary>
     /// Re-populates <see cref="Attacks"/> array based on

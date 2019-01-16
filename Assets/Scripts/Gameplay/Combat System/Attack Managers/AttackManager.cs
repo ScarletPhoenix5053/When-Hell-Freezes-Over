@@ -77,7 +77,6 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
         var projControl = projectiles[0].GetComponent<ProjectileController>();
         projControl.SetAttackData(Attacks[0]);
         projControl.SetHitboxResponder(projControl);
-        projControl.SetSign(Convert.ToInt32(transform.localScale.x));
 
         // Start attack routine        
         if (currentAttackRoutine != null) StopCoroutine(currentAttackRoutine);
@@ -124,6 +123,8 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
         yield return new WaitForSeconds(Utility.FramesToSeconds(Attacks[attackIndex].Startup));
 
         // Active
+        projectiles[0].GetComponent<ProjectileController>().SetSign(Convert.ToInt32(transform.localScale.x));
+        projectiles[0].transform.position = transform.position;
         projectiles[0].SetActive(true);
         AtkStage = AttackStage.Active;
         yield return new WaitForSeconds(Utility.FramesToSeconds(Attacks[attackIndex].Active));

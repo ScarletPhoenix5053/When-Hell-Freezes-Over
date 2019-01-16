@@ -4,7 +4,7 @@ using System.Collections;
 using Sierra.Combat2D;
 
 
-[RequireComponent(typeof(MotionController))]
+[RequireComponent(typeof(CharacterMotionController))]
 [RequireComponent(typeof(PlayerAttackManager))]
 [RequireComponent(typeof(Health))]
 public class PlayerController : BaseController

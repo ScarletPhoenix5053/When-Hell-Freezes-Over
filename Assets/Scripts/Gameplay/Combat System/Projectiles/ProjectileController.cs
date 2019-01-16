@@ -4,15 +4,19 @@ using UnityEngine;
 using Sierra.Combat2D;
 
 /// <summary>
-/// Controller for ranged projeciles. Only allows travel along the X axis for now!
+/// Controller for ranged projeciles.
 /// </summary>
 [RequireComponent(typeof(Hitbox))]
 [RequireComponent(typeof(MotionController))]
 public class ProjectileController : MonoBehaviour, IHitboxResponder
 {
-    protected int sign = 1;
+    protected int ySign = 1;
+    protected int xSign = 1;
+
     protected Hitbox hb;
     protected MotionController mc;
+    protected AttackManager orign;
+
     protected AttackData attackData;
 
     protected void Awake()
@@ -28,7 +32,7 @@ public class ProjectileController : MonoBehaviour, IHitboxResponder
     {
         hb.UpdateHitbox();
 
-        mc.MoveVector = new Vector2(sign, 0);
+        mc.MoveVector = new Vector2(xSign, ySign);
         mc.UpdatePosition();
     }
 
@@ -43,7 +47,7 @@ public class ProjectileController : MonoBehaviour, IHitboxResponder
             if (hb.CheckHit(attackData.HitStun))
             {
                 // set sign of attack
-                attackData.Sign = sign;
+                attackData.Sign = xSign;
                 hurtbox.GetComponent<Hurtbox>().hp.Damage(attackData);
                 //hurtbox.GetComponent<Hurtbox>().Health.LogHp();
 
@@ -58,7 +62,7 @@ public class ProjectileController : MonoBehaviour, IHitboxResponder
     /// <param name="newSign"></param>
     public void SetSign(int newSign)
     {
-        sign = Math.Sign(newSign);
+        xSign = Math.Sign(newSign);
     }
     /// <summary>
     /// Assign <see cref="Hitbox.responder"/> for all attatched hitboxes.
