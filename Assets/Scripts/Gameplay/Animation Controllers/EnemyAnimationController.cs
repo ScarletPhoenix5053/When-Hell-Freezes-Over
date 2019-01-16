@@ -21,6 +21,7 @@ public class EnemyAnimationController : AnimationController
     }
     public void StopHitStun()
     {
+        //Debug.Log("Called");
         an.SetBool("InHitStun", false);
         an.updateMode = AnimatorUpdateMode.Normal;
         if (animPhysCoroutine != null) StopCoroutine(animPhysCoroutine);

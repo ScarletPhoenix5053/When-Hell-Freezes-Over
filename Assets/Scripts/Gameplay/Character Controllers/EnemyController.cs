@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System;
+using System.Collections;
 using Sierra.Combat2D;
 
 [RequireComponent(typeof(EnemyAnimationController))]
@@ -20,11 +20,16 @@ public abstract class EnemyController : BaseController
     protected override void Awake()
     {
         base.Awake();
+
+
         plr = FindObjectOfType<PlayerController>();
         hp = GetComponent<Health>();
     }
     protected virtual void FixedUpdate()
     {
+
+        if (GameManager.Instance.HitStopActive) return;
+
         if (CurrentState == State.Ready || CurrentState == State.InAction)
         {
             DecideAction();
@@ -34,6 +39,10 @@ public abstract class EnemyController : BaseController
         mc.UpdatePosition();
     }
 
+    /// <summary>
+    /// Change enemy's behaviour state
+    /// </summary>
+    /// <param name="newBehaviour"></param>
     public void SetBehaviour(Behaviour newBehaviour)
     {
         if (newBehaviour == CurrentBehaviour) return;

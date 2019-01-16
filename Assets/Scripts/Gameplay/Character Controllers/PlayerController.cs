@@ -40,10 +40,12 @@ public class PlayerController : BaseController
     }
     private void LateUpdate()
     {
+        if (GameManager.Instance.HitStopActive) return;
         OrientByMotion();
     }
     private void FixedUpdate()
     {
+        if (GameManager.Instance.HitStopActive) return;
         if (CurrentAction == Action.Rolling) mc.MoveVector = new Vector2(Math.Sign(transform.localScale.x), 0);
 
         IncrimentJumpTimer();
@@ -145,7 +147,8 @@ public class PlayerController : BaseController
             hurtbox.SetInactive();
         }
         yield return new WaitForSeconds(Sierra.Utility.FramesToSeconds(RollFrames));
-        
+        yield return GameManager.Instance.UntillHitStopInactive();
+
         SetAction(Action.None);
         an.PlayIdle();
         foreach (Hurtbox hurtbox in hp.Hurtboxes)

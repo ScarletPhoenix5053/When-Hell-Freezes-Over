@@ -57,16 +57,13 @@ public class CharacterMotionController : MotionController
     public override void UpdatePosition()
     {
         // apply gravity to cont motion vector
-        if (col != null)
+        if (IsGrounded)
         {
-            if (IsGrounded)
-            {
-                if (contMotionVector.y < 0f) contMotionVector.y = -0.5f;
-            }
-            else if (contMotionVector.y < GravityMax)
-            {
-                contMotionVector.y -= Gravity;
-            }
+            if (contMotionVector.y < 0f) contMotionVector.y = -0.5f;
+        }
+        else if (contMotionVector.y < GravityMax)
+        {
+            contMotionVector.y -= Gravity;
         }
 
 
