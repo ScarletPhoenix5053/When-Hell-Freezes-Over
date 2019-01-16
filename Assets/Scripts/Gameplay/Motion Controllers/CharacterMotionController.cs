@@ -24,11 +24,14 @@ public class CharacterMotionController : MotionController
     {
         get
         {
+            LayerMask layerMask;
+            if (Input.GetKey(KeyCode.S)) layerMask = LayerMask.GetMask("Environment");
+            else layerMask = LayerMask.GetMask("Environment", "Platform");
             return Physics2D.Raycast(
                 new Vector2(col.bounds.center.x, col.bounds.center.y - col.bounds.extents.y),
                 Vector2.down,
                 groundBuffer,
-                LayerMask.GetMask("Environment"));
+                layerMask);
         }
     }
     #endregion
@@ -114,7 +117,6 @@ public class CharacterMotionController : MotionController
         {
             contMotionVector.x = 0;
         }
-    }
-    
+    }   
 
 }

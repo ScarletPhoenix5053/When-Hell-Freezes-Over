@@ -218,6 +218,16 @@ public class PlayerController : BaseController
 
             jumpLimitTimer = jumpLimitSeconds;
         }
+        // Platform interactions
+        if (Input.GetKey(KeyCode.S))
+        {
+            Physics2D.IgnoreLayerCollision(9, 13, true);
+        }
+        else
+        {
+            Physics2D.IgnoreLayerCollision(9, 13, false);
+        }
+
         // Walk
         var walkAxis = 0;
         if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D)){ }
