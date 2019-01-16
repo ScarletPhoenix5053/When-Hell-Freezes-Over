@@ -1,29 +1,35 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections;
+using Sierra.Combat2D;
 
-[RequireComponent(typeof(MotionController))]
+[RequireComponent(typeof(CharacterMotionController))]
 public class Health : MonoBehaviour
 {
     public int Hp = 6;
     public int HpMax = 6;
 
+    public Hurtbox[] Hurtboxes;
+
     public bool Dead { get { return Hp <= 0; } }
 
-    private MotionController mc;
+    private CharacterMotionController mc;
+    private BaseController chr;
 
     private AttackData atkData;
     private IEnumerator currentKbRoutine;
+    private IEnumerator currentHsRoutine;
 
     private void Awake()
     {
-        mc = GetComponent<MotionController>();
+        chr = GetComponent<BaseController>();
+        mc = GetComponent<CharacterMotionController>();
     }
 
-    public void Remove(AttackData data)
+    public void Damage(AttackData data)
     {
         atkData = data;
-        // Log warning and return if dead
+        // Log warning and return if ALREADY dead
         if (Dead)
         {
             Debug.LogWarning(name + " is already dead");
@@ -32,10 +38,21 @@ public class Health : MonoBehaviour
 
         // Adjust Hp
         if (data.Damage != 0) Hp -= data.Damage;
-        if (Hp < 0) Hp = 0;
 
-        // Apply Knockback
-        DoKnockBack();
+        // Check if died this frame
+        if (Hp <= 0)
+        {
+            Hp = 0;
+            chr.Die();
+            StopAllCoroutines();
+        }
+        else
+        {
+            // Apply Knockback/Stun
+            ApplyHitStun();
+            ApplyKnockBack();
+        }
+
     }
 
     public void LogHp()
@@ -47,32 +64,25 @@ public class Health : MonoBehaviour
         Debug.Log(name + " is dead");
     }
 
-    private void DoKnockBack()
+    private void ApplyHitStun()
     {
-        if (currentKbRoutine != null) StopCoroutine(currentKbRoutine);
-        currentKbRoutine = KnockBackRoutine();
-        StartCoroutine(currentKbRoutine);
+        if (currentHsRoutine != null) StopCoroutine(currentHsRoutine);
+        currentHsRoutine = HitStunRoutine();
+        StartCoroutine(currentHsRoutine);
     }
-    private IEnumerator KnockBackRoutine()
+    private void ApplyKnockBack()
     {
-        Debug.Log("Knockback!");
-        var plr = GetComponent<PlayerController>();
-        var enm = GetComponent<BlobController>();
         var sign = Mathf.Sign(transform.localScale.x);
-
-        mc?.EnableInputOverride();
-        // Tidy with inheritance
-        plr?.SetState(PlayerController.State.Hit);
-        // behaviour > state for HIT
-        enm?.SetBehaviour(BlobController.Behaviour.Hit);
         mc?.DoImpulse(new Vector2(atkData.KnockBack * atkData.Sign, atkData.KnockUp));
+    }
+    private IEnumerator HitStunRoutine()
+    {
+        var chr = GetComponent<BaseController>();
+
+        chr.SetState(BaseController.State.InHitstun);
         yield return new WaitForSeconds(Sierra.Utility.FramesToSeconds(atkData.HitStun));
+        yield return GameManager.Instance.UntillHitStopInactive();
 
-        mc?.DisableInputOverride();
-        // Tidy with inheritance
-        // behaviour > state for HIT
-        plr?.SetState(PlayerController.State.Normal);
-        enm?.SetBehaviour(BlobController.Behaviour.Idle);
-
+        chr.SetState(BaseController.State.Ready);
     }
 }

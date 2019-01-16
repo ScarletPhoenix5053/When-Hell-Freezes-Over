@@ -1,42 +1,73 @@
 ﻿using UnityEngine;
 using System;
+using System.Collections;
+using Sierra.Combat2D;
 
 
-[RequireComponent(typeof(MotionController))]
-[RequireComponent(typeof(AttackManager))]
+[RequireComponent(typeof(CharacterMotionController))]
+[RequireComponent(typeof(PlayerAttackManager))]
 [RequireComponent(typeof(Health))]
-public class PlayerController : MonoBehaviour
+public class PlayerController : BaseController
 {
+    #region Public Variables
     public float JumpHeight = 12f;
-    public State CurrentState = State.Normal;
+    public int AdditionalJumps = 1;
 
-    public enum State { Normal, Hit, Attacking, Rolling }
+    public int RollFrames = 45;    
 
+    public Action CurrentAction = Action.None;
+    public enum Action { None, Attacking, Rolling, Climbing }
+
+    public int Sign { get { if (mc.MoveVector.x == 0) return sign; else return sign = Math.Sign(mc.MoveVector.x); } }
+
+    public Canvas TempDeathCanvas;
+    #endregion
+    #region Private Variables
     private PlayerAttackManager am;
-    private MotionController mc;
+    private PlayerAnimationController an;
+    private Health hp;
 
     private InputData currentInputData;
+    private IEnumerator currentRollRoutine;
+
     private float jumpLimitSeconds = 0.2f;
     private float jumpLimitTimer = 0;
+    private int additionalJumpsUsed = 0;
 
+    private int sign = 1;
+    #endregion
 
-    private void Awake()
+    #region Unity Runtime Events
+    protected override void Awake()
     {
+        base.Awake();
         am = GetComponent<PlayerAttackManager>();
-        mc = GetComponent<MotionController>();
+        an = GetComponent<PlayerAnimationController>();
+        hp = GetComponent<Health>();
+
+        if (TempDeathCanvas == null)
+            throw new NullReferenceException("Please assign an object to TempDeathCanvas");
     }
     private void LateUpdate()
     {
+        if (GameManager.Instance.HitStopActive) return;
+
+        if (CurrentState == State.Ready && CurrentAction == Action.None) CheckInputByKeyCode();
+
         OrientByMotion();
     }
     private void FixedUpdate()
     {
+        if (GameManager.Instance.HitStopActive) return;
+
+        if (CurrentAction == Action.Rolling) mc.MoveVector = new Vector2(Math.Sign(transform.localScale.x), 0);
+
+        IncrimentJumpTimer();
         mc.UpdatePosition();
-
-        if (jumpLimitTimer > 0) jumpLimitTimer -= Time.deltaTime;
     }
+    #endregion
 
-
+    #region Public Methods
     /// <summary>
     /// Checks a <see cref="InputData"/> struct and determines what actions to make based on the data contained.
     /// </summary>
@@ -44,70 +75,183 @@ public class PlayerController : MonoBehaviour
     public void ReadInput(InputData data)
     {
         currentInputData = data;
-        switch (CurrentState)
-        {
-            case State.Normal:
-                CheckInputAsNormal();
-                break;
-
-            case State.Hit:
-                break;
-
-            case State.Attacking:
-                break;
-
-            case State.Rolling:
-                break;
-
-            default:
-                throw new NotImplementedException("State " + CurrentState + " is not valid!");
-        }
-    }   
-    /// <summary>
-    /// Updates <see cref="CurrentState"/>
-    /// </summary>
-    /// <param name="newState"></param>
-    public void SetState(State newState)
-    {
-        if (newState != CurrentState)
-        {
-            CurrentState = newState;
-            //Debug.Log(name + " changed state from " + CurrentState + " to " + newState);
-        }
+        Debug.LogWarning("ReadInput method disabled");
+        //if (CurrentState == State.Ready && CurrentAction == Action.None) CheckInputAsNormal();
     }
-    
+    /// <summary>
+    /// Change the player's current action state
+    /// </summary>
+    /// <param name="newAction"></param>
+    public void SetAction(Action newAction)
+    {
+        if (CurrentAction == newAction) return;
+
+        //Debug.Log("Changing player action from " + CurrentAction + " to " + newAction);
+        CurrentAction = newAction;
+    }
+    /// <summary>
+    /// Perform death actions for this character.
+    /// </summary>
+    public override void Die()
+    {
+        SetState(State.Dead);
+
+        // death anim
+        an.PlayDeath();
+
+        // deactivate hurtbox
+        foreach (Hurtbox hurtbox in GetComponent<Health>().Hurtboxes)
+        {
+            hurtbox.SetInactive();
+        }
+
+        // display you died message
+        TempDeathCanvas.gameObject.SetActive(true);
+
+        // restart game after delay
+        GameManager.Instance.ReloadGame(3f);
+    }
+    #endregion
+    #region Private Methods
     /// <summary>
     /// Makes the player face x input direction
     /// </summary>
     private void OrientByMotion()
     {
-        if (mc.MoveVector.x != 0)
-        {
-            transform.localScale = new Vector3(Math.Sign(mc.MoveVector.x), transform.localScale.y, transform.localScale.z);
-        }
+        transform.localScale = new Vector3(Sign, transform.localScale.y, transform.localScale.z);
     }
     /// <summary>
     /// Performs input checks as if the character is unaffected by anything.
     /// </summary>
     private void CheckInputAsNormal()
     {
+        // Reset additionalJumps if on ground
+        if (additionalJumpsUsed != 0 && mc.IsGrounded)
+        {
+            additionalJumpsUsed = 0;
+            Debug.Log("Resetting Addjumps");
+        }
+
+        // Dodge roll
+        if (currentInputData.buttons[2])
+        {
+            if (currentRollRoutine != null) StopCoroutine(currentRollRoutine);
+            currentRollRoutine = RollRoutine();
+            StartCoroutine(currentRollRoutine);
+        }
+        // Ranged attack button
+        else if (currentInputData.buttons[1])
+        {
+            am.RangedAttack();
+        }
         // Light attack button
-        if (currentInputData.buttons[0])
+        else if (currentInputData.buttons[0])
         {
             am.NormalAttack();
         }
 
         // Jump
-        if (currentInputData.axes[0] > 0.5 && mc.IsGrounded && jumpLimitTimer <= 0)
+        if (currentInputData.axes[0] > 0.5 && jumpLimitTimer <= 0)
         {
-            Debug.Log("Jmp!");
+            if (mc.IsGrounded)
+            {
+                Debug.Log("Ground Jump");
+                mc.DoImpulse(new Vector2(0, JumpHeight));
+            }
+            else if (additionalJumpsUsed < AdditionalJumps)
+            {
+                additionalJumpsUsed++;
+
+                Debug.Log("Add Jump");
+                mc.DoImpulse(new Vector2(0, JumpHeight));
+            }
+
             jumpLimitTimer = jumpLimitSeconds;
-            mc.DoImpulse(new Vector2(0, JumpHeight));
         }
         // Walk
         if (currentInputData.axes[1] != 0)
         {
             mc.MoveVector = new Vector2(currentInputData.axes[1], 0);
         }
+    }    
+    /// <summary>
+    /// Performs input checks as if the character is unaffected by anything.
+    /// </summary>
+    private void CheckInputByKeyCode()
+    {
+        // Reset additionalJumps if on ground
+        if (additionalJumpsUsed != 0 && mc.IsGrounded)
+        {
+            additionalJumpsUsed = 0;
+        }
+
+        // Dodge roll
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            if (currentRollRoutine != null) StopCoroutine(currentRollRoutine);
+            currentRollRoutine = RollRoutine();
+            StartCoroutine(currentRollRoutine);
+        }
+        // Ranged attack button
+        else if (Input.GetKeyDown(KeyCode.K))
+        {
+            am.RangedAttack();
+        }
+        // Light attack button
+        else if (Input.GetKeyDown(KeyCode.J))
+        {
+            am.NormalAttack();
+        }
+
+        // Jump
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            if (mc.IsGrounded)
+            {
+                mc.DoImpulse(new Vector2(0, JumpHeight));
+            }
+            else if (additionalJumpsUsed < AdditionalJumps)
+            {
+                additionalJumpsUsed++;
+                mc.DoImpulse(new Vector2(0, JumpHeight));
+            }
+
+            jumpLimitTimer = jumpLimitSeconds;
+        }
+        // Walk
+        var walkAxis = 0;
+        if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D)){ }
+        else if (Input.GetKey(KeyCode.A)) walkAxis = -1;
+        else if (Input.GetKey(KeyCode.D)) walkAxis = 1;
+        if (walkAxis != 0)
+        {
+            mc.MoveVector = new Vector2(walkAxis, 0);
+        }
     }
+
+    private void IncrimentJumpTimer()
+    {
+        if (jumpLimitTimer > 0) jumpLimitTimer -= Time.deltaTime;
+    }
+    private IEnumerator RollRoutine()
+    {
+        SetAction(Action.Rolling);
+        an.PlayDodgeRoll();
+        foreach (Hurtbox hurtbox in hp.Hurtboxes)
+        {
+            hurtbox.SetInactive();
+        }
+        Physics2D.IgnoreLayerCollision(9, 10, true);        
+        yield return new WaitForSeconds(Sierra.Utility.FramesToSeconds(RollFrames));
+        yield return GameManager.Instance.UntillHitStopInactive();
+
+        SetAction(Action.None);
+        an.PlayIdle();
+        foreach (Hurtbox hurtbox in hp.Hurtboxes)
+        {
+            hurtbox.SetActive();
+        }
+        Physics2D.IgnoreLayerCollision(9, 10, false);
+    }
+    #endregion
 }

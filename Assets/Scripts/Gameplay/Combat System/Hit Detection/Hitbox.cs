@@ -11,7 +11,7 @@ namespace Sierra.Combat2D
         public Colours BoxColour = new Colours();
 
         protected State _state = State.Inactive;
-        protected IHitboxResponder _responder = null;
+        protected IHitboxResponder responder = null;
 
         public enum State { Inactive, Active, Colliding }
         public enum Shape { Box, Sphere }
@@ -38,7 +38,7 @@ namespace Sierra.Combat2D
         /// <summary>
         /// Check if the hitbox is overlapping a hurtbox
         /// </summary>
-        public void CheckCollision()
+        public virtual void CheckCollision()
         {
             // Cancel if Inactive
             if (_state == State.Inactive) { return; }
@@ -57,9 +57,9 @@ namespace Sierra.Combat2D
             }
         }
         /// <summary>
-        /// When state is not <see cref="State.Inactive"/>, checks for an overlap with a hurtbox and calls CollidedWith in <see cref="_responder"/>.
+        /// When state is not <see cref="State.Inactive"/>, checks for an overlap with a hurtbox and calls CollidedWith in <see cref="responder"/>.
         /// </summary>
-        public void UpdateHitbox()
+        public virtual void UpdateHitbox()
         {
             // Cancel if Inactive
             if (_state == State.Inactive) { return; }
@@ -71,14 +71,14 @@ namespace Sierra.Combat2D
             for (int i = 0; i < colliders.Length; i++)
             {
                 Collider2D collider = colliders[i];
-                _responder?.Hit(collider);
+                responder?.Hit(collider);
             }
         }
-        public void SetActive()
+        public virtual void SetActive()
         {
             _state = State.Active;
         }
-        public void SetInactive()
+        public virtual void SetInactive()
         {
             _state = State.Inactive;
         }
@@ -88,7 +88,7 @@ namespace Sierra.Combat2D
         /// <param name="responder"></param>
         public void SetResponder(IHitboxResponder responder)
         {
-            _responder = responder; 
+            this.responder = responder; 
         }
 
         /// <summary>

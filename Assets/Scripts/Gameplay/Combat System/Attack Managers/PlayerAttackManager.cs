@@ -28,6 +28,9 @@ public class PlayerAttackManager : AttackManager, IHitboxResponder
         yield return base.IE_DoAttack(attackIndex);
         SetAtkState(AttackState.None);
     }
+    /// <summary>
+    /// Performs normal attack actions. Automatically handles chaining.
+    /// </summary>
     public void NormalAttack()
     {
         // DoAttack Takes an int index to use in Attacks Array.
@@ -43,7 +46,6 @@ public class PlayerAttackManager : AttackManager, IHitboxResponder
         {
             case AttackState.None: // Allow attack
                 DoAttack(normalAttack[1]);
-                Debug.Log(Attacks[normalAttack[1]].Damage);
                 SetAtkState(AttackState.N1);
                 break;
 
@@ -77,8 +79,23 @@ public class PlayerAttackManager : AttackManager, IHitboxResponder
         }
     }
     /// <summary>
+    /// Performs special attack actions.
+    /// </summary>
+    public void SpecialAttack()
+    {
+        throw new NotImplementedException();
+    }
+    /// <summary>
+    /// Perfroms ranged attack actions.
+    /// </summary>
+    public void RangedAttack()
+    {
+        if (AtkStage == AttackStage.Ready) DoRangedAttack(0);
+    }
+    /// <summary>
     /// Re-populates <see cref="Attacks"/> array based on
-    /// <see cref="MeleeWeapon"/> and <see cref="RangedWeapon"/>
+    /// <see cref="MeleeWeapon"/> and <see cref="RangedWeapon"/>.
+    /// Also sets <see cref="AttackManager.projectilePrefab"/> when a ranged weapon is present.
     /// </summary>
     public void AssignWeaponAttackData()
     {
@@ -100,6 +117,7 @@ public class PlayerAttackManager : AttackManager, IHitboxResponder
         {
             if (newAttacks == null) newAttacks = new AttackData[1];
             newAttacks[0] = RangedWeapon.ProjectileAttackData;
+            projectilePrefab = RangedWeapon.ProjectilePrefab;
         }
 
         Attacks = newAttacks;

@@ -12,8 +12,11 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
     public AttackStage AtkStage = AttackStage.Ready;
     public enum AttackStage { Ready, Startup, Active, Recovery }
 
-    protected int currentAttack = 0;
-    protected IEnumerator activeCoroutine = null;
+    protected GameObject projectilePrefab;
+    protected GameObject[] projectiles;
+
+    protected int currentMeleeAttackIndex = 0;
+    protected IEnumerator currentAttackRoutine = null;
 
     protected virtual void FixedUpdate()
     {
@@ -28,14 +31,15 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
         var hb = hurtbox.GetComponent<Hurtbox>();
         if (hb != null)
         {
-            if (hb.CheckHit(Attacks[currentAttack].HitStun))
+            if (hb.CheckHit(Attacks[currentMeleeAttackIndex].HitStun))
             {
                 // set sign of attack
-                Attacks[currentAttack].Sign = Math.Sign(transform.localScale.x);
-                hurtbox.GetComponent<Hurtbox>().hp.Remove(Attacks[currentAttack]);
+                Attacks[currentMeleeAttackIndex].Sign = Math.Sign(transform.localScale.x);
+                hurtbox.GetComponent<Hurtbox>().hp.Damage(Attacks[currentMeleeAttackIndex]);
+                GameManager.Instance.HitStopFor(Attacks[currentMeleeAttackIndex].HitStop);
                 //hurtbox.GetComponent<Hurtbox>().Health.LogHp();
 
-                Hitbox.SetInactive();
+                Hitbox.SetInactive();                
             }
         }
     }
@@ -53,12 +57,42 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
                 name + "'s Attack's array size is " + Attacks.Length);
 
         // Start Coroutine
-        if (activeCoroutine != null) StopCoroutine(activeCoroutine);
-        activeCoroutine = IE_DoAttack(0);
-        StartCoroutine(activeCoroutine);
+        if (currentAttackRoutine != null) StopCoroutine(currentAttackRoutine);
+        currentAttackRoutine = IE_DoAttack(attackIndex);
+        StartCoroutine(currentAttackRoutine);
 
         // Track which attack is ongoing
-        currentAttack = attackIndex;
+        currentMeleeAttackIndex = attackIndex;
+    }
+    /// <summary>
+    /// Generic ranged attack method. Launches a projectile after a delay.
+    /// </summary>
+    /// <param name="attackIndex"></param>
+    public virtual void DoRangedAttack(int attackIndex)
+    {
+        // Create Projectile
+        projectiles = new GameObject[1];
+        projectiles[0] = Instantiate(projectilePrefab, transform.position, projectilePrefab.transform.rotation);
+
+        // Configure projectile
+        var projControl = projectiles[0].GetComponent<ProjectileController>();
+        projControl.SetAttackData(Attacks[0]);
+        projControl.SetHitboxResponder(projControl);
+
+        // Start attack routine        
+        if (currentAttackRoutine != null) StopCoroutine(currentAttackRoutine);
+        currentAttackRoutine = IE_DoRangedAttack(attackIndex);
+        StartCoroutine(currentAttackRoutine);
+    }
+    /// <summary>
+    /// Resets the currentley ative attack.
+    /// </summary>
+    public virtual void StopAttack()
+    {
+        if (currentAttackRoutine != null) StopCoroutine(currentAttackRoutine);
+        Hitbox.SetInactive();
+        AtkStage = AttackStage.Ready;
+        Attacking = false;
     }
     protected virtual IEnumerator IE_DoAttack(int attackIndex)
     {
@@ -75,6 +109,28 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
 
         // Recovery
         Hitbox.SetInactive();
+        AtkStage = AttackStage.Recovery;
+        yield return new WaitForSeconds(Utility.FramesToSeconds(Attacks[attackIndex].Recovery));
+
+        // End
+        AtkStage = AttackStage.Ready;
+        Attacking = false;
+    }
+    protected virtual IEnumerator IE_DoRangedAttack(int attackIndex)
+    {
+        // Startup
+        Attacking = true;
+        AtkStage = AttackStage.Startup;
+        yield return new WaitForSeconds(Utility.FramesToSeconds(Attacks[attackIndex].Startup));
+
+        // Active
+        projectiles[0].GetComponent<ProjectileController>().SetSign(Convert.ToInt32(transform.localScale.x));
+        projectiles[0].transform.position = transform.position;
+        projectiles[0].SetActive(true);
+        AtkStage = AttackStage.Active;
+        yield return new WaitForSeconds(Utility.FramesToSeconds(Attacks[attackIndex].Active));
+
+        // Recovery
         AtkStage = AttackStage.Recovery;
         yield return new WaitForSeconds(Utility.FramesToSeconds(Attacks[attackIndex].Recovery));
 

@@ -1,31 +1,34 @@
-﻿using System.Collections;
+﻿using UnityEngine;
+using System.Collections;
 using Sierra;
-using UnityEngine;
 
 public class AnimationController : MonoBehaviour
 {
-    private Animator an;
-    private IEnumerator animPhysCoroutine = null;
+    protected Animator an;
+    protected IEnumerator animPhysCoroutine = null;
 
-    private void Awake()
+    protected virtual void Awake()
     {
-        an = GetComponent<UnityEngine.Animator>();
+        an = GetComponent<Animator>();
     }
 
-    public void PlayAttack()
+    public virtual void PauseAnimation()
     {
-        an.SetTrigger("Leap");
-        if (animPhysCoroutine != null) StopCoroutine(animPhysCoroutine);
-        animPhysCoroutine = AnimatePhysicsFor(100);
-        StartCoroutine(animPhysCoroutine);
+        if (an != null) an.enabled = false;
+    }
+    public virtual void ResumeAnimation()
+    {
+        if (an != null) an.enabled = true;
     }
 
-    private IEnumerator AnimatePhysicsFor(int frames)
+    protected IEnumerator AnimatePhysicsFor(int frames)
     {
+        yield return GameManager.Instance.UntillHitStopInactive();
         //Debug.Log("Starting Physics anim");
         an.updateMode = AnimatorUpdateMode.AnimatePhysics;
         yield return new WaitForSeconds(Utility.FramesToSeconds(frames));
-    
+        yield return GameManager.Instance.UntillHitStopInactive();
+
         //Debug.Log("Stopping Physics anim");
         an.updateMode = AnimatorUpdateMode.Normal;
     }
