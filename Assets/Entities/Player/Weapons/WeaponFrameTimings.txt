@@ -1,0 +1,16 @@
+Frame Timings: Weapons
+
+Bow
+12,1,18
+
+Hammer/Mace
+
+
+Warhammer/Greataxe
+78,3,92; 42,3,105
+
+Greatsword
+38,2,54; 19,1,32; 22,3,72
+
+Lightsword
+6,1,12; 4,1,8; 5,1,13; 4,1,10; 8,1,22;
