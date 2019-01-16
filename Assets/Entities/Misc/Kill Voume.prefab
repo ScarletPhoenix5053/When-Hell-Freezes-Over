@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5231334629667150706}
   - component: {fileID: 5231334629667150707}
   - component: {fileID: 5231334629667150708}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Kill Voume
   m_TagString: Untagged
   m_Icon: {fileID: 0}

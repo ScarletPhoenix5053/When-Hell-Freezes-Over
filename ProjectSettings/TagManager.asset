@@ -16,8 +16,8 @@ TagManager:
   - Environment
   - Player
   - Enemy
-  - 
-  - 
+  - Projectile
+  - Trigger
   - 
   - 
   - 

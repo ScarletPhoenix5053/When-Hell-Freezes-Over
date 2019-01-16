@@ -6,11 +6,11 @@ public abstract class BaseController : MonoBehaviour
     public State CurrentState = State.Ready;
     public enum State { Ready, InAction, InHitstun, Dead }
 
-    protected MotionController mc;
+    protected CharacterMotionController mc;
 
     protected virtual void Awake()
     {
-        mc = GetComponent<MotionController>();
+        mc = GetComponent<CharacterMotionController>();
     }
 
     /// <summary>

@@ -7,7 +7,7 @@ public class AnimationController : MonoBehaviour
     protected Animator an;
     protected IEnumerator animPhysCoroutine = null;
 
-    protected void Awake()
+    protected virtual void Awake()
     {
         an = GetComponent<Animator>();
     }

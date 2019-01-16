@@ -3,7 +3,7 @@ using System;
 using System.Collections;
 using Sierra.Combat2D;
 
-[RequireComponent(typeof(MotionController))]
+[RequireComponent(typeof(CharacterMotionController))]
 public class Health : MonoBehaviour
 {
     public int Hp = 6;
@@ -13,7 +13,7 @@ public class Health : MonoBehaviour
 
     public bool Dead { get { return Hp <= 0; } }
 
-    private MotionController mc;
+    private CharacterMotionController mc;
     private BaseController chr;
 
     private AttackData atkData;
@@ -23,7 +23,7 @@ public class Health : MonoBehaviour
     private void Awake()
     {
         chr = GetComponent<BaseController>();
-        mc = GetComponent<MotionController>();
+        mc = GetComponent<CharacterMotionController>();
     }
 
     public void Damage(AttackData data)

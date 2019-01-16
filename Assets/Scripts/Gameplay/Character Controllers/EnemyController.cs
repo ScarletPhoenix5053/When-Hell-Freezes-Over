@@ -4,7 +4,7 @@ using Sierra.Combat2D;
 
 [RequireComponent(typeof(EnemyAnimationController))]
 [RequireComponent(typeof(EnemyAttackManager))]
-[RequireComponent(typeof(MotionController))]
+[RequireComponent(typeof(CharacterMotionController))]
 [RequireComponent(typeof(Health))]
 public abstract class EnemyController : BaseController
 {

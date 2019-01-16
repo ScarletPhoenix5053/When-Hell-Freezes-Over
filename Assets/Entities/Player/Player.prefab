@@ -72,6 +72,7 @@ GameObject:
   - component: {fileID: 8993978443071335223}
   - component: {fileID: 8993978443071335215}
   - component: {fileID: 8993978443071335222}
+  - component: {fileID: 2171353324114756376}
   m_Layer: 9
   m_Name: Player
   m_TagString: Untagged
@@ -104,10 +105,10 @@ Animator:
   m_GameObject: {fileID: 8993978443071335221}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a7a4617bdabd372439b1dfa94ca790ca, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
-  m_ApplyRootMotion: 0
+  m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
@@ -209,6 +210,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentState: 0
   JumpHeight: 12
+  RollFrames: 28
+  CurrentAction: 0
   TempDeathCanvas: {fileID: 0}
 --- !u!114 &8993978443071335214
 MonoBehaviour:
@@ -295,3 +298,15 @@ MonoBehaviour:
   ColliderColour:
     Inactive: {r: 0.5, g: 0.5, b: 0.5, a: 0.25}
     Active: {r: 0, g: 0.8, b: 0, a: 0.25}
+--- !u!114 &2171353324114756376
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8993978443071335221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ad21347323f69a4e9e51fb2264547a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
