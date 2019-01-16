@@ -183,7 +183,6 @@ public class PlayerController : BaseController
         if (additionalJumpsUsed != 0 && mc.IsGrounded)
         {
             additionalJumpsUsed = 0;
-            Debug.Log("Resetting Addjumps");
         }
 
         // Dodge roll
@@ -209,14 +208,11 @@ public class PlayerController : BaseController
         {
             if (mc.IsGrounded)
             {
-                Debug.Log("Ground Jump");
                 mc.DoImpulse(new Vector2(0, JumpHeight));
             }
             else if (additionalJumpsUsed < AdditionalJumps)
             {
                 additionalJumpsUsed++;
-
-                Debug.Log("Add Jump");
                 mc.DoImpulse(new Vector2(0, JumpHeight));
             }
 

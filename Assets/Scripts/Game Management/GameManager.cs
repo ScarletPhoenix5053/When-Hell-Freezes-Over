@@ -23,9 +23,7 @@ public class GameManager : MonoBehaviour
     /// </summary>
     /// <param name="duration"></param>
     public void HitStopFor(int frames)
-    {
-        Debug.Log("Hitstop for " + frames);
-
+    {  
         if (currentHitStopRoutine != null) StopCoroutine(currentHitStopRoutine);
         currentHitStopRoutine = HitStopRoutine(Utility.FramesToSeconds(frames));
         StartCoroutine(currentHitStopRoutine);
