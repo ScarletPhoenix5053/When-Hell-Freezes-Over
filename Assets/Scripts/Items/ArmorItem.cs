@@ -8,5 +8,13 @@ public class ArmorItem : GenericItem
 {
     public int DefenseBonus;
 
-    //public EquipmentType equipmentType;
+    public override GenericItem GetCopy()
+    {
+        return Instantiate(this);
+    }
+
+    public override void Destroy()
+    {
+        Destroy(this);
+    }
 }
