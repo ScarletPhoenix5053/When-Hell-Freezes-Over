@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eb82047a286ce7148b5718176ec43ce7, type: 3}
-  m_Name: GoblinLightSword_Hit3.aData 1
+  m_Name: GoblinLightSword_Hit4.aData
   m_EditorClassIdentifier: 
   Damage: 1
   Startup: 5

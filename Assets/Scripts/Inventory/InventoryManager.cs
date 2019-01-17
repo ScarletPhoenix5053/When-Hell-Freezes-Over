@@ -8,6 +8,7 @@ public class InventoryManager : MonoBehaviour
 {
     [SerializeField] Inventory inventory;
     [SerializeField] EquipmentPanel equipmentPanel;
+    [SerializeField] CraftingWindow craftingWindow;
 
     private void Awake()
     {

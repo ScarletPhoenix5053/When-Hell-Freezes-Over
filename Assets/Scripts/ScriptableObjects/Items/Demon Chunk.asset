@@ -15,5 +15,6 @@ MonoBehaviour:
   id: 65bea82868ef4db438ead9be9ae80da0
   Name: Demon Chunk
   Desc: A hunk of flesh from a demon. Good for weaponry.
+  MaximumStacks: 10
   Icon: {fileID: 0}
   equipmentType: 3

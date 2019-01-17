@@ -15,5 +15,6 @@ MonoBehaviour:
   id: cdfc058d3abb5b741904190ffd43a259
   Name: Bone
   Desc: A tough material. Used for crafting.
+  MaximumStacks: 10
   Icon: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   equipmentType: 3

@@ -8,11 +8,12 @@ public class MeleeWeaponItemEditor : Editor
 
     public override void OnInspectorGUI()
     {
+        base.OnInspectorGUI();
         var weaponItem = target as MeleeWeaponItem;
         GUILayout.BeginVertical(GUILayout.Width(48));
         GUILayout.Label(TextureFromSprite(weaponItem.Icon), GUILayout.Width(48), GUILayout.Height(48));
         GUILayout.EndVertical();
-        base.OnInspectorGUI();
+        
         /*
 
         var windowWidth = Screen.width;
