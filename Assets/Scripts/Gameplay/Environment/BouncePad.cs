@@ -21,7 +21,6 @@ public class BouncePad : MonoBehaviour
         // If player
         if (other.tag == "Player" /*&& timeSinceLastActivation >= DelayBetweenActivations*/)
         {
-            Debug.Log("hi");
             // Apply impluse
             otherMC = other.GetComponent<CharacterMotionController>();
             otherMC.DoImpulse(Vector2.up * Velocity);

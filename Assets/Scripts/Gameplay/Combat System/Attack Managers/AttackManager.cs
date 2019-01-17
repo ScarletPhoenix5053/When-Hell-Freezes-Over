@@ -31,7 +31,13 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
         var hb = hurtbox.GetComponent<Hurtbox>();
         if (hb != null)
         {
-            if (hb.CheckHit(Attacks[currentMeleeAttackIndex].HitStun))
+            // if hit a button
+            if (hb is ButtonHurtbox)
+            {
+                hb.CheckHit();
+            }
+            // else must have hit a character
+            else if (hb.CheckHit())
             {
                 // set sign of attack
                 Attacks[currentMeleeAttackIndex].Sign = Math.Sign(transform.localScale.x);

@@ -47,7 +47,7 @@ MonoBehaviour:
   Rotation: {x: 0, y: 0, z: 0, w: 1}
   LayerMask:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 17408
   BoxColour:
     Inactive: {r: 0.5, g: 0.5, b: 0.5, a: 0.25}
     Active: {r: 0.8, g: 0, b: 0, a: 0.25}
@@ -210,6 +210,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentState: 0
   JumpHeight: 12
+  AdditionalJumps: 1
   RollFrames: 28
   CurrentAction: 0
   TempDeathCanvas: {fileID: 0}
@@ -252,7 +253,7 @@ MonoBehaviour:
   XSpeed: 10
   YSpeed: 0
   Gravity: 1
-  GravityMax: 20
+  GravityMax: 70
   DragX: 0.5
   FallMultiplier: 1.5
   LowJumpMultiplier: 2.5

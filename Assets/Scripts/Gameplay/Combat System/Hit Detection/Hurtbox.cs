@@ -28,18 +28,18 @@ namespace Sierra.Combat2D
             public Color Active = new Color(0, 0.8f, 0, 0.25f);
         }
 
-        protected void Reset()
+        protected virtual void Reset()
         {
             col = GetComponent<Collider2D>();
         }
-        protected void Awake()
+        protected virtual void Awake()
         {
             if (col == null) throw new NullReferenceException("This component needs a collider 2D attatched to " +
                 "the same game object to work!");
             if (hp == null) throw new NullReferenceException("This component needs to refer to a health script for " +
                 "attack system to work!");
         }
-        protected void OnDrawGizmos()
+        protected virtual void OnDrawGizmos()
         {
             // Make sure a collider is attatched
             if (col == null)
@@ -60,12 +60,10 @@ namespace Sierra.Combat2D
                     ));
         }
         
-        public bool CheckHit(int hitStunFrames)
+        public virtual bool CheckHit()
         {
             if (_state != State.Inactive)
             {
-                StopCoroutine("HitStun");
-                StartCoroutine(HitStun(hitStunFrames));
                 return true;
             }
             else
@@ -98,13 +96,6 @@ namespace Sierra.Combat2D
                     Gizmos.color = ColliderColour.Active;
                     break;
             }
-        }
-        protected IEnumerator HitStun(int frameDuration)
-        {
-            var duration = Utility.FramesToSeconds(frameDuration);
-
-            yield return new WaitForSeconds(duration);
-            _state = State.Active;
         }
     }
 }
