@@ -1,0 +1,130 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &56912005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7928947400059057774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 426e9a26a49037a48a9d99fbab8452e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!1001 &4087773500566057295
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6247609725106013985, guid: b0089683e247dee49a37d9c1f55fb83c,
+        type: 3}
+      propertyPath: m_Name
+      value: Shield MeatBlob with Event
+      objectReference: {fileID: 0}
+    - target: {fileID: 6247609725106013985, guid: b0089683e247dee49a37d9c1f55fb83c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1525194155671870786, guid: b0089683e247dee49a37d9c1f55fb83c,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1525194155671870786, guid: b0089683e247dee49a37d9c1f55fb83c,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1525194155671870786, guid: b0089683e247dee49a37d9c1f55fb83c,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1525194155671870786, guid: b0089683e247dee49a37d9c1f55fb83c,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1525194155671870786, guid: b0089683e247dee49a37d9c1f55fb83c,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1525194155671870786, guid: b0089683e247dee49a37d9c1f55fb83c,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1525194155671870786, guid: b0089683e247dee49a37d9c1f55fb83c,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1525194155671870786, guid: b0089683e247dee49a37d9c1f55fb83c,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1525194155671870786, guid: b0089683e247dee49a37d9c1f55fb83c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1525194155671870786, guid: b0089683e247dee49a37d9c1f55fb83c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1525194155671870786, guid: b0089683e247dee49a37d9c1f55fb83c,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2108793704996900634, guid: b0089683e247dee49a37d9c1f55fb83c,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5347487584733043882, guid: b0089683e247dee49a37d9c1f55fb83c,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7325883852066777653, guid: b0089683e247dee49a37d9c1f55fb83c,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e340374d94fefa24d9b99202d7448518, type: 2}
+    - target: {fileID: 6247609725106013984, guid: b0089683e247dee49a37d9c1f55fb83c,
+        type: 3}
+      propertyPath: TurnDelayFrames
+      value: 60
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b0089683e247dee49a37d9c1f55fb83c, type: 3}
+--- !u!1 &7928947400059057774 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6247609725106013985, guid: b0089683e247dee49a37d9c1f55fb83c,
+    type: 3}
+  m_PrefabInstance: {fileID: 4087773500566057295}
+  m_PrefabAsset: {fileID: 0}
