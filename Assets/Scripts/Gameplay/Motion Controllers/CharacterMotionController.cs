@@ -34,6 +34,7 @@ public class CharacterMotionController : MotionController
                 layerMask);
         }
     }
+    public Vector2 ContMotionVector;
     #endregion
     #region Protected Vars
     protected BaseController chr;
@@ -44,7 +45,6 @@ public class CharacterMotionController : MotionController
     protected const int deltaMultiplicationFactor = 50;
 
     protected bool impulseLastFrame = false;
-    protected Vector2 contMotionVector;
     protected Vector2 combinedMotionVector;
     #endregion
 
@@ -74,7 +74,7 @@ public class CharacterMotionController : MotionController
     /// <param name="impulse"></param>
     public void DoImpulse(Vector2 impulse)
     {
-        contMotionVector = impulse;
+        ContMotionVector = impulse;
         impulseLastFrame = true;
     }
 
@@ -88,7 +88,7 @@ public class CharacterMotionController : MotionController
     /// </summary>
     protected virtual void SetCombinedMotionVector()
     {
-        combinedMotionVector = moveVector * XSpeed + contMotionVector;
+        combinedMotionVector = moveVector * XSpeed + ContMotionVector;
     }
     /// <summary>
     /// Applies gravity effect to continuous motion along the Y axis
@@ -97,11 +97,11 @@ public class CharacterMotionController : MotionController
     {
         if (IsGrounded)
         {
-            if (contMotionVector.y < 0f) contMotionVector.y = -0.5f;
+            if (ContMotionVector.y < 0f) ContMotionVector.y = -0.5f;
         }
-        else if (contMotionVector.y > -GravityMax)
+        else if (ContMotionVector.y > -GravityMax)
         {
-            contMotionVector.y -= Gravity;
+            ContMotionVector.y -= Gravity;
         }
     }
     /// <summary>
@@ -109,13 +109,13 @@ public class CharacterMotionController : MotionController
     /// </summary>
     protected virtual void ApplyDrag()
     {
-        if (contMotionVector.x <= -zeroThreshold || contMotionVector.x >= zeroThreshold)
+        if (ContMotionVector.x <= -zeroThreshold || ContMotionVector.x >= zeroThreshold)
         {
-            contMotionVector.x -= Math.Sign(contMotionVector.x) * DragX;
+            ContMotionVector.x -= Math.Sign(ContMotionVector.x) * DragX;
         }
         else
         {
-            contMotionVector.x = 0;
+            ContMotionVector.x = 0;
         }
     }   
 

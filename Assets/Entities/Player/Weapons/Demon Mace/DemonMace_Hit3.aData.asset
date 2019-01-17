@@ -18,6 +18,6 @@ MonoBehaviour:
   Recovery: 28
   HitStun: 60
   HitStop: 12
-  Sign: -1
+  Sign: 1
   KnockBack: 4
   KnockUp: 8

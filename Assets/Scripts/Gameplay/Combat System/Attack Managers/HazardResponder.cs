@@ -29,9 +29,9 @@ public class HazardResponder : MonoBehaviour, IHitboxResponder
         Hitbox.UpdateHitbox();
     }
 
+    
     public void Hit(Collider2D hurtbox)
     {
-        Debug.Log("Hit");
         var hb = hurtbox.GetComponent<Hurtbox>();
         if (hb != null)
         {

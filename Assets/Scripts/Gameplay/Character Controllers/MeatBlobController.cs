@@ -4,6 +4,7 @@ using System;
 public class MeatBlobController : EnemyController
 {
     public float ChaseRange = 10f;
+
     protected override void DecideAction()
     {
         FacePlayer();

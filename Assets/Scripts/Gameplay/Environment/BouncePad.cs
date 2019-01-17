@@ -19,7 +19,9 @@ public class BouncePad : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         // If player
-        if (other.tag == "Player" && Input.GetKey(KeyCode.W) /*&& timeSinceLastActivation >= DelayBetweenActivations*/)
+        if (other.tag == "Player" && 
+            (Input.GetKey(KeyCode.W) ||
+            (other.GetComponent<CharacterMotionController>().ContMotionVector.y < -1f) && !Input.GetKey(KeyCode.S)))
         {
             // Apply impluse
             otherMC = other.GetComponent<CharacterMotionController>();

@@ -10,20 +10,20 @@ public class PlayerMotionController : CharacterMotionController
     {
         if (IsGrounded)
         {
-            if (contMotionVector.y < 0f) contMotionVector.y = -0.5f;
+            if (ContMotionVector.y < 0f) ContMotionVector.y = -0.5f;
         }
         // If not falling faster than max falling speed
-        else if (contMotionVector.y > -GravityMax)
+        else if (ContMotionVector.y > -GravityMax)
         {
             // ...and is actually falling, not rising
-            if (contMotionVector.y < 0)
-                contMotionVector.y -= Gravity * FallMultiplier;
+            if (ContMotionVector.y < 0)
+                ContMotionVector.y -= Gravity * FallMultiplier;
             // ...otherwise must be rising
             else if
-                (contMotionVector.y > 0 && !Input.GetKey(KeyCode.W))
-                contMotionVector.y -= Gravity * LowJumpMultiplier;
+                (ContMotionVector.y > 0 && !Input.GetKey(KeyCode.W))
+                ContMotionVector.y -= Gravity * LowJumpMultiplier;
             else
-                contMotionVector.y -= Gravity;
+                ContMotionVector.y -= Gravity;
         }
     }
 }

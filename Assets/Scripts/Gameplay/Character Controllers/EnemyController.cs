@@ -58,17 +58,8 @@ public abstract class EnemyController : BaseController
         Debug.Log(name + "Is Dead.");
         SetState(State.Dead);
         StopAllCoroutines();
-
-        // Death anim
-        //GetComponent<EnemyAnimationController>().PlayDeath();
-
-        // Deactivate hurtbox
-        foreach (Hurtbox hurtbox in hp.Hurtboxes)
-        {
-            hurtbox.SetInactive();
-        }
-
-        // Despawn after delay
+        
+        // Despawn
         Destroy(gameObject);
     }
 

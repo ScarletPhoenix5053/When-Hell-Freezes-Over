@@ -46,6 +46,11 @@ public class PlayerAnimationController : AnimationController
         mc = GetComponent<PlayerMotionController>();
         sk_an = GetComponent<SkeletonAnimation>();
     }
+    private void LateUpdate()
+    {
+        if (GameManager.Instance.HitStopActive) sk_an.timeScale = 0;
+        else sk_an.timeScale = 1;
+    }
 
     public void RunAnimationStateMachine()
     {

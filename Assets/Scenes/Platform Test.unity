@@ -624,16 +624,6 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 8993978441492708963, guid: 299c53565037cd24dacc737c83af3fc5,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.25
-      objectReference: {fileID: 0}
-    - target: {fileID: 8993978441492708963, guid: 299c53565037cd24dacc737c83af3fc5,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.3
-      objectReference: {fileID: 0}
     - target: {fileID: 7795181411740776146, guid: 299c53565037cd24dacc737c83af3fc5,
         type: 3}
       propertyPath: _animationName
@@ -658,21 +648,6 @@ PrefabInstance:
         type: 3}
       propertyPath: LowJumpMultiplier
       value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8993978441492708962, guid: 299c53565037cd24dacc737c83af3fc5,
-        type: 3}
-      propertyPath: Size.y
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 8993978441492708962, guid: 299c53565037cd24dacc737c83af3fc5,
-        type: 3}
-      propertyPath: Size.z
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8993978441492708962, guid: 299c53565037cd24dacc737c83af3fc5,
-        type: 3}
-      propertyPath: Size.x
-      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 299c53565037cd24dacc737c83af3fc5, type: 3}
