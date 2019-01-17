@@ -9,7 +9,6 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
 {
     public event Action<GenericItem> OnLeftClickEvent;
 
-    [SerializeField]
     private GenericItem _item;
     public GenericItem Item
     {
@@ -74,7 +73,6 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
         
         if(eventData != null && eventData.button == PointerEventData.InputButton.Left)
         {
-            //THE ERROR IS HERE.
             if (Item != null && OnLeftClickEvent != null)
             {
                 Debug.Log("Equipping");

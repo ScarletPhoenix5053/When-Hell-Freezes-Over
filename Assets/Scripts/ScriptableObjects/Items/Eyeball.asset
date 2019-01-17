@@ -15,5 +15,6 @@ MonoBehaviour:
   id: cffe84e01b01e0840898170edde7f144
   Name: Eyeball
   Desc: Ew, it's squishy. Good for crafting.
+  MaximumStacks: 10
   Icon: {fileID: 0}
   equipmentType: 3
