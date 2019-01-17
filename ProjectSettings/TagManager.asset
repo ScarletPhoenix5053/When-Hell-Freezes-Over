@@ -4,8 +4,7 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Checkpoint
-  - Forge
+  - Platform
   layers:
   - Default
   - TransparentFX
@@ -20,8 +19,8 @@ TagManager:
   - Enemy
   - Projectile
   - Trigger
-  - 
-  - 
+  - Platform
+  - Interactable
   - 
   - 
   - 
