@@ -61,6 +61,8 @@ namespace Sierra.Combat2D
         /// </summary>
         public virtual void UpdateHitbox()
         {
+            if (name != "HB")
+            Debug.Log(name + " is a'hurtin");
             // Cancel if Inactive
             if (_state == State.Inactive) { return; }
 
@@ -70,6 +72,7 @@ namespace Sierra.Combat2D
             // Perform interaction on hit
             for (int i = 0; i < colliders.Length; i++)
             {
+                Debug.Log(colliders[i].name);
                 Collider2D collider = colliders[i];
                 responder?.Hit(collider);
             }
