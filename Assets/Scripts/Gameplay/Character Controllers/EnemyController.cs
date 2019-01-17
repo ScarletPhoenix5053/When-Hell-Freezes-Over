@@ -3,7 +3,7 @@ using System.Collections;
 using Sierra.Combat2D;
 
 [RequireComponent(typeof(EnemyAnimationController))]
-[RequireComponent(typeof(EnemyAttackManager))]
+[RequireComponent(typeof(IHitboxResponder))]
 [RequireComponent(typeof(CharacterMotionController))]
 [RequireComponent(typeof(Health))]
 public abstract class EnemyController : BaseController
@@ -60,7 +60,7 @@ public abstract class EnemyController : BaseController
         StopAllCoroutines();
 
         // Death anim
-        GetComponent<EnemyAnimationController>().PlayDeath();
+        //GetComponent<EnemyAnimationController>().PlayDeath();
 
         // Deactivate hurtbox
         foreach (Hurtbox hurtbox in hp.Hurtboxes)
@@ -69,7 +69,7 @@ public abstract class EnemyController : BaseController
         }
 
         // Despawn after delay
-        Destroy(gameObject, 3f);
+        Destroy(gameObject);
     }
 
     protected void FacePlayer()

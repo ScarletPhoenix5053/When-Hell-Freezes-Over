@@ -1,14 +1,42 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System;
 
 public class MeatBlobController : EnemyController
 {
+    public float ChaseRange = 10f;
     protected override void DecideAction()
     {
-        throw new System.NotImplementedException();
+        FacePlayer();
+
+        if (distToPlayer < ChaseRange)
+        {
+            SetBehaviour(Behaviour.Chasing);
+        }
+        else
+        {
+            SetBehaviour(Behaviour.Idle);
+        }
     }
     protected override void Act()
     {
-        throw new System.NotImplementedException();
+        switch (CurrentBehaviour)
+        {
+            case Behaviour.Idle:
+                break;
+
+            case Behaviour.Chasing:
+                if (playerToLeft)
+                {
+                    mc.MoveVector = Vector2.left;
+                }
+                else
+                {
+                    mc.MoveVector = Vector2.right;
+                }
+                break;
+
+            default:
+                throw new NotImplementedException("Meatblob does not support behaviour " + CurrentBehaviour);
+        }
     }
 }
