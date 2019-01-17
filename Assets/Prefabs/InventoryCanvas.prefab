@@ -8065,11 +8065,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1397650147446102129}
     m_Modifications:
-    - target: {fileID: 8886214811771042433, guid: 81e19101344ffde4da1946f7cdf54812,
-        type: 3}
-      propertyPath: m_Name
-      value: CraftingRecipeUI
-      objectReference: {fileID: 0}
     - target: {fileID: 8886214811771042686, guid: 81e19101344ffde4da1946f7cdf54812,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -8205,6 +8200,11 @@ PrefabInstance:
       propertyPath: itemContainer
       value: 
       objectReference: {fileID: 1397650147213011024}
+    - target: {fileID: 8886214811771042433, guid: 81e19101344ffde4da1946f7cdf54812,
+        type: 3}
+      propertyPath: m_Name
+      value: CraftingRecipeUI
+      objectReference: {fileID: 0}
     - target: {fileID: 8886214811587934426, guid: 81e19101344ffde4da1946f7cdf54812,
         type: 3}
       propertyPath: m_AnchorMin.y
@@ -8401,6 +8401,18 @@ PrefabInstance:
       propertyPath: m_FontData.m_MaxSize
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 8886214810627944132, guid: 81e19101344ffde4da1946f7cdf54812,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 8cb98240be4ac4448915955bd9b7a8de,
+        type: 3}
+    - target: {fileID: 8886214812374343087, guid: 81e19101344ffde4da1946f7cdf54812,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: ac22607711df42b44a15856470a2e666,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 81e19101344ffde4da1946f7cdf54812, type: 3}
 --- !u!114 &3171386174098660085 stripped
