@@ -16,11 +16,11 @@ public class PlayerBrooke : MonoBehaviour
 
     //RESPAWNING
     public Vector3 respawnPoint;
-    public Health health;
+    protected Health health;
 
     //FORGES
     public bool atForge;
-    public Image prompt;
+    public GameObject prompt;
 
     private void Start()
     {
@@ -76,7 +76,7 @@ public class PlayerBrooke : MonoBehaviour
         if (other.tag == "Forge")
         {
             atForge = true;
-            prompt.enabled = true;
+            prompt.SetActive(true);
         }
     }
 
@@ -85,7 +85,7 @@ public class PlayerBrooke : MonoBehaviour
         if (other.tag == "Forge")
         {
             atForge = false;
-            prompt.enabled = false;
+            prompt.SetActive(false);
         }
     }
 

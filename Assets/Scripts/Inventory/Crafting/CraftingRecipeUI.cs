@@ -7,7 +7,7 @@ public class CraftingRecipeUI : MonoBehaviour
     [SerializeField] RectTransform arrowParent;
     [SerializeField] ItemSlot[] itemSlots;
 
-    public GameObject notEnough;
+    //public GameObject notEnough;
     public Animator anim;
 
     public ItemContainer itemContainer;
@@ -42,7 +42,6 @@ public class CraftingRecipeUI : MonoBehaviour
             }
             else
             {
-                Debug.Log("not enough materials bruv");
                 StartCoroutine(NotEnoughMaterials());
             }
         }
@@ -89,9 +88,8 @@ public class CraftingRecipeUI : MonoBehaviour
     IEnumerator NotEnoughMaterials()
     {
         anim.SetBool("isDisplayed", true);
-        yield return new WaitForSeconds(5f);
-        anim.SetBool("isDisplayed", false);
-        //isAchieved = false;
+        yield return new WaitForSeconds(4f);
+        anim.SetBool("isDisplayed", false); //this is not being set to false all of a sudden?
         StopCoroutine(NotEnoughMaterials());
     }
 

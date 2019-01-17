@@ -143,6 +143,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseEnabled: 0
+  inventoryUI: {fileID: 0}
+  tooltip: {fileID: 0}
+  armorTooltip: {fileID: 0}
+  craftingEnabled: 0
+  craftingUI: {fileID: 0}
+  notEnough: {fileID: 0}
 --- !u!1 &6086003898252230540
 GameObject:
   m_ObjectHideFlags: 0

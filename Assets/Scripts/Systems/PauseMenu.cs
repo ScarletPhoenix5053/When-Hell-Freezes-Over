@@ -13,6 +13,7 @@ public class PauseMenu : MonoBehaviour
     public bool craftingEnabled;
     private PlayerBrooke pB;
     public GameObject craftingUI;
+    public GameObject notEnough;
     //public Canvas screenUI;
 
     void Start()
@@ -56,15 +57,17 @@ public class PauseMenu : MonoBehaviour
                 if(craftingEnabled)
                 {
                     PausedGame();
-                    pB.prompt.enabled = false;
+                    pB.prompt.SetActive(false);
                     craftingUI.SetActive(true);
                     inventoryUI.SetActive(true);
+                    notEnough.SetActive(true);
                 }
                 else if(!craftingEnabled)
                 {
                     UnpausedGame();
                     craftingUI.SetActive(false);
-                    pB.prompt.enabled = true;
+                    notEnough.SetActive(false);
+                    pB.prompt.SetActive(true);
                     inventoryUI.SetActive(false);
                     tooltip.HideTooltip();
                     armorTooltip.HideTooltip();
