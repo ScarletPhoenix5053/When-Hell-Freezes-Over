@@ -3,7 +3,6 @@ using System;
 using System.Collections;
 using Sierra.Combat2D;
 
-
 [RequireComponent(typeof(CharacterMotionController))]
 [RequireComponent(typeof(PlayerAttackManager))]
 [RequireComponent(typeof(Health))]
@@ -43,6 +42,7 @@ public class PlayerController : BaseController
         base.Awake();
         am = GetComponent<PlayerAttackManager>();
         an = GetComponent<PlayerAnimationController>();
+
         hp = GetComponent<Health>();
 
         if (TempDeathCanvas == null)
@@ -61,6 +61,7 @@ public class PlayerController : BaseController
         if (GameManager.Instance.HitStopActive) return;
 
         if (CurrentAction == Action.Rolling) mc.MoveVector = new Vector2(Math.Sign(transform.localScale.x), 0);
+        an.RunAnimationStateMachine();
 
         IncrimentJumpTimer();
         mc.UpdatePosition();
@@ -97,7 +98,6 @@ public class PlayerController : BaseController
         SetState(State.Dead);
 
         // death anim
-        an.PlayDeath();
 
         // deactivate hurtbox
         foreach (Hurtbox hurtbox in GetComponent<Health>().Hurtboxes)
@@ -186,7 +186,7 @@ public class PlayerController : BaseController
         }
 
         // Dodge roll
-        if (Input.GetKeyDown(KeyCode.L))
+        if (Input.GetKeyDown(KeyCode.L) && mc.IsGrounded)
         {
             if (currentRollRoutine != null) StopCoroutine(currentRollRoutine);
             currentRollRoutine = RollRoutine();
@@ -245,8 +245,8 @@ public class PlayerController : BaseController
     }
     private IEnumerator RollRoutine()
     {
+        SetState(State.InAction);
         SetAction(Action.Rolling);
-        an.PlayDodgeRoll();
         foreach (Hurtbox hurtbox in hp.Hurtboxes)
         {
             hurtbox.SetInactive();
@@ -255,8 +255,8 @@ public class PlayerController : BaseController
         yield return new WaitForSeconds(Sierra.Utility.FramesToSeconds(RollFrames));
         yield return GameManager.Instance.UntillHitStopInactive();
 
+        SetState(State.Ready);
         SetAction(Action.None);
-        an.PlayIdle();
         foreach (Hurtbox hurtbox in hp.Hurtboxes)
         {
             hurtbox.SetActive();
