@@ -12,9 +12,11 @@ public class PlayerAnimationController : AnimationController
 
     private SkeletonAnimation sk_an;
     private PlayerController plr;
+    private PlayerAttackManager am;
     private PlayerMotionController mc;
 
     private Color defaultColour;
+    private PlayerAttackManager.AttackState previousAttackState = PlayerAttackManager.AttackState.None;
 
     private AnimState currentAnimationState = AnimState.Idle;
     private enum AnimState
@@ -40,6 +42,7 @@ public class PlayerAnimationController : AnimationController
         base.Awake();
 
         plr = GetComponent<PlayerController>();
+        am = GetComponent<PlayerAttackManager>();
         mc = GetComponent<PlayerMotionController>();
         sk_an = GetComponent<SkeletonAnimation>();
     }
@@ -57,6 +60,7 @@ public class PlayerAnimationController : AnimationController
                 else if (plr.CurrentState == BaseController.State.InAction)
                 {
                     if (plr.CurrentAction == PlayerController.Action.Rolling) ChangeToRollState();
+                    else if (plr.CurrentAction == PlayerController.Action.Attacking) ChangeToAttackState();
                 }
                 break;
 
@@ -69,6 +73,7 @@ public class PlayerAnimationController : AnimationController
                 else if (plr.CurrentState == BaseController.State.InAction)
                 {
                     if (plr.CurrentAction == PlayerController.Action.Rolling) ChangeToRollState();
+                    else if (plr.CurrentAction == PlayerController.Action.Attacking) ChangeToAttackState();
                 }
                 break;
 
@@ -88,6 +93,38 @@ public class PlayerAnimationController : AnimationController
                 if (plr.CurrentState != BaseController.State.InAction || 
                     plr.CurrentAction != PlayerController.Action.Rolling)
                     ChangeToIdleState();
+                break;
+
+            case AnimState.Attacking:
+                if (plr.CurrentState != BaseController.State.InAction ||
+                    plr.CurrentAction != PlayerController.Action.Attacking)
+                    ChangeToIdleState();
+
+                var newAttackState = am.AtkState;
+                if (previousAttackState != newAttackState && newAttackState != PlayerAttackManager.AttackState.None)
+                {
+                    sk_an.AnimationState.SetAnimation(0, "MaceString1", false);
+                    /*
+                    switch (newAttackState)
+                    {
+                        case PlayerAttackManager.AttackState.N1:
+                            break;
+
+                        case PlayerAttackManager.AttackState.N2:
+                            break;
+                        case PlayerAttackManager.AttackState.N3:
+                            break;
+                        case PlayerAttackManager.AttackState.N4:
+                            break;
+                        case PlayerAttackManager.AttackState.N5:
+                            break;
+                        case PlayerAttackManager.AttackState.Ranged:
+                            break;
+                        default:
+                            throw new NotImplementedException("This attack animation sub-state is not yet configured!"); ;
+                    }*/
+                }
+                previousAttackState = newAttackState;
                 break;
 
             default:
@@ -125,6 +162,10 @@ public class PlayerAnimationController : AnimationController
     {
         SetAnimationState(AnimState.Rolling);
         sk_an.AnimationState.SetAnimation(0, "Roll", false);
+    }
+    public void ChangeToAttackState()
+    {
+        SetAnimationState(AnimState.Attacking);
     }
 
     private void SetAnimationState(AnimState newAnimationState)

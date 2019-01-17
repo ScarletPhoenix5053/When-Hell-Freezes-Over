@@ -241,12 +241,12 @@ MonoBehaviour:
   Hitbox: {fileID: 8993978441492708962}
   Attacks:
   - {fileID: 11400000, guid: 5575af19d988c824fb314bd288aa51b5, type: 2}
-  - {fileID: 11400000, guid: dc1475f68f03a3c469644fa250354885, type: 2}
-  - {fileID: 11400000, guid: 25dfdfa3b27bf8b4091941dbffa5d671, type: 2}
-  - {fileID: 11400000, guid: 6d381fdf2c129664f9582e8da87ab9b0, type: 2}
-  - {fileID: 11400000, guid: a4823146f75c62d449650c8eddb09be1, type: 2}
+  - {fileID: 11400000, guid: 703929c51bbef094db9e91d76c03bb1d, type: 2}
+  - {fileID: 11400000, guid: fd9f7287e38759049b568d38966ad240, type: 2}
+  - {fileID: 11400000, guid: 383972eda32c07b43b933d1fc9582813, type: 2}
+  - {fileID: 11400000, guid: 990cfab95ac5f1845b071e756072c890, type: 2}
   AtkStage: 0
-  MeleeWeapon: {fileID: 11400000, guid: 69b9ff052498ef247ba4ff2eb4aefbd2, type: 2}
+  MeleeWeapon: {fileID: 11400000, guid: aa662c7224db3f146a6e094d97e8e559, type: 2}
   RangedWeapon: {fileID: 11400000, guid: 00cec8ad545caf44b97fcb42cbdcc884, type: 2}
   AtkState: 0
 --- !u!114 &247271014943288401

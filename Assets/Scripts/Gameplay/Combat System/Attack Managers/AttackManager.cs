@@ -119,6 +119,7 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
         yield return new WaitForSeconds(Utility.FramesToSeconds(Attacks[attackIndex].Recovery));
 
         // End
+        GetComponent<BaseController>().SetState(BaseController.State.Ready);
         AtkStage = AttackStage.Ready;
         Attacking = false;
     }
