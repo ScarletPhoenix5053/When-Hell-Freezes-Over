@@ -70,6 +70,7 @@ namespace Sierra.Combat2D
             // Perform interaction on hit
             for (int i = 0; i < colliders.Length; i++)
             {
+                if (name == "Hazard") Debug.Log(colliders[i]);
                 Collider2D collider = colliders[i];
                 responder?.Hit(collider);
             }
