@@ -55,7 +55,7 @@ public class MeatBlobShieldedController : EnemyController
         if (BouncePadPrefab != null)
             Instantiate(
                 BouncePadPrefab,
-                new Vector3(transform.position.x, transform.position.y -0.5f, transform.position.z), 
+                new Vector3(transform.position.x, transform.position.y, transform.position.z), 
                 Quaternion.identity);
         base.Die();
     }

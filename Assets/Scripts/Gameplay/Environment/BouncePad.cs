@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Spine.Unity;
 
 public class BouncePad : MonoBehaviour
 {
@@ -9,9 +10,14 @@ public class BouncePad : MonoBehaviour
 
     protected Collider2D trigger;
     protected CharacterMotionController otherMC;
+    protected SkeletonAnimation skeletonAnimation;
 
     protected float timeSinceLastActivation;
 
+    private void Awake()
+    {
+        skeletonAnimation = GetComponent<SkeletonAnimation>();
+    }
     private void FixedUpdate()
     {
         IncrimentActivationTimer();
@@ -24,6 +30,8 @@ public class BouncePad : MonoBehaviour
             (other.GetComponent<CharacterMotionController>().ContMotionVector.y < -1f) && !Input.GetKey(KeyCode.S)))
         {
             // Apply impluse
+            skeletonAnimation.AnimationState.SetAnimation(0, "Jump", false);
+            skeletonAnimation.AnimationState.AddAnimation(0, "Idle", true, 0);
             otherMC = other.GetComponent<CharacterMotionController>();
             otherMC.DoImpulse(Vector2.up * Velocity);
 
