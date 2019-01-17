@@ -57,13 +57,13 @@ public class PlayerController : BaseController
             CheckInputByKeyCode();
 
         OrientByMotion();
+        an.RunAnimationStateMachine();
     }
     private void FixedUpdate()
     {
         if (GameManager.Instance.HitStopActive) return;
 
         if (CurrentAction == Action.Rolling) mc.MoveVector = new Vector2(Math.Sign(transform.localScale.x), 0);
-        an.RunAnimationStateMachine();
 
         IncrimentJumpTimer();
         mc.UpdatePosition();

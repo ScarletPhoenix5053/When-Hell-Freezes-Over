@@ -614,21 +614,6 @@ PrefabInstance:
       propertyPath: TempDeathCanvas
       value: 
       objectReference: {fileID: 1713052424}
-    - target: {fileID: 8993978443071335220, guid: 299c53565037cd24dacc737c83af3fc5,
-        type: 3}
-      propertyPath: JumpHeight
-      value: 16
-      objectReference: {fileID: 0}
-    - target: {fileID: 8993978443071335220, guid: 299c53565037cd24dacc737c83af3fc5,
-        type: 3}
-      propertyPath: AdditionalJumps
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8993978443071335220, guid: 299c53565037cd24dacc737c83af3fc5,
-        type: 3}
-      propertyPath: RollFrames
-      value: 32
-      objectReference: {fileID: 0}
     - target: {fileID: 2919184388049846621, guid: 299c53565037cd24dacc737c83af3fc5,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -662,27 +647,7 @@ PrefabInstance:
     - target: {fileID: 7795181411740776146, guid: 299c53565037cd24dacc737c83af3fc5,
         type: 3}
       propertyPath: initialSkinName
-      value: demonmace
-      objectReference: {fileID: 0}
-    - target: {fileID: 8993978443071335209, guid: 299c53565037cd24dacc737c83af3fc5,
-        type: 3}
-      propertyPath: m_Size.x
-      value: 0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 8993978443071335209, guid: 299c53565037cd24dacc737c83af3fc5,
-        type: 3}
-      propertyPath: m_Size.y
-      value: 2.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8993978443071335209, guid: 299c53565037cd24dacc737c83af3fc5,
-        type: 3}
-      propertyPath: m_Offset.y
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8993978443071335209, guid: 299c53565037cd24dacc737c83af3fc5,
-        type: 3}
-      propertyPath: m_Offset.x
-      value: -0.02
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 247271014943288401, guid: 299c53565037cd24dacc737c83af3fc5,
         type: 3}

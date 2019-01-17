@@ -103,26 +103,26 @@ public class PlayerAnimationController : AnimationController
                 var newAttackState = am.AtkState;
                 if (previousAttackState != newAttackState && newAttackState != PlayerAttackManager.AttackState.None)
                 {
-                    sk_an.AnimationState.SetAnimation(0, "MaceString1", false);
-                    /*
+                    
                     switch (newAttackState)
                     {
                         case PlayerAttackManager.AttackState.N1:
+                            sk_an.AnimationState.SetAnimation(0, "MaceString1", false);
                             break;
 
                         case PlayerAttackManager.AttackState.N2:
+                            sk_an.AnimationState.SetAnimation(0, "MaceString2", false);
                             break;
+
                         case PlayerAttackManager.AttackState.N3:
+                            sk_an.AnimationState.SetAnimation(0, "MaceString3", false);
                             break;
-                        case PlayerAttackManager.AttackState.N4:
-                            break;
-                        case PlayerAttackManager.AttackState.N5:
-                            break;
+
                         case PlayerAttackManager.AttackState.Ranged:
                             break;
                         default:
                             throw new NotImplementedException("This attack animation sub-state is not yet configured!"); ;
-                    }*/
+                    }
                 }
                 previousAttackState = newAttackState;
                 break;

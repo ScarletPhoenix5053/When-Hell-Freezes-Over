@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: DemonMace_Hit3.aData
   m_EditorClassIdentifier: 
   Damage: 2
-  Startup: 16
-  Active: 1
+  Startup: 39
+  Active: 4
   Recovery: 28
   HitStun: 60
   HitStop: 12
