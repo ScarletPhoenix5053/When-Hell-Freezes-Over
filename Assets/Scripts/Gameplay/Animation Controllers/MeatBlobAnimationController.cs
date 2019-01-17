@@ -33,7 +33,7 @@ public class MeatBlobAnimationController : EnemyAnimationController
     {
         if (enm.CurrentState == BaseController.State.Dead) ChangeToDeathState();
         if (enm.CurrentState == BaseController.State.InHitstun) ChangeToHitState();
-
+    
         switch (currentAnimationState)
         {
             case AnimState.Idle:
@@ -45,10 +45,11 @@ public class MeatBlobAnimationController : EnemyAnimationController
                 break;
 
             case AnimState.Hit:
-                if (enm.CurrentState != BaseController.State.InHitstun) ChangeToIdleState();
+                if (enm.CurrentState != BaseController.State.InHitstun) ChangeToHitState();
                 break;
 
             case AnimState.Dead:
+                Debug.Log(name + " is playing dead");
                 break;
 
             default:
@@ -69,12 +70,13 @@ public class MeatBlobAnimationController : EnemyAnimationController
     public void ChangeToHitState()
     {
         SetAnimationState(AnimState.Hit);
-        sk_an.AnimationState.SetAnimation(0, "HitStun", true);
+        sk_an.AnimationState.SetAnimation(0, "HitStun", false);
+        sk_an.AnimationState.AddAnimation(0, "Idle", true, 0);
     }
     public void ChangeToDeathState()
     {
         SetAnimationState(AnimState.Dead);
-        sk_an.AnimationState.SetAnimation(0, "Death", false);
+        sk_an.AnimationState.SetAnimation(1, "Death", false);
     }
 
     private void SetAnimationState(AnimState newAnimationState)

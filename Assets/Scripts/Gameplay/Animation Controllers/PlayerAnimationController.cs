@@ -145,7 +145,7 @@ public class PlayerAnimationController : AnimationController
     public void ChangeToFallState()
     {
         SetAnimationState(AnimState.Fall);
-        sk_an.AnimationState.SetAnimation(0, "Jump", true);
+        sk_an.AnimationState.SetAnimation(0, "Jump", false);
     }
     public void ChangeToRollState()
     {

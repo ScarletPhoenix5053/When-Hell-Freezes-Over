@@ -169,7 +169,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentState: 0
   JumpHeight: 16
-  AdditionalJumps: 2
+  AdditionalJumps: 1
   RollFrames: 32
   CurrentAction: 0
   TempDeathCanvas: {fileID: 0}
@@ -214,6 +214,7 @@ MonoBehaviour:
   Gravity: 1
   GravityMax: 70
   DragX: 0.5
+  ContMotionVector: {x: 0, y: 0}
   FallMultiplier: 1.5
   LowJumpMultiplier: 2.5
 --- !u!114 &2316523160876057037
