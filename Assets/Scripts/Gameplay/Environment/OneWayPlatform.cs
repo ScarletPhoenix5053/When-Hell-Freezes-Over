@@ -3,40 +3,59 @@ using UnityEngine;
 
 public class OneWayPlatform : MonoBehaviour
 {
-    private Transform plr;
-    private Collider2D col;
+    public Collider2D solidCollider;
+    public Collider2D belowTrigger;
+
+    private Transform plr;  
     private Renderer rn;
 
     private Color originalColour;
     private Color halfColour;
 
+    private bool playerBelow;
+
+    private float lowestPoint;
+
     private void Awake()
     {
-        col = GetComponent<Collider2D>();
-        rn = GetComponent<Renderer>();
+        rn = GetComponentInChildren<Renderer>();
         plr = FindObjectOfType<PlayerController>().gameObject.transform;
 
-        if (col == null) throw new NullReferenceException(name + " needs a 2D collider!");
+        if (solidCollider == null) throw new NullReferenceException(name + " needs a 2D collider!");
         if (plr == null) Debug.LogError("Could not find a player!");
 
         originalColour = rn.material.color;
         halfColour = new Color(rn.material.color.r/2, rn.material.color.g/2, rn.material.color.b/2, 0.5f);
+
+        FindLowestPoint();
     }
     private void FixedUpdate()
     {
         if (plr != null)
         {
-            if (plr.position.y-1 < transform.position.y)
+            if (playerBelow)
             {
-
                 rn.material.color = halfColour;
-                col.enabled = false;
+                solidCollider.enabled = false;
+                playerBelow = false;
             }
             else
             {
                 rn.material.color = originalColour;
-                col.enabled = true;
+                solidCollider.enabled = true;
             }
         }
+    }
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.tag == "Player")
+        {
+            playerBelow = true;
+        }
+    }
+
+    private void FindLowestPoint()
+    {
+        lowestPoint = transform.position.y - solidCollider.bounds.extents.y;
     }
 }
