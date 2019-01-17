@@ -1,0 +1,34 @@
+
+MeatblobsFinalShield.png
+size: 8192,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Floor blob
+  rotate: false
+  xy: 2, 2
+  size: 2468, 866
+  orig: 2468, 866
+  offset: 0, 0
+  index: -1
+Floor shield
+  rotate: false
+  xy: 2472, 80
+  size: 2194, 788
+  orig: 2194, 788
+  offset: 0, 0
+  index: -1
+Squash blob
+  rotate: false
+  xy: 4668, 514
+  size: 2267, 354
+  orig: 2267, 354
+  offset: 0, 0
+  index: -1
+Squash shield
+  rotate: false
+  xy: 4668, 308
+  size: 1754, 204
+  orig: 1754, 204
+  offset: 0, 0
+  index: -1

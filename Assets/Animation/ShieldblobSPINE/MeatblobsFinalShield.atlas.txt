@@ -1,0 +1,20 @@
+
+MeatblobsFinalShield.png
+size: 2048,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Shield
+  rotate: true
+  xy: 2, 2
+  size: 609, 1172
+  orig: 609, 1172
+  offset: 0, 0
+  index: -1
+Shield blob
+  rotate: false
+  xy: 2, 613
+  size: 1796, 1104
+  orig: 1796, 1104
+  offset: 0, 0
+  index: -1

@@ -40,16 +40,23 @@ public class ProjectileController : MonoBehaviour, IHitboxResponder
     public virtual void Hit(Collider2D hurtbox)
     {
         // On successful hit, deal damage and other effects to the character attatched to the hurtbox
-        // Disable hitbox on hit.
+        // Disable hitbox on hit.        
         var hb = hurtbox.GetComponent<Hurtbox>();
         if (hb != null)
         {
-            if (hb.CheckHit(attackData.HitStun))
+            // if hit a button
+            if (hb is ButtonHurtbox)
+            {
+                hb.CheckHit();
+
+                Destroy(gameObject);
+            }
+            // else must have hit a character
+            else if (hb.CheckHit())
             {
                 // set sign of attack
                 attackData.Sign = xSign;
                 hurtbox.GetComponent<Hurtbox>().hp.Damage(attackData);
-                //hurtbox.GetComponent<Hurtbox>().Health.LogHp();
 
                 Destroy(gameObject);
             }

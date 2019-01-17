@@ -31,7 +31,13 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
         var hb = hurtbox.GetComponent<Hurtbox>();
         if (hb != null)
         {
-            if (hb.CheckHit(Attacks[currentMeleeAttackIndex].HitStun))
+            // if hit a button
+            if (hb is ButtonHurtbox)
+            {
+                hb.CheckHit();
+            }
+            // else must have hit a character
+            else if (hb.CheckHit())
             {
                 // set sign of attack
                 Attacks[currentMeleeAttackIndex].Sign = Math.Sign(transform.localScale.x);
@@ -63,6 +69,11 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
 
         // Track which attack is ongoing
         currentMeleeAttackIndex = attackIndex;
+
+        // Do impulse
+        if (GetComponent<PlayerController>())
+            GetComponent<CharacterMotionController>()?.
+                DoImpulse(new Vector2(Attacks[attackIndex].ImpulseStrength * GetComponent<PlayerController>().Sign, 0));
     }
     /// <summary>
     /// Generic ranged attack method. Launches a projectile after a delay.
@@ -113,6 +124,7 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
         yield return new WaitForSeconds(Utility.FramesToSeconds(Attacks[attackIndex].Recovery));
 
         // End
+        GetComponent<BaseController>().SetState(BaseController.State.Ready);
         AtkStage = AttackStage.Ready;
         Attacking = false;
     }
@@ -135,6 +147,7 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
         yield return new WaitForSeconds(Utility.FramesToSeconds(Attacks[attackIndex].Recovery));
 
         // End
+        GetComponent<BaseController>().SetState(BaseController.State.Ready);
         AtkStage = AttackStage.Ready;
         Attacking = false;
     }

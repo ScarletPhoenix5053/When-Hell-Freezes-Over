@@ -28,6 +28,11 @@ public class PlayerAttackManager : AttackManager, IHitboxResponder
         yield return base.IE_DoAttack(attackIndex);
         SetAtkState(AttackState.None);
     }
+    protected override IEnumerator IE_DoRangedAttack(int attackIndex)
+    {
+        yield return base.IE_DoRangedAttack(attackIndex);
+        SetAtkState(AttackState.None);
+    }
     /// <summary>
     /// Performs normal attack actions. Automatically handles chaining.
     /// </summary>
@@ -90,7 +95,11 @@ public class PlayerAttackManager : AttackManager, IHitboxResponder
     /// </summary>
     public void RangedAttack()
     {
-        if (AtkStage == AttackStage.Ready) DoRangedAttack(0);
+        if (AtkStage == AttackStage.Ready)
+        {
+            SetAtkState(AttackState.Ranged);
+            DoRangedAttack(0);
+        }
     }
     /// <summary>
     /// Re-populates <see cref="Attacks"/> array based on
