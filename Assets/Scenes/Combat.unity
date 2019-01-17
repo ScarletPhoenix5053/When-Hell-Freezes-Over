@@ -124,6 +124,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shield MeatBlob
       objectReference: {fileID: 0}
+    - target: {fileID: 6247609725106013985, guid: b0089683e247dee49a37d9c1f55fb83c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1525194155671870786, guid: b0089683e247dee49a37d9c1f55fb83c,
         type: 3}
       propertyPath: m_LocalPosition.x

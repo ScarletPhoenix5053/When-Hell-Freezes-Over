@@ -9,15 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb82047a286ce7148b5718176ec43ce7, type: 3}
-  m_Name: DemonMace_Special.aData
-  m_EditorClassIdentifier: 
-  Damage: 1
-  Startup: 39
-  Active: 4
-  Recovery: 28
+  m_Script: {fileID: 0}
+  m_Name: DemonMace.dData
+  m_EditorClassIdentifier: Assembly-CSharp::DamageData
+  Damage: 2
+  KnockBack: 3
+  KnockUp: 1
   HitStun: 32
-  HitStop: 12
-  Sign: 1
-  KnockBack: 8
-  KnockUp: 3
+  HitStop: 6
+  Sign: -1
