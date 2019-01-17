@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Ladder : MonoBehaviour
 {
-    private PlayerLadder playerLadder;
+    private PlayerBrooke playerLadder;
 
     void Start()
     {
-        playerLadder = FindObjectOfType<PlayerLadder>();
+        playerLadder = FindObjectOfType<PlayerBrooke>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)

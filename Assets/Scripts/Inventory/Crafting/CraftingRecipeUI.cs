@@ -8,7 +8,7 @@ public class CraftingRecipeUI : MonoBehaviour
     [SerializeField] ItemSlot[] itemSlots;
 
     public GameObject notEnough;
-    public GameObject fullInventory;
+    public Animator anim;
 
     public ItemContainer itemContainer;
 
@@ -37,13 +37,13 @@ public class CraftingRecipeUI : MonoBehaviour
                 else
                 {
                     Debug.Log("inventory is full.");
-                    fullInventory.SetActive(true);
+                    
                 }
             }
             else
             {
                 Debug.Log("not enough materials bruv");
-                notEnough.SetActive(true);
+                StartCoroutine(NotEnoughMaterials());
             }
         }
     }
@@ -85,4 +85,14 @@ public class CraftingRecipeUI : MonoBehaviour
         }
         return slotIndex;
     }
+
+    IEnumerator NotEnoughMaterials()
+    {
+        anim.SetBool("isDisplayed", true);
+        yield return new WaitForSeconds(5f);
+        anim.SetBool("isDisplayed", false);
+        //isAchieved = false;
+        StopCoroutine(NotEnoughMaterials());
+    }
+
 }
