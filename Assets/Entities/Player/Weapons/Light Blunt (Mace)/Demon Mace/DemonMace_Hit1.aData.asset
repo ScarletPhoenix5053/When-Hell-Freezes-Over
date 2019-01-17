@@ -12,7 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb82047a286ce7148b5718176ec43ce7, type: 3}
   m_Name: DemonMace_Hit1.aData
   m_EditorClassIdentifier: 
-  DamageData: {fileID: 11400000, guid: abd2e7afb64bd29449f0e8197c8d2375, type: 2}
   Startup: 19
   Active: 2
   Recovery: 18
+  ImpulseStrength: 5
+  Damage: 2
+  KnockBack: 2
+  KnockUp: 0
+  HitStun: 32
+  HitStop: 4
+  Sign: 1
