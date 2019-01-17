@@ -10,12 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 0}
-  m_Name: StarterBow.rAData
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectileAttackData
-  DamageData: {fileID: 11400000, guid: 3521efd527e4d1b41a2629da7f7f7adc, type: 2}
-  Startup: 22
-  Active: 1
-  Recovery: 22
-  ImpulseStrength: 5
-  Speed: 0
-  StartDirection: {x: 0, y: 0}
+  m_Name: WeakBow.dData
+  m_EditorClassIdentifier: Assembly-CSharp::DamageData
+  Damage: 1
+  KnockBack: 8
+  KnockUp: 3
+  HitStun: 32
+  HitStop: 4
+  Sign: 1

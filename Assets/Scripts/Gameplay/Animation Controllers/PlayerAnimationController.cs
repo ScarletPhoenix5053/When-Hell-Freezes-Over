@@ -5,12 +5,6 @@ using Spine.Unity;
 
 public class PlayerAnimationController : AnimationController
 {
-    /// <summary>
-    /// Returns the <see cref="TrackEntry"/> of the first track in spine animation. Null if nothing is playing.
-    /// </summary>
-    public TrackEntry CurrentTrack { get { return sk_an.AnimationState.GetCurrent(0); }}
-
-    private SkeletonAnimation sk_an;
     private PlayerController plr;
     private PlayerAttackManager am;
     private PlayerMotionController mc;
@@ -44,7 +38,6 @@ public class PlayerAnimationController : AnimationController
         plr = GetComponent<PlayerController>();
         am = GetComponent<PlayerAttackManager>();
         mc = GetComponent<PlayerMotionController>();
-        sk_an = GetComponent<SkeletonAnimation>();
     }
     private void LateUpdate()
     {
@@ -111,6 +104,10 @@ public class PlayerAnimationController : AnimationController
                     
                     switch (newAttackState)
                     {
+                        case PlayerAttackManager.AttackState.Ranged:
+                            sk_an.AnimationState.SetAnimation(0, "BowFirstShot", false);
+                            break;
+
                         case PlayerAttackManager.AttackState.N1:
                             sk_an.AnimationState.SetAnimation(0, "MaceString1", false);
                             break;
@@ -123,8 +120,6 @@ public class PlayerAnimationController : AnimationController
                             sk_an.AnimationState.SetAnimation(0, "MaceString3", false);
                             break;
 
-                        case PlayerAttackManager.AttackState.Ranged:
-                            break;
                         default:
                             throw new NotImplementedException("This attack animation sub-state is not yet configured!"); ;
                     }
@@ -135,17 +130,6 @@ public class PlayerAnimationController : AnimationController
             default:
                 throw new NotImplementedException("This animation state is not yet configured");
         }
-    }
-
-
-    /// <summary>
-    /// Sets X orientation to match sign. Automatically processes sign.
-    /// </summary>
-    /// <param name="sign"></param>
-    public void OrientTo(int sign)
-    {
-        sign = Math.Sign(sign);
-        sk_an.Skeleton.ScaleX = sign;
     }
     
     public void ChangeToIdleState()

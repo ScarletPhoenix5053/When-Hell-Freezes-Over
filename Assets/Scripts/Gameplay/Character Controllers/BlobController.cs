@@ -31,7 +31,6 @@ public class BlobController : EnemyController
         base.SetState(newState);
         if (newState == State.InHitstun)
         {
-            an.PlayHitStun();
             am.StopAttack();
         }
     }
@@ -75,7 +74,6 @@ public class BlobController : EnemyController
             switch (CurrentBehaviour)
             {
                 case Behaviour.Idle:
-                    an.StopHitStun();
                     break;
 
                 case Behaviour.Attacking:
@@ -88,7 +86,6 @@ public class BlobController : EnemyController
                     break;
 
                 case Behaviour.Chasing:
-                    an.StopHitStun();
                     if (playerToLeft)
                     {
                         mc.MoveVector = Vector2.left;

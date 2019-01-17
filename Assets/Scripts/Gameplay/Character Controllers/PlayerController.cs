@@ -160,6 +160,8 @@ public class PlayerController : BaseController
         // Ranged attack button
         if (Input.GetKeyDown(KeyCode.K))
         {
+            SetState(State.InAction);
+            SetAction(Action.Attacking);
             am.RangedAttack();
         }
 

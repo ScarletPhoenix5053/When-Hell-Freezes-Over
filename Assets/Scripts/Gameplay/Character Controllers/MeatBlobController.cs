@@ -20,24 +20,27 @@ public class MeatBlobController : EnemyController
     }
     protected override void Act()
     {
-        switch (CurrentBehaviour)
+        if (CurrentState == State.Ready)
         {
-            case Behaviour.Idle:
-                break;
+            switch (CurrentBehaviour)
+            {
+                case Behaviour.Idle:
+                    break;
 
-            case Behaviour.Chasing:
-                if (playerToLeft)
-                {
-                    mc.MoveVector = Vector2.left;
-                }
-                else
-                {
-                    mc.MoveVector = Vector2.right;
-                }
-                break;
+                case Behaviour.Chasing:
+                    if (playerToLeft)
+                    {
+                        mc.MoveVector = Vector2.left;
+                    }
+                    else
+                    {
+                        mc.MoveVector = Vector2.right;
+                    }
+                    break;
 
-            default:
-                throw new NotImplementedException("Meatblob does not support behaviour " + CurrentBehaviour);
+                default:
+                    throw new NotImplementedException("Meatblob does not support behaviour " + CurrentBehaviour);
+            }
         }
     }
 }
