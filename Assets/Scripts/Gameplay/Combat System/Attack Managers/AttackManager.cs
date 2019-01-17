@@ -69,6 +69,11 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
 
         // Track which attack is ongoing
         currentMeleeAttackIndex = attackIndex;
+
+        // Do impulse
+        if (GetComponent<PlayerController>())
+            GetComponent<CharacterMotionController>()?.
+                DoImpulse(new Vector2(Attacks[attackIndex].ImpulseStrength * GetComponent<PlayerController>().Sign, 0));
     }
     /// <summary>
     /// Generic ranged attack method. Launches a projectile after a delay.

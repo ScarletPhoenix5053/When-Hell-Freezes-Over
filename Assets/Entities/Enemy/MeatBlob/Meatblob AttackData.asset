@@ -10,14 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eb82047a286ce7148b5718176ec43ce7, type: 3}
-  m_Name: DemonMace_Hit1.aData
+  m_Name: Meatblob AttackData
   m_EditorClassIdentifier: 
-  Damage: 2
-  Startup: 19
-  Active: 2
-  Recovery: 18
-  HitStun: 60
-  HitStop: 6
-  Sign: -1
-  KnockBack: 2
-  KnockUp: 0
+  DamageData: {fileID: 11400000, guid: 28d484e66b0a41a44b0c32b2a3d20ed4, type: 2}
+  Startup: 1
+  Active: 1
+  Recovery: 60
+  ImpulseStrength: 5
