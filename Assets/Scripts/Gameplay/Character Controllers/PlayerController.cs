@@ -3,7 +3,6 @@ using System;
 using System.Collections;
 using Sierra.Combat2D;
 
-
 [RequireComponent(typeof(CharacterMotionController))]
 [RequireComponent(typeof(PlayerAttackManager))]
 [RequireComponent(typeof(Health))]
@@ -43,6 +42,7 @@ public class PlayerController : BaseController
         base.Awake();
         am = GetComponent<PlayerAttackManager>();
         an = GetComponent<PlayerAnimationController>();
+
         hp = GetComponent<Health>();
 
         if (TempDeathCanvas == null)
@@ -52,7 +52,9 @@ public class PlayerController : BaseController
     {
         if (GameManager.Instance.HitStopActive) return;
 
-        if (CurrentState == State.Ready && CurrentAction == Action.None) CheckInputByKeyCode();
+        if (CurrentState == State.Ready ||
+            (CurrentState == State.InAction && CurrentAction == Action.Attacking))
+            CheckInputByKeyCode();
 
         OrientByMotion();
     }
@@ -61,6 +63,7 @@ public class PlayerController : BaseController
         if (GameManager.Instance.HitStopActive) return;
 
         if (CurrentAction == Action.Rolling) mc.MoveVector = new Vector2(Math.Sign(transform.localScale.x), 0);
+        an.RunAnimationStateMachine();
 
         IncrimentJumpTimer();
         mc.UpdatePosition();
@@ -89,6 +92,11 @@ public class PlayerController : BaseController
         //Debug.Log("Changing player action from " + CurrentAction + " to " + newAction);
         CurrentAction = newAction;
     }
+    public override void SetState(State newState)
+    {
+        if (newState == State.Ready) SetAction(Action.None);
+        base.SetState(newState);
+    }
     /// <summary>
     /// Perform death actions for this character.
     /// </summary>
@@ -97,7 +105,6 @@ public class PlayerController : BaseController
         SetState(State.Dead);
 
         // death anim
-        an.PlayDeath();
 
         // deactivate hurtbox
         foreach (Hurtbox hurtbox in GetComponent<Health>().Hurtboxes)
@@ -119,60 +126,6 @@ public class PlayerController : BaseController
     private void OrientByMotion()
     {
         transform.localScale = new Vector3(Sign, transform.localScale.y, transform.localScale.z);
-    }
-    /// <summary>
-    /// Performs input checks as if the character is unaffected by anything.
-    /// </summary>
-    private void CheckInputAsNormal()
-    {
-        // Reset additionalJumps if on ground
-        if (additionalJumpsUsed != 0 && mc.IsGrounded)
-        {
-            additionalJumpsUsed = 0;
-            Debug.Log("Resetting Addjumps");
-        }
-
-        // Dodge roll
-        if (currentInputData.buttons[2])
-        {
-            if (currentRollRoutine != null) StopCoroutine(currentRollRoutine);
-            currentRollRoutine = RollRoutine();
-            StartCoroutine(currentRollRoutine);
-        }
-        // Ranged attack button
-        else if (currentInputData.buttons[1])
-        {
-            am.RangedAttack();
-        }
-        // Light attack button
-        else if (currentInputData.buttons[0])
-        {
-            am.NormalAttack();
-        }
-
-        // Jump
-        if (currentInputData.axes[0] > 0.5 && jumpLimitTimer <= 0)
-        {
-            if (mc.IsGrounded)
-            {
-                Debug.Log("Ground Jump");
-                mc.DoImpulse(new Vector2(0, JumpHeight));
-            }
-            else if (additionalJumpsUsed < AdditionalJumps)
-            {
-                additionalJumpsUsed++;
-
-                Debug.Log("Add Jump");
-                mc.DoImpulse(new Vector2(0, JumpHeight));
-            }
-
-            jumpLimitTimer = jumpLimitSeconds;
-        }
-        // Walk
-        if (currentInputData.axes[1] != 0)
-        {
-            mc.MoveVector = new Vector2(currentInputData.axes[1], 0);
-        }
     }    
     /// <summary>
     /// Performs input checks as if the character is unaffected by anything.
@@ -185,22 +138,29 @@ public class PlayerController : BaseController
             additionalJumpsUsed = 0;
         }
 
-        // Dodge roll
-        if (Input.GetKeyDown(KeyCode.L))
+        if (mc.IsGrounded)
         {
-            if (currentRollRoutine != null) StopCoroutine(currentRollRoutine);
-            currentRollRoutine = RollRoutine();
-            StartCoroutine(currentRollRoutine);
+            // Light attack button
+            if (Input.GetKeyDown(KeyCode.J) && 
+                (CurrentAction == Action.Attacking || CurrentAction == Action.None))
+            {
+                SetState(State.InAction);
+                SetAction(Action.Attacking);
+                am.NormalAttack();
+            }
+            // Dodge roll
+            else if (Input.GetKeyDown(KeyCode.L) && CurrentAction == Action.None)
+            {
+                if (currentRollRoutine != null) StopCoroutine(currentRollRoutine);
+                currentRollRoutine = RollRoutine();
+                StartCoroutine(currentRollRoutine);
+            }
         }
+
         // Ranged attack button
-        else if (Input.GetKeyDown(KeyCode.K))
+        if (Input.GetKeyDown(KeyCode.K))
         {
             am.RangedAttack();
-        }
-        // Light attack button
-        else if (Input.GetKeyDown(KeyCode.J))
-        {
-            am.NormalAttack();
         }
 
         // Jump
@@ -228,14 +188,17 @@ public class PlayerController : BaseController
             Physics2D.IgnoreLayerCollision(9, 13, false);
         }
 
-        // Walk
-        var walkAxis = 0;
-        if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D)){ }
-        else if (Input.GetKey(KeyCode.A)) walkAxis = -1;
-        else if (Input.GetKey(KeyCode.D)) walkAxis = 1;
-        if (walkAxis != 0)
+        if (CurrentAction == Action.None)
         {
-            mc.MoveVector = new Vector2(walkAxis, 0);
+            // Walk
+            var walkAxis = 0;
+            if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D)) { }
+            else if (Input.GetKey(KeyCode.A)) walkAxis = -1;
+            else if (Input.GetKey(KeyCode.D)) walkAxis = 1;
+            if (walkAxis != 0)
+            {
+                mc.MoveVector = new Vector2(walkAxis, 0);
+            }
         }
     }
 
@@ -245,8 +208,8 @@ public class PlayerController : BaseController
     }
     private IEnumerator RollRoutine()
     {
+        SetState(State.InAction);
         SetAction(Action.Rolling);
-        an.PlayDodgeRoll();
         foreach (Hurtbox hurtbox in hp.Hurtboxes)
         {
             hurtbox.SetInactive();
@@ -255,8 +218,8 @@ public class PlayerController : BaseController
         yield return new WaitForSeconds(Sierra.Utility.FramesToSeconds(RollFrames));
         yield return GameManager.Instance.UntillHitStopInactive();
 
+        SetState(State.Ready);
         SetAction(Action.None);
-        an.PlayIdle();
         foreach (Hurtbox hurtbox in hp.Hurtboxes)
         {
             hurtbox.SetActive();
