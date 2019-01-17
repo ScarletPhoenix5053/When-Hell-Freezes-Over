@@ -1,0 +1,27 @@
+
+MeatblobsFinalShield.png
+size: 4096,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Spear
+  rotate: false
+  xy: 1890, 2
+  size: 1551, 1398
+  orig: 1551, 1398
+  offset: 0, 0
+  index: -1
+Spear blob
+  rotate: false
+  xy: 2, 322
+  size: 1886, 1078
+  orig: 1886, 1078
+  offset: 0, 0
+  index: -1
+Spear hand
+  rotate: false
+  xy: 2, 23
+  size: 400, 297
+  orig: 400, 297
+  offset: 0, 0
+  index: -1
