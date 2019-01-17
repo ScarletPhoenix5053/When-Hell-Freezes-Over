@@ -1,0 +1,139 @@
+
+Protagonist.png
+size: 2048,512
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+BootL
+  rotate: true
+  xy: 1357, 49
+  size: 99, 69
+  orig: 99, 69
+  offset: 0, 0
+  index: -1
+BootR
+  rotate: true
+  xy: 1971, 251
+  size: 85, 54
+  orig: 85, 54
+  offset: 0, 0
+  index: -1
+GloveL
+  rotate: false
+  xy: 889, 20
+  size: 96, 134
+  orig: 96, 134
+  offset: 0, 0
+  index: -1
+KneeL
+  rotate: true
+  xy: 1264, 150
+  size: 84, 132
+  orig: 84, 132
+  offset: 0, 0
+  index: -1
+KneeR
+  rotate: true
+  xy: 827, 156
+  size: 78, 165
+  orig: 78, 165
+  offset: 0, 0
+  index: -1
+ThighL
+  rotate: true
+  xy: 1971, 338
+  size: 78, 61
+  orig: 78, 61
+  offset: 0, 0
+  index: -1
+ThighR
+  rotate: false
+  xy: 1917, 185
+  size: 86, 56
+  orig: 86, 56
+  offset: 0, 0
+  index: -1
+Torso
+  rotate: true
+  xy: 994, 34
+  size: 200, 268
+  orig: 200, 268
+  offset: 0, 0
+  index: -1
+a
+  rotate: true
+  xy: 420, 34
+  size: 113, 180
+  orig: 113, 180
+  offset: 0, 0
+  index: -1
+bone_axe
+  rotate: true
+  xy: 2, 149
+  size: 360, 823
+  orig: 360, 823
+  offset: 0, 0
+  index: -1
+bow_basic
+  rotate: true
+  xy: 2, 2
+  size: 145, 416
+  orig: 145, 416
+  offset: 0, 0
+  index: -1
+bow_basicstring
+  rotate: true
+  xy: 420, 25
+  size: 7, 355
+  orig: 7, 355
+  offset: 0, 0
+  index: -1
+demon_mace
+  rotate: true
+  xy: 827, 236
+  size: 273, 619
+  orig: 273, 619
+  offset: 0, 0
+  index: -1
+ds
+  rotate: true
+  xy: 602, 34
+  size: 113, 180
+  orig: 113, 180
+  offset: 0, 0
+  index: -1
+file
+  rotate: false
+  xy: 1448, 20
+  size: 467, 489
+  orig: 467, 489
+  offset: 0, 0
+  index: -1
+fn
+  rotate: false
+  xy: 784, 7
+  size: 103, 140
+  orig: 103, 140
+  offset: 0, 0
+  index: -1
+g
+  rotate: true
+  xy: 1917, 418
+  size: 91, 117
+  orig: 91, 117
+  offset: 0, 0
+  index: -1
+gb
+  rotate: false
+  xy: 1264, 31
+  size: 91, 117
+  orig: 91, 117
+  offset: 0, 0
+  index: -1
+vb vbv
+  rotate: true
+  xy: 1917, 243
+  size: 173, 52
+  orig: 173, 52
+  offset: 0, 0
+  index: -1
