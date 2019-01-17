@@ -64,7 +64,7 @@ public class MeatBlobShieldedController : EnemyController
         waitingToTurn = true;
         yield return new WaitForSeconds(Sierra.Utility.FramesToSeconds(TurnDelayFrames));
         yield return GameManager.Instance.UntillHitStopInactive();
-        if (CurrentState == State.InHitstun) yield return null;
+        while (CurrentState == State.InHitstun) yield return null;
         
         waitingToTurn = false;
         transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);

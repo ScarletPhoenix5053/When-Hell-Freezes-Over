@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: StarterBow.rAData
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileAttackData
   DamageData: {fileID: 11400000, guid: 3521efd527e4d1b41a2629da7f7f7adc, type: 2}
-  Startup: 22
+  Startup: 21
   Active: 1
   Recovery: 22
   ImpulseStrength: 5

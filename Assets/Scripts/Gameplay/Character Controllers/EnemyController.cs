@@ -57,7 +57,7 @@ public abstract class EnemyController : BaseController
     {
         Debug.Log(name + "Is Dead.");
         SetState(State.Dead);
-        StopAllCoroutines();
+        //StopAllCoroutines();
         
         // Despawn
         Destroy(gameObject, 1f);

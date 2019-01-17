@@ -168,7 +168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentState: 0
   CurrentBehaviour: 0
-  ChaseRange: 12
+  ChaseRange: 10
 --- !u!114 &4287611348197353290
 MonoBehaviour:
   m_ObjectHideFlags: 0
