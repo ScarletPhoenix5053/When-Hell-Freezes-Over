@@ -9,16 +9,17 @@ public class InventoryManager : MonoBehaviour
     [SerializeField] Inventory inventory;
     [SerializeField] EquipmentPanel equipmentPanel;
     [SerializeField] CraftingWindow craftingWindow;
+    [SerializeField] DestroyDialog dropCheck;
 
     private void Awake()
     {
         inventory.OnItemLeftClickedEvent += EquipFromInventory;
+        inventory.OnItemRightClickedEvent += DestroyItem;
         equipmentPanel.OnItemLeftClickedEvent += UnequipFromEquipPanel;
     }
 
     private void EquipFromInventory(GenericItem item)
     {
-        Debug.Log("oof");
         if(item is MeleeWeaponItem)
         {
             Equip((MeleeWeaponItem)item);
@@ -69,5 +70,20 @@ public class InventoryManager : MonoBehaviour
         {
             inventory.AddItem(item);
         }
+    }
+
+    public void DestroyItem(GenericItem item)
+    {
+        if (item == null) return;
+
+        dropCheck.Show();
+        dropCheck.OnYesEvent += () => ActuallyDestroyItem(item);    
+    }
+
+    public void ActuallyDestroyItem(GenericItem item)
+    {
+        inventory.RemoveItem(item);
+        //Destroy(item);
+
     }
 }

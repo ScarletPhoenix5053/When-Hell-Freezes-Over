@@ -10,7 +10,7 @@ public class PlayerBrooke : MonoBehaviour
 
     //LADDERS
     public bool OnLadder;
-    public float climbSpeed;
+    //public float climbSpeed;
     private float climbVelocity;
     private float gravityStore;
 
@@ -21,6 +21,9 @@ public class PlayerBrooke : MonoBehaviour
     //FORGES
     public bool atForge;
     public GameObject prompt;
+
+    //ITEMPICKUP
+    public GameObject currentinterObj = null;
 
     private void Start()
     {
@@ -39,8 +42,12 @@ public class PlayerBrooke : MonoBehaviour
         if(health.Dead == true)
         {
             transform.position = respawnPoint;
-            //Can make a function called RESPAWN if necessary.
             health.Hp = 6;
+        }
+
+        if (Input.GetKey(KeyCode.E) && currentinterObj)
+        {
+            currentinterObj.SendMessage("DoInteraction");
         }
     }
 
@@ -78,6 +85,12 @@ public class PlayerBrooke : MonoBehaviour
             atForge = true;
             prompt.SetActive(true);
         }
+
+        if (other.tag == "Interactable")
+        {
+            Debug.Log(other.name);
+            currentinterObj = other.gameObject;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -86,6 +99,14 @@ public class PlayerBrooke : MonoBehaviour
         {
             atForge = false;
             prompt.SetActive(false);
+        }
+
+        if (other.tag =="Interactable")
+        {
+            if (other.gameObject == currentinterObj)
+            {
+                currentinterObj = null;
+            }
         }
     }
 
