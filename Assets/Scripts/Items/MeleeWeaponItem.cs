@@ -12,7 +12,7 @@ public class MeleeWeaponItem : GenericItem
 
     public enum WeaponType
     {
-        LongSword, GreatSword, Mace, Warhammer
+        LightSword, GreatSword, Mace, Warhammer
     }
 
 

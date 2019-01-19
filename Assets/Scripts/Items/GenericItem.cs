@@ -19,6 +19,7 @@ public class GenericItem : ScriptableObject
     [SerializeField] string id;
     public string ID { get { return id; } }
     public string Name = "New Item";
+    [TextArea(3 , 10)]
     public string Desc = "A new item.";
     public int MaximumStacks = 1;
     public Sprite Icon;

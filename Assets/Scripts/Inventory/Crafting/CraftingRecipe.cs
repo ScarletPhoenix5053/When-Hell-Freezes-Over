@@ -7,7 +7,6 @@ using UnityEngine;
 public struct ItemAmount
 {
     public GenericItem Item;
-    [Range(1, 999)]
     public int Amount;
 }
 

@@ -31,7 +31,7 @@ public class ItemChest : MonoBehaviour
         if(isInRange && !isEmpty && Input.GetKeyDown(itemPickupKeycode))
         {
             GenericItem itemCopy = item.GetCopy();
-            //Item isn't showing up in the inventory?
+            //Item tooltip isn't appearing
             if (inventory.AddItem(itemCopy))
             {
                 amount--;
