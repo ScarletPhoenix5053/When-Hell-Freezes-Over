@@ -5,6 +5,23 @@ using Spine.Unity;
 
 public class PlayerAnimationController : AnimationController
 {
+    public bool CloseToGround
+    {
+        get
+        {
+            Debug.Log("checking close");
+            var col = GetComponent<Collider2D>();
+            LayerMask layerMask;
+            if (Input.GetKey(KeyCode.S)) layerMask = LayerMask.GetMask("Environment");
+            else layerMask = LayerMask.GetMask("Environment", "Platform");
+            return Physics2D.Raycast(
+                new Vector2(col.bounds.center.x, col.bounds.center.y - col.bounds.extents.y),
+                Vector2.down,
+                -1f,
+                layerMask);
+        }
+    }
+
     private PlayerController plr;
     private PlayerAttackManager am;
     private PlayerMotionController mc;
@@ -53,7 +70,7 @@ public class PlayerAnimationController : AnimationController
                 if (plr.CurrentState == BaseController.State.Ready)
                 {
                     if (mc.MoveVector.x != 0) ChangeToRunState();
-                    if (!mc.IsGrounded) ChangeToFallState();
+                    if (!mc.IsGrounded && !CloseToGround) ChangeToFallState();
                 }
                 else if (plr.CurrentState == BaseController.State.InAction)
                 {
@@ -66,7 +83,7 @@ public class PlayerAnimationController : AnimationController
                 if (plr.CurrentState == BaseController.State.Ready)
                 {
                     if (mc.MoveVector.x == 0) ChangeToIdleState();
-                    if (!mc.IsGrounded) ChangeToFallState();
+                    if (!mc.IsGrounded && !CloseToGround) ChangeToFallState();
                 }
                 else if (plr.CurrentState == BaseController.State.InAction)
                 {

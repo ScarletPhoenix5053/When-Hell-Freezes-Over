@@ -210,8 +210,11 @@ public class PlayerController : BaseController
     }
     private IEnumerator RollRoutine()
     {
+        var capsule = GetComponent<CapsuleCollider2D>();
         SetState(State.InAction);
         SetAction(Action.Rolling);
+        capsule.size = new Vector2(capsule.size.x, capsule.size.y / 2);
+        capsule.offset = new Vector2(capsule.offset.x, capsule.offset.y - 0.6f);
         foreach (Hurtbox hurtbox in hp.Hurtboxes)
         {
             hurtbox.SetInactive();
@@ -222,6 +225,8 @@ public class PlayerController : BaseController
 
         SetState(State.Ready);
         SetAction(Action.None);
+        capsule.size = new Vector2(capsule.size.x, capsule.size. y * 2);
+        capsule.offset = new Vector2(capsule.offset.x, capsule.offset.y + 0.6f);
         foreach (Hurtbox hurtbox in hp.Hurtboxes)
         {
             hurtbox.SetActive();

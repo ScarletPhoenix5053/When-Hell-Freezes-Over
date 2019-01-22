@@ -27,6 +27,7 @@ public class ProjectileController : MonoBehaviour, IHitboxResponder
     protected void OnEnable()
     {
         hb.SetActive();
+        Destroy(gameObject, 1f);
     }
     protected void FixedUpdate()
     {

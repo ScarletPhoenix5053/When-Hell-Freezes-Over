@@ -57,6 +57,11 @@ public class MeatBlobShieldedController : EnemyController
                 BouncePadPrefab,
                 new Vector3(transform.position.x, transform.position.y, transform.position.z), 
                 Quaternion.identity);
+        var eventRaiser = GetComponent<EventRaiser>();
+        if (eventRaiser != null)
+        {
+            eventRaiser.RaiseEvent();
+        }
         base.Die();
     }
     protected IEnumerator TurnRoutine()
