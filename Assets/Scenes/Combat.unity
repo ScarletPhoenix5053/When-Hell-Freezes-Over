@@ -305,6 +305,34 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 913530798}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1508435225 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4746834277537396295, guid: efba3e9d87b9cf24991b239151c01183,
+    type: 3}
+  m_PrefabInstance: {fileID: 4746834278627180535}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1508435226
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1508435225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 469813415af298144954ba115c07043a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControllerAttackButton: 332
+  KeboardAttackButton: 106
+  ControllerSpecialAttackButton: 333
+  KeboardSpecialAttackButton: 107
+  ControllerRangedAttackButton: 335
+  KeboardRangedAttackButton: 108
+  ControllerRollButton: 331
+  KeboardRollButton: 304
+  ControllerJumpButton: 330
+  KeboardJumpButton: 32
 --- !u!1 &1529487022
 GameObject:
   m_ObjectHideFlags: 0

@@ -25,8 +25,7 @@ public class PlayerController : BaseController
     private PlayerAttackManager am;
     private PlayerAnimationController an;
     private Health hp;
-
-    private InputData currentInputData;
+    
     private IEnumerator currentRollRoutine;
 
     private float jumpLimitSeconds = 0.2f;
@@ -54,7 +53,7 @@ public class PlayerController : BaseController
 
         if (CurrentState == State.Ready ||
             (CurrentState == State.InAction && CurrentAction == Action.Attacking))
-            CheckInputByKeyCode();
+            CheckInput();
 
         OrientByMotion();
         an.RunAnimationStateMachine();
@@ -71,16 +70,6 @@ public class PlayerController : BaseController
     #endregion
 
     #region Public Methods
-    /// <summary>
-    /// Checks a <see cref="InputData"/> struct and determines what actions to make based on the data contained.
-    /// </summary>
-    /// <param name="data"></param>
-    public void ReadInput(InputData data)
-    {
-        currentInputData = data;
-        Debug.LogWarning("ReadInput method disabled");
-        //if (CurrentState == State.Ready && CurrentAction == Action.None) CheckInputAsNormal();
-    }
     /// <summary>
     /// Change the player's current action state
     /// </summary>
@@ -130,7 +119,7 @@ public class PlayerController : BaseController
     /// <summary>
     /// Performs input checks as if the character is unaffected by anything.
     /// </summary>
-    private void CheckInputByKeyCode()
+    private void CheckInput()
     {
         // Reset additionalJumps if on ground
         if (additionalJumpsUsed != 0 && mc.IsGrounded)
