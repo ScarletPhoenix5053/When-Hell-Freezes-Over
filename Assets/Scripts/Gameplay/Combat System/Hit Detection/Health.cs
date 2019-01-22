@@ -76,18 +76,18 @@ public class Health : MonoBehaviour
     private void Die()
     {
         Hp = 0;
-        chr.Die();
+        chr?.Die();
         StopAllCoroutines();
     }
 
     private IEnumerator HitStunRoutine()
     {
-        chr.SetState(BaseController.State.InHitstun);
+        chr?.SetState(BaseController.State.InHitstun);
 
         // Start timer
         yield return Utility.FrameTimer(atkData.HitStun, 0);
 
         // End timer
-        chr.SetState(BaseController.State.Ready);
+        chr?.SetState(BaseController.State.Ready);
     }
 }

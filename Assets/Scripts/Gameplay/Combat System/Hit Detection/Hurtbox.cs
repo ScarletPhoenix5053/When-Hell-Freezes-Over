@@ -28,7 +28,9 @@ namespace Sierra.Combat2D
         public class Colours
         {
             public Color Inactive = new Color(0.5f, 0.5f, 0.5f, 0.25f);
-            public Color Active = new Color(0, 0.8f, 0, 0.25f);
+            public Color Vulnerable = new Color(0, 0.8f, 0, 0.25f);
+            public Color Critical = new Color(0.8f, 1, 0, 0.25f);
+            public Color Blocking = new Color(0, 0, 1, 0.25f);
         }
 
         protected virtual void Reset()
@@ -118,7 +120,15 @@ namespace Sierra.Combat2D
                     break;
 
                 case State.Vulnerable:
-                    Gizmos.color = ColliderColour.Active;
+                    Gizmos.color = ColliderColour.Vulnerable;
+                    break;
+
+                case State.Critical:
+                    Gizmos.color = ColliderColour.Critical;
+                    break;
+
+                case State.Blocking:
+                    Gizmos.color = ColliderColour.Blocking;
                     break;
             }
         }

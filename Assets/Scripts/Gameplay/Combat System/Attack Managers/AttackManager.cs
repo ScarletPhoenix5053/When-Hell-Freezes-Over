@@ -29,6 +29,7 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
         // On successful hit, deal damage and other effects to the character attatched to the hurtbox
         // Disable hitbox on hit.
         var hb = hurtbox.GetComponent<Hurtbox>();
+        var criticalHit = false;
         if (hb != null)
         {
             // if hit a button
@@ -37,14 +38,14 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
                 hb.CheckHit();
             }
             // else must have hit a character
-            else if (hb.CheckHit())
+            else if (hb.CheckHit(out criticalHit))
             {
                 // set sign of attack
                 Attacks[currentAttackIndex].Sign = Math.Sign(transform.localScale.x);
                 hurtbox.GetComponent<Hurtbox>().hp.Damage(Attacks[currentAttackIndex]);
                 GameManager.Instance.HitStopFor(Attacks[currentAttackIndex].HitStop);
                 //hurtbox.GetComponent<Hurtbox>().Health.LogHp();
-
+                
                 Hitbox.SetInactive();                
             }
         }

@@ -9,7 +9,6 @@ public class PlayerAnimationController : AnimationController
     {
         get
         {
-            Debug.Log("checking close");
             var col = GetComponent<Collider2D>();
             LayerMask layerMask;
             if (Input.GetKey(KeyCode.S)) layerMask = LayerMask.GetMask("Environment");
