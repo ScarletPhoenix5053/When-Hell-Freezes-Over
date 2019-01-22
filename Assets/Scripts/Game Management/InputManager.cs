@@ -62,6 +62,11 @@ public class InputManager : MonoBehaviour
         return Input.GetKeyDown(Instance.ControllerJumpButton)
             || Input.GetKeyDown(Instance.KeyboardJumpButton);
     }
+    public static bool JumpHeld()
+    {
+        return Input.GetKey(Instance.ControllerJumpButton)
+            || Input.GetKey(Instance.KeyboardJumpButton);
+    }
     public static bool Roll()
     {
         return Input.GetKeyDown(Instance.ControllerRollButton)
@@ -79,7 +84,10 @@ public class InputManager : MonoBehaviour
     #region Axial Inputs
     public static float MotionAxis()
     {
-        return Input.GetAxis("Horizontal");
+        var motionAxis = 0f;
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow) || Input.GetAxis("Horizontal") < -booleanDeadZone) motionAxis -= 1;
+        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow) || Input.GetAxis("Horizontal") > booleanDeadZone) motionAxis += 1;
+        return motionAxis;
     }
     public static float VeticalAxis()
     {

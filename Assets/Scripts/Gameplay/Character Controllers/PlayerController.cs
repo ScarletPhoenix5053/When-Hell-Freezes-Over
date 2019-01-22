@@ -130,7 +130,7 @@ public class PlayerController : BaseController
         if (mc.IsGrounded)
         {
             // Light attack button
-            if (Input.GetKeyDown(KeyCode.J) && 
+            if (InputManager.Attack() && 
                 (CurrentAction == Action.Attacking || CurrentAction == Action.None))
             {
                 SetState(State.InAction);
@@ -138,7 +138,7 @@ public class PlayerController : BaseController
                 am.NormalAttack();
             }
             // Dodge roll
-            else if (Input.GetKeyDown(KeyCode.L) && CurrentAction == Action.None)
+            else if (InputManager.Roll() && CurrentAction == Action.None)
             {
                 if (currentRollRoutine != null) StopCoroutine(currentRollRoutine);
                 currentRollRoutine = RollRoutine();
@@ -147,7 +147,7 @@ public class PlayerController : BaseController
         }
 
         // Ranged attack button
-        if (Input.GetKeyDown(KeyCode.K))
+        if (InputManager.RangedAttack())
         {
             SetState(State.InAction);
             SetAction(Action.Attacking);
@@ -155,7 +155,7 @@ public class PlayerController : BaseController
         }
 
         // Jump
-        if (Input.GetKeyDown(KeyCode.W))
+        if (InputManager.Jump())
         {
             if (mc.IsGrounded)
             {
@@ -170,7 +170,7 @@ public class PlayerController : BaseController
             jumpLimitTimer = jumpLimitSeconds;
         }
         // Platform interactions
-        if (Input.GetKey(KeyCode.S))
+        if (InputManager.HoldingDown())
         {
             Physics2D.IgnoreLayerCollision(9, 13, true);
         }
@@ -182,13 +182,9 @@ public class PlayerController : BaseController
         if (CurrentAction == Action.None)
         {
             // Walk
-            var walkAxis = 0;
-            if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D)) { }
-            else if (Input.GetKey(KeyCode.A)) walkAxis = -1;
-            else if (Input.GetKey(KeyCode.D)) walkAxis = 1;
-            if (walkAxis != 0)
+            if (InputManager.MotionAxis() != 0)
             {
-                mc.MoveVector = new Vector2(walkAxis, 0);
+                mc.MoveVector = new Vector2(InputManager.MotionAxis(), 0);
             }
         }
     }

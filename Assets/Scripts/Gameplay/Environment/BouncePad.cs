@@ -26,8 +26,8 @@ public class BouncePad : MonoBehaviour
     {
         // If player
         if (other.tag == "Player" && 
-            (Input.GetKey(KeyCode.W) ||
-            (other.GetComponent<CharacterMotionController>().ContMotionVector.y < -1f) && !Input.GetKey(KeyCode.S)))
+            (InputManager.Jump()) ||
+            (other.GetComponent<CharacterMotionController>().ContMotionVector.y < -1f) && !InputManager.HoldingDown())
         {
             // Apply impluse
             skeletonAnimation.AnimationState.SetAnimation(0, "Jump", false);
