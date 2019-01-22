@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 69b9ff052498ef247ba4ff2eb4aefbd2
   Name: Blacksmith Hammer
-  Desc: Chad's trusty hammer. Great for making weapons and pulverizing meatbags.
+  Desc: A blacksmith's trusty hammer. Not bad to start with.
   MaximumStacks: 1
   Icon: {fileID: 21300000, guid: 4115c6f1516da114687b2a63cb7c9d06, type: 3}
   equipmentType: 1

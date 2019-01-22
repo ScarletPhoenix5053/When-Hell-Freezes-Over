@@ -87,8 +87,9 @@ public class CraftingRecipeUI : MonoBehaviour
 
     IEnumerator NotEnoughMaterials()
     {
+        
         anim.SetBool("isDisplayed", true);
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSecondsRealtime(4f);
         anim.SetBool("isDisplayed", false); //this is not being set to false all of a sudden?
         StopCoroutine(NotEnoughMaterials());
     }

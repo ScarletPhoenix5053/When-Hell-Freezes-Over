@@ -15,5 +15,6 @@ MonoBehaviour:
   id: 32293a175eefa5b4cbf31f9f4220145d
   Name: Soul Shard
   Desc: You defeated a boss! Good for you.
-  Icon: {fileID: 0}
+  MaximumStacks: 1
+  Icon: {fileID: 21300000, guid: 56bef4fc7ab42104d85107fa898f0f40, type: 3}
   equipmentType: 3

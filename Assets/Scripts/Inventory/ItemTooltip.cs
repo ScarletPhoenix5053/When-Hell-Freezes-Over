@@ -23,6 +23,10 @@ public class ItemTooltip : MonoBehaviour
 
             tooltip.transform.position = position;
         }
+        else
+        {
+                Debug.Log("Nothing here, cap'n");
+        }
         
     }
 

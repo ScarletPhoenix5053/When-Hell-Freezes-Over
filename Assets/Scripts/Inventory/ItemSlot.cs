@@ -8,6 +8,7 @@ using UnityEngine.EventSystems;
 public class ItemSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public event Action<GenericItem> OnLeftClickEvent;
+    public event Action<GenericItem> OnRightClickEvent;
 
     private GenericItem _item;
     public GenericItem Item
@@ -22,8 +23,9 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
             }
             else
             {
-                image.sprite = _item.Icon;
+                //Not being enabled until I open the inventory before picking up the items.
                 image.enabled = true;
+                image.sprite = _item.Icon;
             }
         }
     }
@@ -70,13 +72,21 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        
         if(eventData != null && eventData.button == PointerEventData.InputButton.Left)
         {
             if (Item != null && OnLeftClickEvent != null)
             {
                 Debug.Log("Equipping");
                 OnLeftClickEvent(Item);
+            }
+        }
+
+        if (eventData != null && eventData.button == PointerEventData.InputButton.Right)
+        {
+            if (Item != null && OnRightClickEvent != null)
+            {
+                Debug.Log("Destroying.");
+                OnRightClickEvent(Item);
             }
         }
     }

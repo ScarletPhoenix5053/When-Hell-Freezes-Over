@@ -31,6 +31,7 @@ public class ItemChest : MonoBehaviour
         if(isInRange && !isEmpty && Input.GetKeyDown(itemPickupKeycode))
         {
             GenericItem itemCopy = item.GetCopy();
+            //Item tooltip isn't appearing
             if (inventory.AddItem(itemCopy))
             {
                 amount--;
@@ -50,10 +51,8 @@ public class ItemChest : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("uhhh");
         if (other.gameObject.tag == "Player")
         {
-            Debug.Log("ohhh");
             isInRange = true;
             if (!isEmpty)
             {

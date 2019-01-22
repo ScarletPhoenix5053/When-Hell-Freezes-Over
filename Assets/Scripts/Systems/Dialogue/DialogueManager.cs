@@ -8,11 +8,11 @@ public class DialogueManager : MonoBehaviour
     public GameObject dBox;
     public Text dText;
     public Text dName;
-    public string cName;
+    [HideInInspector] public string cName;
 
     public bool dialogActive;
 
-    public string[] dialogLines;
+    [HideInInspector] public string[] dialogLines;
     public int currentLine;
     //private PlayerController thePlayer;
 

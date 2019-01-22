@@ -7,6 +7,7 @@ public class EquipmentPanel : MonoBehaviour
 {
     [SerializeField] Transform equipmentSlotsParent;
     [SerializeField] EquipmentSlot[] equipmentSlots;
+    public List<GenericItem> equippedItems = new List<GenericItem>();
 
     public event Action<GenericItem> OnItemLeftClickedEvent;
 
@@ -26,6 +27,7 @@ public class EquipmentPanel : MonoBehaviour
             {
                 previousItem = (GenericItem)equipmentSlots[i].Item;
                 equipmentSlots[i].Item = item;
+                equippedItems.Add(item); //added not tested
                 return true;
             }
         }
@@ -40,7 +42,9 @@ public class EquipmentPanel : MonoBehaviour
             if (equipmentSlots[i].Item == item)
             {
                 equipmentSlots[i].Item = null;
+                equippedItems.Remove(item); //added not tested
                 return true;
+
             }
         }
         return false;

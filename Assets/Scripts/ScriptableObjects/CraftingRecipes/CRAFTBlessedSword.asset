@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09bd1dbdeb82db546bd12d61e0686341, type: 3}
+  m_Name: CRAFTBlessedSword
+  m_EditorClassIdentifier: 
+  Materials:
+  - Item: {fileID: 11400000, guid: 32293a175eefa5b4cbf31f9f4220145d, type: 2}
+    Amount: 5
+  - Item: {fileID: 11400000, guid: cdfc058d3abb5b741904190ffd43a259, type: 2}
+    Amount: 4
+  - Item: {fileID: 11400000, guid: 65bea82868ef4db438ead9be9ae80da0, type: 2}
+    Amount: 2
+  Results:
+  - Item: {fileID: 11400000, guid: 7171afdbb704d3d42906185038c1d51b, type: 2}
+    Amount: 1

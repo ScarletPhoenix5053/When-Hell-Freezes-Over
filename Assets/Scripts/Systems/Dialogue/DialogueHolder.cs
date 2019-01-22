@@ -10,6 +10,8 @@ public class DialogueHolder : MonoBehaviour
     [TextArea(2, 10)]
     public string[] dialogueLines;
 
+    public bool isBoss;
+
 
     void Start()
     {
@@ -23,9 +25,8 @@ public class DialogueHolder : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D other)
     {
-        if (other.gameObject.name == "Player")
+        if (other.gameObject.tag == "Player")
         {
-
             if (Input.GetKeyDown(KeyCode.Space)) //If it's getkeydown the first line doesn't play, but it doesn't repeat. 
             {
                 //Audio here?
@@ -39,7 +40,9 @@ public class DialogueHolder : MonoBehaviour
                 }
 
             }
+            
         }
     }
+
 
 }

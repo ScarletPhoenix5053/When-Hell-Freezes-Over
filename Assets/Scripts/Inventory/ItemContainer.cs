@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class ItemContainer : MonoBehaviour, IItemContainer
 {
     [SerializeField] protected ItemSlot[] itemSlots;
+    public List<GenericItem> genericItems = new List<GenericItem>();
 
     public virtual bool AddItem(GenericItem item)
     {
@@ -13,6 +14,7 @@ public abstract class ItemContainer : MonoBehaviour, IItemContainer
             if (itemSlots[i].Item == null || (itemSlots[i].Item.ID == item.ID && itemSlots[i].Amount < item.MaximumStacks))
             {
                 itemSlots[i].Item = item;
+                genericItems.Add(item);
                 itemSlots[i].Amount++;
                 return true;
             }
@@ -29,9 +31,11 @@ public abstract class ItemContainer : MonoBehaviour, IItemContainer
             if (itemSlots[i].Item == item)
             {
                 itemSlots[i].Amount--;
+                genericItems.Remove(item);
                 if (itemSlots[i].Amount == 0)
                 {
                     itemSlots[i].Item = null;
+                    genericItems.Remove(item);
                 }
 
                 return true;
@@ -67,6 +71,7 @@ public abstract class ItemContainer : MonoBehaviour, IItemContainer
                 if (itemSlots[i].Amount == 0)
                 {
                     itemSlots[i].Item = null;
+                    
                 }
                 return item;
             }
