@@ -43,6 +43,23 @@ namespace Sierra.Combat2D
             DrawHurtbox();
         }
         
+        public virtual bool CheckHit()
+        {
+            if (HurtboxState != State.Inactive)
+            {
+                if (HurtboxState == State.Blocking)
+                {
+                    Debug.Log("Blocked");
+                    return false;
+                }
+                return true;
+            }
+            else
+            {
+                Debug.Log(name + " is inactive!");
+                return false;
+            }
+        }
         public virtual bool CheckHit(out bool criticalHit)
         {
             criticalHit = false;
