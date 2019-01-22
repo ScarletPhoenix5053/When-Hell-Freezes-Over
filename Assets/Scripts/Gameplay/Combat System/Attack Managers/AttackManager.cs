@@ -15,7 +15,7 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
     protected GameObject projectilePrefab;
     protected GameObject[] projectiles;
 
-    protected int currentMeleeAttackIndex = 0;
+    protected int currentAttackIndex = 0;
     protected IEnumerator currentAttackRoutine = null;
 
     protected virtual void FixedUpdate()
@@ -40,9 +40,9 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
             else if (hb.CheckHit())
             {
                 // set sign of attack
-                Attacks[currentMeleeAttackIndex].Sign = Math.Sign(transform.localScale.x);
-                hurtbox.GetComponent<Hurtbox>().hp.Damage(Attacks[currentMeleeAttackIndex]);
-                GameManager.Instance.HitStopFor(Attacks[currentMeleeAttackIndex].HitStop);
+                Attacks[currentAttackIndex].Sign = Math.Sign(transform.localScale.x);
+                hurtbox.GetComponent<Hurtbox>().hp.Damage(Attacks[currentAttackIndex]);
+                GameManager.Instance.HitStopFor(Attacks[currentAttackIndex].HitStop);
                 //hurtbox.GetComponent<Hurtbox>().Health.LogHp();
 
                 Hitbox.SetInactive();                
@@ -55,25 +55,11 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
     /// </summary>
     /// <param name="attackIndex"></param>
     public virtual void DoAttack(int attackIndex)
-    {
-        // Ensure index is in range
-        if (attackIndex > Attacks.Length)
-            throw new IndexOutOfRangeException(
-                "Index " + attackIndex + " is out of range!" +
-                name + "'s Attack's array size is " + Attacks.Length);
+    {        
+        CheckAttackIndexIsInRange(attackIndex);
+        currentAttackIndex = attackIndex;
 
-        // Start Coroutine
-        if (currentAttackRoutine != null) StopCoroutine(currentAttackRoutine);
-        currentAttackRoutine = IE_DoAttack(attackIndex);
-        StartCoroutine(currentAttackRoutine);
-
-        // Track which attack is ongoing
-        currentMeleeAttackIndex = attackIndex;
-
-        // Do impulse
-        if (GetComponent<PlayerController>())
-            GetComponent<CharacterMotionController>()?.
-                DoImpulse(new Vector2(Attacks[attackIndex].ImpulseStrength * GetComponent<PlayerController>().Sign, 0));
+        StartAttackRoutine();
     }
     /// <summary>
     /// Generic ranged attack method. Launches a projectile after a delay.
@@ -81,6 +67,9 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
     /// <param name="attackIndex"></param>
     public virtual void DoRangedAttack(int attackIndex)
     {
+        CheckAttackIndexIsInRange(attackIndex);
+        currentAttackIndex = attackIndex;
+
         // Create Projectile
         projectiles = new GameObject[1];
         projectiles[0] = Instantiate(projectilePrefab, transform.position, projectilePrefab.transform.rotation);
@@ -90,10 +79,8 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
         projControl.SetAttackData(Attacks[0]);
         projControl.SetHitboxResponder(projControl);
 
-        // Start attack routine        
-        if (currentAttackRoutine != null) StopCoroutine(currentAttackRoutine);
-        currentAttackRoutine = IE_DoRangedAttack(attackIndex);
-        StartCoroutine(currentAttackRoutine);
+        // Start attack routine
+        StartRangedAttackRoutine();
     }
     /// <summary>
     /// Resets the currentley ative attack.
@@ -105,46 +92,87 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
         AtkStage = AttackStage.Ready;
         Attacking = false;
     }
-    protected virtual IEnumerator IE_DoAttack(int attackIndex)
+
+    /// <summary>
+    /// Creates an impulse that moves the characer basted on <see cref="AttackData.MotionOnAttack"/>
+    /// </summary>
+    protected void ApplyAttackMotion()
     {
+        if (GetComponent<PlayerController>())
+            GetComponent<CharacterMotionController>()?.
+                DoImpulse(new Vector2(Attacks[currentAttackIndex].MotionOnAttack * GetComponent<PlayerController>().Sign, 0));
+    }
+    /// <summary>
+    /// Throws an exception with a custom message if index is out of range
+    /// </summary>
+    /// <param name="attackIndex"></param>
+    protected void CheckAttackIndexIsInRange(int attackIndex)
+    {
+        if (attackIndex > Attacks.Length)
+            throw new IndexOutOfRangeException(
+                "Index " + attackIndex + " is out of range!" +
+                name + "'s Attack's array size is " + Attacks.Length);
+    }
+
+    protected void StartAttackRoutine()
+    {
+        if (currentAttackRoutine != null) StopCoroutine(currentAttackRoutine);
+        currentAttackRoutine = IE_DoAttack();
+        StartCoroutine(currentAttackRoutine);
+    }
+    protected void StartRangedAttackRoutine()
+    {
+        if (currentAttackRoutine != null) StopCoroutine(currentAttackRoutine);
+        currentAttackRoutine = IE_DoRangedAttack();
+        StartCoroutine(currentAttackRoutine);
+    }
+
+    protected virtual IEnumerator IE_DoAttack()
+    {
+        var attackTimer = 0;
+
         // Startup
         Attacking = true;
         Hitbox.SetResponder(this);
+        ApplyAttackMotion();
         AtkStage = AttackStage.Startup;
-        yield return new WaitForSeconds(Utility.FramesToSeconds(Attacks[attackIndex].Startup));
+        yield return Utility.FrameTimer(Attacks[currentAttackIndex].Startup, attackTimer);
 
         // Active
         Hitbox.SetActive();
         AtkStage = AttackStage.Active;
-        yield return new WaitForSeconds(Utility.FramesToSeconds(Attacks[attackIndex].Active));
+        yield return Utility.FrameTimer(Attacks[currentAttackIndex].Active, attackTimer);
 
         // Recovery
         Hitbox.SetInactive();
         AtkStage = AttackStage.Recovery;
-        yield return new WaitForSeconds(Utility.FramesToSeconds(Attacks[attackIndex].Recovery));
+        yield return Utility.FrameTimer(Attacks[currentAttackIndex].Recovery, attackTimer);
 
         // End
         GetComponent<BaseController>().SetState(BaseController.State.Ready);
         AtkStage = AttackStage.Ready;
         Attacking = false;
     }
-    protected virtual IEnumerator IE_DoRangedAttack(int attackIndex)
+    protected virtual IEnumerator IE_DoRangedAttack()
     {
+        var attackTimer = 0;
+
         // Startup
         Attacking = true;
+        ApplyAttackMotion();
         AtkStage = AttackStage.Startup;
-        yield return new WaitForSeconds(Utility.FramesToSeconds(Attacks[attackIndex].Startup));
+        yield return Utility.FrameTimer(Attacks[currentAttackIndex].Startup, attackTimer);
 
         // Active
         projectiles[0].GetComponent<ProjectileController>().SetSign(Convert.ToInt32(transform.localScale.x));
         projectiles[0].transform.position = transform.position;
         projectiles[0].SetActive(true);
         AtkStage = AttackStage.Active;
-        yield return new WaitForSeconds(Utility.FramesToSeconds(Attacks[attackIndex].Active));
+        yield return Utility.FrameTimer(Attacks[currentAttackIndex].Active, attackTimer);
 
         // Recovery
         AtkStage = AttackStage.Recovery;
-        yield return new WaitForSeconds(Utility.FramesToSeconds(Attacks[attackIndex].Recovery));
+        yield return Utility.FrameTimer(Attacks[currentAttackIndex].Recovery, attackTimer);
 
         // End
         GetComponent<BaseController>().SetState(BaseController.State.Ready);

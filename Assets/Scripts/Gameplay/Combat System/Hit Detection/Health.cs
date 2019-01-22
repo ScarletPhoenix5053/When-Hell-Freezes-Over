@@ -1,13 +1,14 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections;
+using Sierra;
 using Sierra.Combat2D;
 
 [RequireComponent(typeof(CharacterMotionController))]
 public class Health : MonoBehaviour
 {
-    public int Hp = 6;
     public int HpMax = 6;
+    public int Hp = 6;
 
     public Hurtbox[] Hurtboxes;
 
@@ -28,7 +29,6 @@ public class Health : MonoBehaviour
 
     public void Damage(AttackData data)
     {
-        atkData = data;
         // Log warning and return if ALREADY dead
         if (Dead)
         {
@@ -36,23 +36,17 @@ public class Health : MonoBehaviour
             return;
         }
 
-        // Adjust Hp
-        if (data.Damage != 0) Hp -= data.Damage;
+
+        atkData = data;
+        AdjustHP();
 
         // Check if died this frame
-        if (Hp <= 0)
-        {
-            Hp = 0;
-            chr.Die();
-            StopAllCoroutines();
-        }
+        if (Dead) Die();
         else
         {
-            // Apply Knockback/Stun
             ApplyHitStun();
             ApplyKnockBack();
         }
-
     }
 
     public void LogHp()
@@ -64,6 +58,10 @@ public class Health : MonoBehaviour
         Debug.Log(name + " is dead");
     }
 
+    private void AdjustHP()
+    {
+        if (atkData.Damage != 0) Hp -= atkData.Damage;
+    }
     private void ApplyHitStun()
     {
         if (currentHsRoutine != null) StopCoroutine(currentHsRoutine);
@@ -75,14 +73,21 @@ public class Health : MonoBehaviour
         var sign = Mathf.Sign(transform.localScale.x);
         mc?.DoImpulse(new Vector2(atkData.KnockBack * atkData.Sign, atkData.KnockUp));
     }
+    private void Die()
+    {
+        Hp = 0;
+        chr.Die();
+        StopAllCoroutines();
+    }
+
     private IEnumerator HitStunRoutine()
     {
-        var chr = GetComponent<BaseController>();
-
         chr.SetState(BaseController.State.InHitstun);
-        yield return new WaitForSeconds(Sierra.Utility.FramesToSeconds(atkData.HitStun));
-        yield return GameManager.Instance.UntillHitStopInactive();
 
+        // Start timer
+        yield return Utility.FrameTimer(atkData.HitStun, 0);
+
+        // End timer
         chr.SetState(BaseController.State.Ready);
     }
 }

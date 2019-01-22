@@ -15,7 +15,7 @@ namespace Sierra.Combat2D
     {
         protected EventRaiser EventRaiser;
 
-        protected override void Awake()
+        protected void Awake()
         {
             EventRaiser = GetComponent<EventRaiser>();
         }
