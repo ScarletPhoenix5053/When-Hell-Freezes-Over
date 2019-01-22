@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System;
+using System.Collections;
 
 namespace Sierra
 {
@@ -9,13 +10,13 @@ namespace Sierra
         {
             return Convert.ToSingle(frames) / Convert.ToSingle(framesPerSecond);
         }
-        /// <summary>
-        /// Use to throw an exception when a monobehaviour is missing an essential component.
-        /// </summary>
-        /// <param name="name">Name of the <see cref="MonoBehaviour"/></param>
-        public static void ThrowNoComponentException(string name)
+        public static IEnumerator FrameTimer(int timerDuration, int timer)
         {
-            throw new MissingComponentException(name + " is missing an essential component!");
+            while (timer < timerDuration)
+            {
+                if (!GameManager.Instance.HitStopActive) timer++;
+                yield return new WaitForFixedUpdate();
+            }
         }
     }
 }

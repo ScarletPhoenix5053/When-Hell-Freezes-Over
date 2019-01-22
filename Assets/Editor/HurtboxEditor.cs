@@ -11,12 +11,12 @@ public class HurtboxEditor : Editor
 
         var hurtbox = target as Hurtbox;
 
-        if (hurtbox.col == null)
+        if (hurtbox.Collider == null)
         {
             Collider2D col = null;
             if (col = hurtbox.GetComponent<Collider2D>())
             {
-                hurtbox.col = col;
+                hurtbox.Collider = col;
             }
             EditorGUILayout.HelpBox("This component needs a collider 2D attatched to " +
                 "the same game object to work!",

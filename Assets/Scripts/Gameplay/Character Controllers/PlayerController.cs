@@ -25,8 +25,7 @@ public class PlayerController : BaseController
     private PlayerAttackManager am;
     private PlayerAnimationController an;
     private Health hp;
-
-    private InputData currentInputData;
+    
     private IEnumerator currentRollRoutine;
 
     private float jumpLimitSeconds = 0.2f;
@@ -54,7 +53,7 @@ public class PlayerController : BaseController
 
         if (CurrentState == State.Ready ||
             (CurrentState == State.InAction && CurrentAction == Action.Attacking))
-            CheckInputByKeyCode();
+            CheckInput();
 
         OrientByMotion();
         an.RunAnimationStateMachine();
@@ -71,16 +70,6 @@ public class PlayerController : BaseController
     #endregion
 
     #region Public Methods
-    /// <summary>
-    /// Checks a <see cref="InputData"/> struct and determines what actions to make based on the data contained.
-    /// </summary>
-    /// <param name="data"></param>
-    public void ReadInput(InputData data)
-    {
-        currentInputData = data;
-        Debug.LogWarning("ReadInput method disabled");
-        //if (CurrentState == State.Ready && CurrentAction == Action.None) CheckInputAsNormal();
-    }
     /// <summary>
     /// Change the player's current action state
     /// </summary>
@@ -130,7 +119,7 @@ public class PlayerController : BaseController
     /// <summary>
     /// Performs input checks as if the character is unaffected by anything.
     /// </summary>
-    private void CheckInputByKeyCode()
+    private void CheckInput()
     {
         // Reset additionalJumps if on ground
         if (additionalJumpsUsed != 0 && mc.IsGrounded)
@@ -141,7 +130,7 @@ public class PlayerController : BaseController
         if (mc.IsGrounded)
         {
             // Light attack button
-            if (Input.GetKeyDown(KeyCode.J) && 
+            if (InputManager.Attack() && 
                 (CurrentAction == Action.Attacking || CurrentAction == Action.None))
             {
                 SetState(State.InAction);
@@ -149,7 +138,7 @@ public class PlayerController : BaseController
                 am.NormalAttack();
             }
             // Dodge roll
-            else if (Input.GetKeyDown(KeyCode.L) && CurrentAction == Action.None)
+            else if (InputManager.Roll() && CurrentAction == Action.None)
             {
                 if (currentRollRoutine != null) StopCoroutine(currentRollRoutine);
                 currentRollRoutine = RollRoutine();
@@ -158,7 +147,7 @@ public class PlayerController : BaseController
         }
 
         // Ranged attack button
-        if (Input.GetKeyDown(KeyCode.K))
+        if (InputManager.RangedAttack())
         {
             SetState(State.InAction);
             SetAction(Action.Attacking);
@@ -166,7 +155,7 @@ public class PlayerController : BaseController
         }
 
         // Jump
-        if (Input.GetKeyDown(KeyCode.W))
+        if (InputManager.Jump())
         {
             if (mc.IsGrounded)
             {
@@ -181,7 +170,7 @@ public class PlayerController : BaseController
             jumpLimitTimer = jumpLimitSeconds;
         }
         // Platform interactions
-        if (Input.GetKey(KeyCode.S))
+        if (InputManager.HoldingDown())
         {
             Physics2D.IgnoreLayerCollision(9, 13, true);
         }
@@ -193,13 +182,9 @@ public class PlayerController : BaseController
         if (CurrentAction == Action.None)
         {
             // Walk
-            var walkAxis = 0;
-            if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D)) { }
-            else if (Input.GetKey(KeyCode.A)) walkAxis = -1;
-            else if (Input.GetKey(KeyCode.D)) walkAxis = 1;
-            if (walkAxis != 0)
+            if (InputManager.MotionAxis() != 0)
             {
-                mc.MoveVector = new Vector2(walkAxis, 0);
+                mc.MoveVector = new Vector2(InputManager.MotionAxis(), 0);
             }
         }
     }

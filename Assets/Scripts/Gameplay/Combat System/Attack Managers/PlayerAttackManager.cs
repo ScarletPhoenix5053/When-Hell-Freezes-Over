@@ -23,14 +23,14 @@ public class PlayerAttackManager : AttackManager, IHitboxResponder
         else AssignWeaponAttackData();
     }
 
-    protected override IEnumerator IE_DoAttack(int attackIndex)
+    protected override IEnumerator IE_DoAttack()
     {
-        yield return base.IE_DoAttack(attackIndex);
+        yield return base.IE_DoAttack();
         SetAtkState(AttackState.None);
     }
-    protected override IEnumerator IE_DoRangedAttack(int attackIndex)
+    protected override IEnumerator IE_DoRangedAttack()
     {
-        yield return base.IE_DoRangedAttack(attackIndex);
+        yield return base.IE_DoRangedAttack();
         SetAtkState(AttackState.None);
     }
     /// <summary>

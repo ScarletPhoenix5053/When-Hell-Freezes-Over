@@ -7,7 +7,7 @@ public class AttackData : ScriptableObject
     public int Active = 4;
     public int Recovery = 20;
 
-    public float ImpulseStrength = 5f;
+    public float MotionOnAttack = 5f;
     public int Damage = 1;
     public float KnockBack = 8f;
     public float KnockUp = 3f;
