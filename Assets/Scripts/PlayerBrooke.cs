@@ -91,6 +91,22 @@ public class PlayerBrooke : MonoBehaviour
             Debug.Log(other.name);
             currentinterObj = other.gameObject;
         }
+
+        if(other.tag == "Health")
+        {
+            if(health.Hp < 5)
+            {
+                health.Hp += 2;
+                Destroy(other.gameObject);
+            }
+
+            else if(health.Hp == 5)
+            {
+                health.Hp += 1;
+                Destroy(other.gameObject);
+            }
+           
+        }
     }
 
     private void OnTriggerExit2D(Collider2D other)

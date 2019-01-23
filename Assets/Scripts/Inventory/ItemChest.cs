@@ -7,8 +7,11 @@ public class ItemChest : MonoBehaviour
     [SerializeField] GenericItem item; //Put the item you want the chest to have in this inspector slot
     [SerializeField] int amount = 1;
     [SerializeField] Inventory inventory; //Drag the players inventory
-    [SerializeField] SpriteRenderer spriteRenderer; 
+    [SerializeField] SpriteRenderer spriteRenderer, chestRenderer;
     [SerializeField] KeyCode itemPickupKeycode = KeyCode.E; //change as you like.
+
+    public Sprite closed;
+    public Sprite open;
 
     private bool isInRange;
     private bool isEmpty;
@@ -24,6 +27,7 @@ public class ItemChest : MonoBehaviour
 
         spriteRenderer.sprite = item.Icon;
         spriteRenderer.enabled = false;
+        chestRenderer.sprite = closed;
     }
 
     private void Update()
@@ -39,6 +43,7 @@ public class ItemChest : MonoBehaviour
                 {
                     isEmpty = true;
                     spriteRenderer.enabled = false;
+                    chestRenderer.sprite = open;
                 }
             }
             else
