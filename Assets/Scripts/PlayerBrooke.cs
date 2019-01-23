@@ -47,7 +47,7 @@ public class PlayerBrooke : MonoBehaviour
 
         if (Input.GetKey(KeyCode.E) && currentinterObj)
         {
-            currentinterObj.SendMessage("DoInteraction");
+            currentinterObj.SendMessage("PickUp");
         }
     }
 

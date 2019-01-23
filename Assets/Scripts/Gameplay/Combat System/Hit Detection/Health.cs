@@ -55,7 +55,6 @@ public class Health : MonoBehaviour
     public void Damage(AttackData data)
     {
         atkData = data;
-        UpdateHearts();
         // Log warning and return if ALREADY dead
         if (Dead)
         {
@@ -65,6 +64,7 @@ public class Health : MonoBehaviour
 
         // Adjust Hp
         if (data.Damage != 0) Hp -= data.Damage;
+        UpdateHearts();
 
         // Check if died this frame
         if (Hp <= 0)
