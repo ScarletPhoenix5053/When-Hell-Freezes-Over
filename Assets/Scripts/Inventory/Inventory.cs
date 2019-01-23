@@ -5,22 +5,6 @@ using UnityEngine;
 
 public class Inventory : ItemContainer
 {
-    #region instance
-    public static Inventory instance;
-    void Awake()
-    {
-        if (instance != null)
-        {
-            Debug.LogWarning("More than one instance of inventory found."); //See ITEMS by Brackeys video
-            return;
-        }
-        instance = this;
-    }
-
-    #endregion
-
-
-
     [SerializeField] List<GenericItem> startingItems;
     [SerializeField] Transform itemsParent;
 

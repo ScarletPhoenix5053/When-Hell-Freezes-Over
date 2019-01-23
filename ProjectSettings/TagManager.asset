@@ -8,6 +8,7 @@ TagManager:
   - Forge
   - Checkpoint
   - Interactable
+  - Health
   layers:
   - Default
   - TransparentFX

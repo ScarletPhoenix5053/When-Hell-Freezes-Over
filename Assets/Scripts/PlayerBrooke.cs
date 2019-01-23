@@ -47,7 +47,7 @@ public class PlayerBrooke : MonoBehaviour
 
         if (Input.GetKey(KeyCode.E) && currentinterObj)
         {
-            currentinterObj.SendMessage("DoInteraction");
+            currentinterObj.SendMessage("PickUp");
         }
     }
 
@@ -90,6 +90,22 @@ public class PlayerBrooke : MonoBehaviour
         {
             Debug.Log(other.name);
             currentinterObj = other.gameObject;
+        }
+
+        if(other.tag == "Health")
+        {
+            if(health.Hp < 5)
+            {
+                health.Hp += 2;
+                Destroy(other.gameObject);
+            }
+
+            else if(health.Hp == 5)
+            {
+                health.Hp += 1;
+                Destroy(other.gameObject);
+            }
+           
         }
     }
 
