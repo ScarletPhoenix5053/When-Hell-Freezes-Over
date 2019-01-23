@@ -17,7 +17,7 @@ public class PlayerController : BaseController
     public Action CurrentAction = Action.None;
     public enum Action { None, Attacking, Rolling, Climbing }
 
-    public int Sign { get { if (mc.MoveVector.x == 0) return sign; else return sign = Math.Sign(mc.MoveVector.x); } }
+    public override int Sign { get { if (mc.MoveVector.x == 0) return sign; else return sign = Math.Sign(mc.MoveVector.x); } }
 
     public Canvas TempDeathCanvas;
     #endregion
@@ -31,8 +31,6 @@ public class PlayerController : BaseController
     private float jumpLimitSeconds = 0.2f;
     private float jumpLimitTimer = 0;
     private int additionalJumpsUsed = 0;
-
-    private int sign = 1;
     #endregion
 
     #region Unity Runtime Events
@@ -52,7 +50,7 @@ public class PlayerController : BaseController
         if (GameManager.Instance.HitStopActive) return;
 
         if (CurrentState == State.Ready ||
-            (CurrentState == State.InAction && CurrentAction == Action.Attacking))
+            (CurrentState == State.Action && CurrentAction == Action.Attacking))
             CheckInput();
 
         OrientByMotion();
@@ -92,14 +90,8 @@ public class PlayerController : BaseController
     public override void Die()
     {
         SetState(State.Dead);
-
-        // death anim
-
-        // deactivate hurtbox
-        foreach (Hurtbox hurtbox in GetComponent<Health>().Hurtboxes)
-        {
-            hurtbox.SetInactive();
-        }
+        
+        GetComponent<Health>().Hurtbox.SetState(Hurtbox.State.Inactive);
 
         // display you died message
         TempDeathCanvas.gameObject.SetActive(true);
@@ -133,7 +125,7 @@ public class PlayerController : BaseController
             if (InputManager.Attack() && 
                 (CurrentAction == Action.Attacking || CurrentAction == Action.None))
             {
-                SetState(State.InAction);
+                SetState(State.Action);
                 SetAction(Action.Attacking);
                 am.NormalAttack();
             }
@@ -149,7 +141,7 @@ public class PlayerController : BaseController
         // Ranged attack button
         if (InputManager.RangedAttack())
         {
-            SetState(State.InAction);
+            SetState(State.Action);
             SetAction(Action.Attacking);
             am.RangedAttack();
         }
@@ -196,14 +188,12 @@ public class PlayerController : BaseController
     private IEnumerator RollRoutine()
     {
         var capsule = GetComponent<CapsuleCollider2D>();
-        SetState(State.InAction);
+        SetState(State.Action);
         SetAction(Action.Rolling);
         capsule.size = new Vector2(capsule.size.x, capsule.size.y / 2);
         capsule.offset = new Vector2(capsule.offset.x, capsule.offset.y - 0.6f);
-        foreach (Hurtbox hurtbox in hp.Hurtboxes)
-        {
-            hurtbox.SetInactive();
-        }
+        hp.Hurtbox.SetState(Hurtbox.State.Blocking);
+
         Physics2D.IgnoreLayerCollision(9, 10, true);        
         yield return new WaitForSeconds(Sierra.Utility.FramesToSeconds(RollFrames));
         yield return GameManager.Instance.UntillHitStopInactive();
@@ -212,10 +202,8 @@ public class PlayerController : BaseController
         SetAction(Action.None);
         capsule.size = new Vector2(capsule.size.x, capsule.size. y * 2);
         capsule.offset = new Vector2(capsule.offset.x, capsule.offset.y + 0.6f);
-        foreach (Hurtbox hurtbox in hp.Hurtboxes)
-        {
-            hurtbox.SetActive();
-        }
+        hp.Hurtbox.SetState(Hurtbox.State.Vulnerable);
+
         Physics2D.IgnoreLayerCollision(9, 10, false);
     }
     #endregion

@@ -6,6 +6,8 @@ namespace Sierra
 {
     static class Utility
     {
+        private static System.Random Random = new System.Random();
+
         public static float FramesToSeconds(int frames, int framesPerSecond = 60)
         {
             return Convert.ToSingle(frames) / Convert.ToSingle(framesPerSecond);
@@ -17,6 +19,11 @@ namespace Sierra
                 if (!GameManager.Instance.HitStopActive) timer++;
                 yield return new WaitForFixedUpdate();
             }
+        }
+
+        public static float GetRandomFloat()
+        {
+            return Convert.ToSingle(Random.NextDouble());
         }
     }
 }

@@ -23,7 +23,7 @@ namespace Sierra.Combat2D
         public override bool CheckHit()
         {
             EventRaiser?.RaiseEvent();
-            SetInactive();
+            SetState(State.Inactive);
             return true;
         }
     }
