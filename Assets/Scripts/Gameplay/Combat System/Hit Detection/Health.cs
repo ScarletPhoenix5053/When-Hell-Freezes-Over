@@ -10,7 +10,10 @@ public class Health : MonoBehaviour
     public int HpMax = 6;
     public int Hp = 6;
 
-    public Hurtbox[] Hurtboxes;
+    public bool AffectedByKnockback = true;
+    public bool AffectedByKnockbackOnCrit = true;
+
+    public Hurtbox Hurtbox;
 
     public bool Dead { get { return Hp <= 0; } }
 
@@ -18,13 +21,13 @@ public class Health : MonoBehaviour
     private BaseController chr;
 
     private AttackData atkData;
-    private IEnumerator currentKbRoutine;
     private IEnumerator currentHsRoutine;
 
     private void Awake()
     {
         chr = GetComponent<BaseController>();
         mc = GetComponent<CharacterMotionController>();
+        Hurtbox = GetComponent<Hurtbox>();
     }
 
     public void Damage(AttackData data, bool critical = false)
@@ -85,6 +88,9 @@ public class Health : MonoBehaviour
     }
     private void ApplyKnockBack()
     {
+        if (!AffectedByKnockback) return;
+        if (Hurtbox.HurtboxState == Hurtbox.State.Critical && !AffectedByKnockbackOnCrit) return;
+
         var sign = Mathf.Sign(transform.localScale.x);
         mc?.DoImpulse(new Vector2(atkData.KnockBack * atkData.Sign, atkData.KnockUp));
     }

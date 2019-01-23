@@ -92,14 +92,8 @@ public class PlayerController : BaseController
     public override void Die()
     {
         SetState(State.Dead);
-
-        // death anim
-
-        // deactivate hurtbox
-        foreach (Hurtbox hurtbox in GetComponent<Health>().Hurtboxes)
-        {
-            hurtbox.SetInactive();
-        }
+        
+        GetComponent<Health>().Hurtbox.SetInactive();
 
         // display you died message
         TempDeathCanvas.gameObject.SetActive(true);
@@ -200,10 +194,8 @@ public class PlayerController : BaseController
         SetAction(Action.Rolling);
         capsule.size = new Vector2(capsule.size.x, capsule.size.y / 2);
         capsule.offset = new Vector2(capsule.offset.x, capsule.offset.y - 0.6f);
-        foreach (Hurtbox hurtbox in hp.Hurtboxes)
-        {
-            hurtbox.SetInactive();
-        }
+        hp.Hurtbox.SetInactive();
+
         Physics2D.IgnoreLayerCollision(9, 10, true);        
         yield return new WaitForSeconds(Sierra.Utility.FramesToSeconds(RollFrames));
         yield return GameManager.Instance.UntillHitStopInactive();
@@ -212,10 +204,8 @@ public class PlayerController : BaseController
         SetAction(Action.None);
         capsule.size = new Vector2(capsule.size.x, capsule.size. y * 2);
         capsule.offset = new Vector2(capsule.offset.x, capsule.offset.y + 0.6f);
-        foreach (Hurtbox hurtbox in hp.Hurtboxes)
-        {
-            hurtbox.SetActive();
-        }
+        hp.Hurtbox.SetActive();
+
         Physics2D.IgnoreLayerCollision(9, 10, false);
     }
     #endregion
