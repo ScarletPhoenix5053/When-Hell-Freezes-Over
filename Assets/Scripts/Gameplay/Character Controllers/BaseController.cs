@@ -3,7 +3,6 @@ using System;
 
 public abstract class BaseController : MonoBehaviour
 {
-
     public State CurrentState = State.Ready;
     public enum State { Ready, Action, HitStun, SuperStun, Dead }
 

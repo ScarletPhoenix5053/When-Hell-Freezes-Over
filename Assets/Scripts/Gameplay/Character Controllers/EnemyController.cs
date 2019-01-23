@@ -3,13 +3,14 @@ using System.Collections;
 using Sierra.Combat2D;
 
 [RequireComponent(typeof(EnemyAnimationController))]
-[RequireComponent(typeof(IHitboxResponder))]
+[RequireComponent(typeof(AttackManager))]
 [RequireComponent(typeof(CharacterMotionController))]
 [RequireComponent(typeof(Health))]
 public abstract class EnemyController : BaseController
 {
     protected PlayerController plr;
     protected Health hp;
+    protected AttackManager am;
 
     protected float DistToPlayer { get { return Vector2.Distance(transform.position, plr.transform.position); } }
     protected bool PlayerToLeft { get { return plr.transform.position.x < transform.position.x; } }
@@ -18,9 +19,9 @@ public abstract class EnemyController : BaseController
     {
         base.Awake();
 
-
         plr = FindObjectOfType<PlayerController>();
         hp = GetComponent<Health>();
+        am = GetComponent<AttackManager>();
     }
     protected virtual void FixedUpdate()
     {

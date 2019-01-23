@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEditor;
 using Sierra;
 
+
 public class MeatblobController : EnemyController
 {
     public float DetectionRange = 12f;
@@ -26,6 +27,9 @@ public class MeatblobController : EnemyController
     public enum Behaviour { Idle, Chasing, WindingUp, Leaping, Recovering }
 
     protected IEnumerator currentRoutine;
+
+    protected int leapFrameBuffer = 10;
+    protected int leapFrameCurrent = 0;
 
     protected void OnDrawGizmosSelected()
     {
@@ -62,6 +66,10 @@ public class MeatblobController : EnemyController
                 mc.MoveVector = new Vector2(dir, 0);
                 break;
 
+            case Behaviour.Leaping:
+                
+                break;
+
             default:
                 break;
         }
@@ -82,7 +90,12 @@ public class MeatblobController : EnemyController
                 break;
                 
             case Behaviour.Leaping:
-                if (mc.IsGrounded) StartRecovery();
+                if (mc.IsGrounded && leapFrameCurrent >= leapFrameBuffer)
+                {
+                    leapFrameBuffer = 0;
+                    StartRecovery();
+                }
+                if (leapFrameCurrent < leapFrameBuffer) leapFrameBuffer++; 
                 break;
 
             default:
@@ -100,7 +113,9 @@ public class MeatblobController : EnemyController
     }
     protected void StartLeap()
     {
+        Debug.Log("Leaping");
         SetBehaviour(Behaviour.Leaping);
+        am.DoAttack(0);
 
         var xVariance = AverageLeapVariance.x * Utility.GetRandomFloat();
         var yVariance = AverageLeapVariance.y * Utility.GetRandomFloat();
@@ -111,11 +126,13 @@ public class MeatblobController : EnemyController
     }
     protected void StartRecovery()
     {
+        Debug.Log("Recovering");
+        SetBehaviour(Behaviour.Recovering);
+        am.StopAttack();
+
         if (currentRoutine != null) StopCoroutine(currentRoutine);
         currentRoutine = RecoveryRoutine();
         StartCoroutine(currentRoutine);
-
-        SetBehaviour(Behaviour.Recovering);
     }
 
     protected void DrawCircle(float radius, Color colour)
