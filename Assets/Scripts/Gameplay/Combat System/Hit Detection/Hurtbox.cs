@@ -17,7 +17,7 @@ namespace Sierra.Combat2D
         public Colours ColliderColour = new Colours();
         public bool DrawGizmo = false;
 
-        public State HurtboxState = State.Vulnerable;
+        public State CurrentState = State.Vulnerable;
         protected IHitboxResponder caller = null;
 
         public enum State { Inactive, Vulnerable, Critical, Blocking }
@@ -40,16 +40,16 @@ namespace Sierra.Combat2D
         protected virtual void OnDrawGizmos()
         {
             if (Collider == null || !DrawGizmo) return;
-
+            
             SetGizmoColor();
             DrawHurtbox();
         }
         
         public virtual bool CheckHit()
         {
-            if (HurtboxState != State.Inactive)
+            if (CurrentState != State.Inactive)
             {
-                if (HurtboxState == State.Blocking)
+                if (CurrentState == State.Blocking)
                 {
                     Debug.Log("Blocked");
                     return false;
@@ -65,14 +65,14 @@ namespace Sierra.Combat2D
         public virtual bool CheckHit(out bool criticalHit)
         {
             criticalHit = false;
-            if (HurtboxState != State.Inactive)
+            if (CurrentState != State.Inactive)
             {
-                if (HurtboxState == State.Blocking)
+                if (CurrentState == State.Blocking)
                 {
                     Debug.Log("Blocked");
                     return false;
                 }
-                else if (HurtboxState == State.Critical)
+                else if (CurrentState == State.Critical)
                 {
                     Debug.Log("Critical Hit!");
                     criticalHit = true;
@@ -86,13 +86,9 @@ namespace Sierra.Combat2D
                 return false;
             }
         }
-        public void SetActive()
+        public virtual void SetState(State newState)
         {
-            HurtboxState = State.Vulnerable;
-        }
-        public void SetInactive()
-        {
-            HurtboxState = State.Inactive;
+            if (newState != CurrentState) CurrentState = newState;
         }
 
         protected void DrawHurtbox()
@@ -113,7 +109,7 @@ namespace Sierra.Combat2D
         /// </summary>
         protected void SetGizmoColor()
         {
-            switch (HurtboxState)
+            switch (CurrentState)
             {
                 case State.Inactive:
                     Gizmos.color = ColliderColour.Inactive;

@@ -261,7 +261,7 @@ MonoBehaviour:
     Critical: {r: 0.81218004, g: 1, b: 0, a: 0.25}
     Blocking: {r: 0, g: 0, b: 1, a: 0.25}
   DrawGizmo: 1
-  HurtboxState: 2
+  CurrentState: 1
 --- !u!61 &813853056
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -388,11 +388,10 @@ MonoBehaviour:
   DetectionRange: 12
   MinimumAttackRange: 3
   MaximumAttackRange: 7
-  MinimumWindupFrames: 60
-  MaximumWindupFrames: 120
+  WindupFrames: 60
   RecoveryFrames: 180
-  AverageLeapVelocity: {x: 17, y: 16}
-  AverageLeapVariance: {x: 3, y: 3}
+  AverageLeapVelocity: {x: 20, y: 16.1}
+  AverageLeapVariance: {x: 0, y: 0}
   EnterWindupChance: 0.02
   LeapChance: 0.02
   CurrentBehaviour: 0
@@ -775,6 +774,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1076471686}
   m_PrefabAsset: {fileID: 0}
+--- !u!70 &2040861777 stripped
+CapsuleCollider2D:
+  m_CorrespondingSourceObject: {fileID: 8993978443071335209, guid: 299c53565037cd24dacc737c83af3fc5,
+    type: 3}
+  m_PrefabInstance: {fileID: 239044538672106959}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2049815790 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4746834278871844747, guid: efba3e9d87b9cf24991b239151c01183,
@@ -870,6 +875,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8993978443071335222, guid: 299c53565037cd24dacc737c83af3fc5,
+        type: 3}
+      propertyPath: Collider
+      value: 
+      objectReference: {fileID: 2040861777}
+    - target: {fileID: 8993978443071335222, guid: 299c53565037cd24dacc737c83af3fc5,
+        type: 3}
+      propertyPath: DrawGizmo
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 299c53565037cd24dacc737c83af3fc5, type: 3}

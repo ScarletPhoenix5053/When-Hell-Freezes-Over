@@ -3,6 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEditor;
 using Sierra;
+using Sierra.Combat2D;
 
 
 public class MeatblobController : EnemyController
@@ -11,8 +12,9 @@ public class MeatblobController : EnemyController
     public float MinimumAttackRange = 2f;
     public float MaximumAttackRange = 5f;
 
-    public int MinimumWindupFrames = 60;
-    public int MaximumWindupFrames = 120;
+    [Range(0,180)]
+    public int WindupFrames = 60;
+    [Range(0,300)]
     public int RecoveryFrames = 180;
 
     public Vector2 AverageLeapVelocity = new Vector2(10, 10);
@@ -28,9 +30,13 @@ public class MeatblobController : EnemyController
 
     protected IEnumerator currentRoutine;
 
-    protected int leapFrameBuffer = 10;
+    protected int leapFrameBuffer = 5;
     protected int leapFrameCurrent = 0;
 
+    protected void OnDrawGizmos()
+    {
+        DrawStateGizmo();
+    }
     protected void OnDrawGizmosSelected()
     {
         DrawCircle(DetectionRange, Color.cyan);
@@ -92,10 +98,10 @@ public class MeatblobController : EnemyController
             case Behaviour.Leaping:
                 if (mc.IsGrounded && leapFrameCurrent >= leapFrameBuffer)
                 {
-                    leapFrameBuffer = 0;
+                    leapFrameCurrent = 0;
                     StartRecovery();
                 }
-                if (leapFrameCurrent < leapFrameBuffer) leapFrameBuffer++; 
+                if (leapFrameCurrent < leapFrameBuffer) leapFrameCurrent++; 
                 break;
 
             default:
@@ -113,7 +119,6 @@ public class MeatblobController : EnemyController
     }
     protected void StartLeap()
     {
-        Debug.Log("Leaping");
         SetBehaviour(Behaviour.Leaping);
         am.DoAttack(0);
 
@@ -126,8 +131,8 @@ public class MeatblobController : EnemyController
     }
     protected void StartRecovery()
     {
-        Debug.Log("Recovering");
         SetBehaviour(Behaviour.Recovering);
+        hp.Hurtbox.SetState(Hurtbox.State.Critical);
         am.StopAttack();
 
         if (currentRoutine != null) StopCoroutine(currentRoutine);
@@ -140,40 +145,58 @@ public class MeatblobController : EnemyController
         Handles.color = colour;
         Handles.DrawWireDisc(transform.position, Vector3.forward, radius);
     }
+    protected void DrawStateGizmo()
+    {
+        var gizmoName = "Idle";
+
+        if (CurrentState == State.HitStun)
+        {
+            gizmoName = "Stun";
+        }
+        else if (CurrentState == State.SuperStun)
+        {
+            gizmoName = "SuperStun";
+        }
+        else
+        {
+            switch (CurrentBehaviour)
+            {
+                case Behaviour.Chasing:
+                    gizmoName = "Chasing";
+                    break;
+
+                case Behaviour.WindingUp:
+                    gizmoName = "WindingUp";
+                    break;
+
+                case Behaviour.Leaping:
+                    gizmoName = "Attacking";
+                    break;
+
+                case Behaviour.Recovering:
+                    gizmoName = "Recovery";
+                    break;
+
+                default:
+                    break;
+            }
+        }
+        Gizmos.DrawIcon(transform.position + Vector3.up * 2, gizmoName);
+    }
 
     protected IEnumerator WindupRoutine()
     {
-        var readyToLeap = false;
         var windupTimer = 0;
-
-        // Minimum wait duration
-        while (windupTimer < MinimumWindupFrames)
-        {
-            windupTimer++;
-            yield return new WaitForFixedUpdate();
-        }
-
-        // Leap after random duration
-        while (!readyToLeap && windupTimer < MaximumWindupFrames)
-        {
-            if (Utility.GetRandomFloat() < LeapChance) readyToLeap = true;
-
-            windupTimer++;
-            yield return new WaitForFixedUpdate();
-        }
-
-        // Begin Leap
+        yield return Utility.FrameTimer(WindupFrames, windupTimer);
+        
         StartLeap();
     }
     protected IEnumerator RecoveryRoutine()
     {
         var recoveryTimer = 0;
-        while (recoveryTimer < RecoveryFrames)
-        {
-            recoveryTimer++;
-            yield return new WaitForFixedUpdate();
-        }
+        yield return Utility.FrameTimer(RecoveryFrames, recoveryTimer);
 
         SetBehaviour(Behaviour.Idle);
-     }
+        hp.Hurtbox.SetState(Hurtbox.State.Vulnerable);
+    }
 }

@@ -91,7 +91,7 @@ public class PlayerController : BaseController
     {
         SetState(State.Dead);
         
-        GetComponent<Health>().Hurtbox.SetInactive();
+        GetComponent<Health>().Hurtbox.SetState(Hurtbox.State.Inactive);
 
         // display you died message
         TempDeathCanvas.gameObject.SetActive(true);
@@ -192,7 +192,7 @@ public class PlayerController : BaseController
         SetAction(Action.Rolling);
         capsule.size = new Vector2(capsule.size.x, capsule.size.y / 2);
         capsule.offset = new Vector2(capsule.offset.x, capsule.offset.y - 0.6f);
-        hp.Hurtbox.SetInactive();
+        hp.Hurtbox.SetState(Hurtbox.State.Blocking);
 
         Physics2D.IgnoreLayerCollision(9, 10, true);        
         yield return new WaitForSeconds(Sierra.Utility.FramesToSeconds(RollFrames));
@@ -202,7 +202,7 @@ public class PlayerController : BaseController
         SetAction(Action.None);
         capsule.size = new Vector2(capsule.size.x, capsule.size. y * 2);
         capsule.offset = new Vector2(capsule.offset.x, capsule.offset.y + 0.6f);
-        hp.Hurtbox.SetActive();
+        hp.Hurtbox.SetState(Hurtbox.State.Vulnerable);
 
         Physics2D.IgnoreLayerCollision(9, 10, false);
     }

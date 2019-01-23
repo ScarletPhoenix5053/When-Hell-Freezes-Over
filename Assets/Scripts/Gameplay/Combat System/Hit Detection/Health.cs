@@ -9,6 +9,7 @@ public class Health : MonoBehaviour
 {
     public int HpMax = 6;
     public int Hp = 6;
+    public float SuperStunMultiplier = 3f;
 
     public bool AffectedByKnockback = true;
     public bool AffectedByKnockbackOnCrit = true;
@@ -32,6 +33,8 @@ public class Health : MonoBehaviour
 
     public void Damage(AttackData data, bool critical = false)
     {
+        Debug.Log(name + "was damaged");
+
         // Log warning and return if ALREADY dead
         if (Dead)
         {
@@ -49,7 +52,6 @@ public class Health : MonoBehaviour
             // Check for critical hit
             if (critical)
             {
-                Debug.Log("tracking critical hit");
                 ApplySuperStun();
                 ApplyKnockBack();
             }
@@ -72,7 +74,19 @@ public class Health : MonoBehaviour
 
     private void AdjustHP()
     {
-        if (atkData.Damage != 0) Hp -= atkData.Damage;
+
+        if (atkData.Damage != 0)
+        {
+            if (chr?.CurrentState == BaseController.State.SuperStun)
+            {
+                Hp -= Convert.ToInt32(atkData.Damage * SuperStunMultiplier);
+            }
+            else
+            {
+                Hp -= atkData.Damage;
+            }
+        }
+        LogHp();
     }
     private void ApplyHitStun()
     {
@@ -89,7 +103,7 @@ public class Health : MonoBehaviour
     private void ApplyKnockBack()
     {
         if (!AffectedByKnockback) return;
-        if (Hurtbox.HurtboxState == Hurtbox.State.Critical && !AffectedByKnockbackOnCrit) return;
+        if (Hurtbox.CurrentState == Hurtbox.State.Critical && !AffectedByKnockbackOnCrit) return;
 
         var sign = Mathf.Sign(transform.localScale.x);
         mc?.DoImpulse(new Vector2(atkData.KnockBack * atkData.Sign, atkData.KnockUp));
