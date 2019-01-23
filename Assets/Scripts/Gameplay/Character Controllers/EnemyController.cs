@@ -3,34 +3,32 @@ using System.Collections;
 using Sierra.Combat2D;
 
 [RequireComponent(typeof(EnemyAnimationController))]
-[RequireComponent(typeof(IHitboxResponder))]
+[RequireComponent(typeof(AttackManager))]
 [RequireComponent(typeof(CharacterMotionController))]
 [RequireComponent(typeof(Health))]
 public abstract class EnemyController : BaseController
 {
-    public Behaviour CurrentBehaviour = Behaviour.Idle;
-    public enum Behaviour { Idle, Attacking, Chasing }
-
     protected PlayerController plr;
     protected Health hp;
+    protected AttackManager am;
 
-    protected float distToPlayer { get { return Vector2.Distance(transform.position, plr.transform.position); } }
-    protected bool playerToLeft { get { return plr.transform.position.x < transform.position.x; } }
+    protected float DistToPlayer { get { return Vector2.Distance(transform.position, plr.transform.position); } }
+    protected bool PlayerToLeft { get { return plr.transform.position.x < transform.position.x; } }
 
     protected override void Awake()
     {
         base.Awake();
 
-
         plr = FindObjectOfType<PlayerController>();
         hp = GetComponent<Health>();
+        am = GetComponent<AttackManager>();
     }
     protected virtual void FixedUpdate()
     {
 
         if (GameManager.Instance.HitStopActive) return;
 
-        if (CurrentState == State.Ready || CurrentState == State.InAction)
+        if (CurrentState == State.Ready)
         {
             DecideAction();
             Act();
@@ -39,17 +37,6 @@ public abstract class EnemyController : BaseController
         mc.UpdatePosition();
     }
 
-    /// <summary>
-    /// Change enemy's behaviour state
-    /// </summary>
-    /// <param name="newBehaviour"></param>
-    public void SetBehaviour(Behaviour newBehaviour)
-    {
-        if (newBehaviour == CurrentBehaviour) return;
-
-        //Debug.Log(name + " changed behaviour state from " + currentBehaviour + " to " + newBehaviour);
-        CurrentBehaviour = newBehaviour;
-    }
     /// <summary>
     /// Perform death actions for this enemy.
     /// </summary>
@@ -65,7 +52,7 @@ public abstract class EnemyController : BaseController
 
     protected void FacePlayer()
     {
-        if (playerToLeft)
+        if (PlayerToLeft)
         {
             transform.localScale = new Vector3(-1, transform.localScale.y, 1);
         }

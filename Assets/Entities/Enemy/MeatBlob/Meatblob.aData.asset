@@ -9,18 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: StarterBow.rAData
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectileAttackData
-  Startup: 21
-  Active: 1
-  Recovery: 22
-  MotionOnAttack: 5
+  m_Script: {fileID: 11500000, guid: eb82047a286ce7148b5718176ec43ce7, type: 3}
+  m_Name: Meatblob.aData
+  m_EditorClassIdentifier: 
+  Startup: 0
+  Active: 60
+  Recovery: 120
+  MotionOnAttack: 0
   Damage: 1
-  KnockBack: 8
-  KnockUp: 3
-  HitStun: 32
+  KnockBack: 12
+  KnockUp: 4
+  HitStun: 22
   HitStop: 4
   Sign: 1
-  Speed: 0
-  StartDirection: {x: 0, y: 0}

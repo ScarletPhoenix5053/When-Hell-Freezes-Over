@@ -2,13 +2,16 @@
 using System;
 using System.Collections;
 using UnityEngine.UI;
+using Sierra;
 using Sierra.Combat2D;
 
 [RequireComponent(typeof(CharacterMotionController))]
 public class Health : MonoBehaviour
 {
-    public int Hp;
-    public int HpMax; // = 6;
+    #region Public Variables
+    public int HpMax = 6;
+    public int Hp = 6;
+    public float SuperStunMultiplier = 3f;
 
     private int startHearts = 3;
     private int healthPerHeart = 2;
@@ -17,21 +20,26 @@ public class Health : MonoBehaviour
     public Image[] healthImages;
     public Sprite[] healthSprites;
 
-    public Hurtbox[] Hurtboxes;
+    public bool AffectedByKnockback = true;
+    public bool AffectedByKnockbackOnCrit = true;
+
+    public Hurtbox Hurtbox;
 
     public bool Dead { get { return Hp <= 0; } }
-
+    #endregion
+    #region Private Variables
     private CharacterMotionController mc;
     private BaseController chr;
 
     private AttackData atkData;
-    private IEnumerator currentKbRoutine;
     private IEnumerator currentHsRoutine;
+    #endregion
 
     private void Awake()
     {
         chr = GetComponent<BaseController>();
         mc = GetComponent<CharacterMotionController>();
+        Hurtbox = GetComponent<Hurtbox>();
     }
 
     private void Start()
@@ -51,10 +59,12 @@ public class Health : MonoBehaviour
             healthImages[2].sprite = healthSprites[2];
         }
     }
-
+    #region Public Methods
     public void Damage(AttackData data)
+    public void Damage(AttackData data, bool critical = false)
     {
-        atkData = data;
+        Debug.Log(name + "was damaged");
+
         // Log warning and return if ALREADY dead
         if (Dead)
         {
@@ -62,24 +72,26 @@ public class Health : MonoBehaviour
             return;
         }
 
-        // Adjust Hp
-        if (data.Damage != 0) Hp -= data.Damage;
+        atkData = data;
+        AdjustHP();
         UpdateHearts();
 
         // Check if died this frame
-        if (Hp <= 0)
-        {
-            Hp = 0;
-            chr.Die();
-            StopAllCoroutines();
-        }
+        if (Dead) Die();
         else
         {
-            // Apply Knockback/Stun
-            ApplyHitStun();
-            ApplyKnockBack();
+            // Check for critical hit
+            if (critical)
+            {
+                ApplySuperStun();
+                ApplyKnockBack();
+            }
+            else
+            {
+                ApplyHitStun();
+                ApplyKnockBack();
+            }
         }
-
     }
 
     public void LogHp()
@@ -90,30 +102,75 @@ public class Health : MonoBehaviour
     {
         Debug.Log(name + " is dead");
     }
+    #endregion
+    #region Private Methods
+    private void AdjustHP()
+    {
 
+        if (atkData.Damage != 0)
+        {
+            if (chr?.CurrentState == BaseController.State.SuperStun)
+            {
+                Hp -= Convert.ToInt32(atkData.Damage * SuperStunMultiplier);
+            }
+            else
+            {
+                Hp -= atkData.Damage;
+            }
+        }
+        LogHp();
+    }
     private void ApplyHitStun()
     {
+        // Exit early if in superstun to prevent normal hitstun from overriding.
+        if (chr?.CurrentState == BaseController.State.SuperStun) return;
+
         if (currentHsRoutine != null) StopCoroutine(currentHsRoutine);
         currentHsRoutine = HitStunRoutine();
         StartCoroutine(currentHsRoutine);
     }
+    private void ApplySuperStun()
+    {
+        if (currentHsRoutine != null) StopCoroutine(currentHsRoutine);
+        currentHsRoutine = SuperStunRoutine();
+        StartCoroutine(currentHsRoutine);
+    }
     private void ApplyKnockBack()
     {
+        if (!AffectedByKnockback) return;
+        if (Hurtbox.CurrentState == Hurtbox.State.Critical && !AffectedByKnockbackOnCrit) return;
+
         var sign = Mathf.Sign(transform.localScale.x);
         mc?.DoImpulse(new Vector2(atkData.KnockBack * atkData.Sign, atkData.KnockUp));
     }
-    private IEnumerator HitStunRoutine()
+    private void Die()
     {
-        var chr = GetComponent<BaseController>();
-
-        chr.SetState(BaseController.State.InHitstun);
-        yield return new WaitForSeconds(Sierra.Utility.FramesToSeconds(atkData.HitStun));
-        yield return GameManager.Instance.UntillHitStopInactive();
-
-        chr.SetState(BaseController.State.Ready);
+        Hp = 0;
+        chr?.Die();
+        StopAllCoroutines();
     }
 
+    private IEnumerator HitStunRoutine()
+    {
+        chr?.SetState(BaseController.State.HitStun);
 
+        // Start timer
+        yield return Utility.FrameTimer(atkData.HitStun, 0);
+
+        // End timer
+        chr?.SetState(BaseController.State.Ready);
+    }
+    private IEnumerator SuperStunRoutine()
+    {
+        Debug.Log("Applying Superstun for 3.5 seconds");
+        chr?.SetState(BaseController.State.SuperStun);
+
+        // Start timer
+        yield return Utility.FrameTimer(210, 0);
+
+        // End timer
+        chr?.SetState(BaseController.State.Ready);
+    }
     public void CheckHealthAmount()
     {
 
@@ -169,4 +226,5 @@ public class Health : MonoBehaviour
         Hp = Mathf.Clamp(Hp, 0, startHearts * healthPerHeart);
         UpdateHearts();
     }
+    #endregion
 }

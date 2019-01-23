@@ -24,14 +24,41 @@ public class CharacterMotionController : MotionController
     {
         get
         {
-            LayerMask layerMask;
-            if (Input.GetKey(KeyCode.S)) layerMask = LayerMask.GetMask("Environment");
-            else layerMask = LayerMask.GetMask("Environment", "Platform");
+            return GroundedLeft || GroundedRight;
+        }
+    }
+    /// <summary>
+    /// Calls the Left-Side grounding ray.
+    /// </summary>
+    public bool GroundedLeft
+    {
+        get
+        {
             return Physics2D.Raycast(
-                new Vector2(col.bounds.center.x, col.bounds.center.y - col.bounds.extents.y),
+                new Vector2(
+                    col.bounds.center.x - col.bounds.extents.x,
+                    col.bounds.center.y - col.bounds.extents.y
+                    ),
                 Vector2.down,
                 groundBuffer,
-                layerMask);
+                GroundMask);
+        }
+    }
+    /// <summary>
+    /// Calls the Right-Side grounding ray.
+    /// </summary>
+    public bool GroundedRight
+    {
+        get
+        {
+            return Physics2D.Raycast(
+                new Vector2(
+                    col.bounds.center.x + col.bounds.extents.x,
+                    col.bounds.center.y - col.bounds.extents.y
+                    ),
+                Vector2.down,
+                groundBuffer,
+                GroundMask);
         }
     }
     public Vector2 ContMotionVector;
@@ -41,11 +68,23 @@ public class CharacterMotionController : MotionController
     protected Collider2D col;
 
     protected const float groundBuffer = 0.05f;
+    protected const float groundStick = 0.1f;
     protected const float zeroThreshold = 0.05f;
     protected const int deltaMultiplicationFactor = 50;
 
     protected bool impulseLastFrame = false;
     protected Vector2 combinedMotionVector;
+
+    protected LayerMask GroundMask
+    {
+        get
+        {
+            LayerMask layerMask;
+            if (InputManager.HoldingDown()) layerMask = LayerMask.GetMask("Environment");
+            else layerMask = LayerMask.GetMask("Environment", "Platform");
+            return layerMask;
+        }
+    }
     #endregion
 
     protected override void Awake()
@@ -60,6 +99,7 @@ public class CharacterMotionController : MotionController
     /// </summary>
     public override void UpdatePosition()
     {
+        StickToGround();
         ApplyGravity();
 
         SetCombinedMotionVector();
@@ -67,6 +107,7 @@ public class CharacterMotionController : MotionController
 
         ApplyDrag();
         ResetMoveVector();
+        ResetImpulse();
     }
     /// <summary>
     /// Apply a force that decays over time.
@@ -82,6 +123,7 @@ public class CharacterMotionController : MotionController
     {
         rb.velocity = combinedMotionVector;
     }
+
     /// <summary>
     /// Combine movement vector with continuous motion applied by gravity
     /// or impulese to create a fintal motion vector.
@@ -90,6 +132,37 @@ public class CharacterMotionController : MotionController
     {
         combinedMotionVector = moveVector * XSpeed + ContMotionVector;
     }
+    /// <summary>
+    /// Method that sticks player to ground if they are close by, allowing smooth ramp descending.
+    /// Does not operate if there was an impulse last frame.
+    /// </summary>
+    protected virtual void StickToGround()
+    {
+        if (impulseLastFrame) return;
+
+        // Check if close enough to stick to ground
+        var stickyRay =
+            Physics2D.Raycast(
+                new Vector2(
+                    col.bounds.center.x,
+                    col.bounds.center.y - col.bounds.extents.y
+                    ),
+                Vector2.down,
+                groundStick,
+                GroundMask);
+
+        // Stick player to ground if close enough
+        if ((bool)stickyRay)
+        {
+            transform.position =
+                new Vector3(
+                    transform.position.x,
+                    transform.position.y - stickyRay.distance,
+                    transform.position.z
+                    );
+        }
+    }
+
     /// <summary>
     /// Applies gravity effect to continuous motion along the Y axis
     /// </summary>
@@ -117,6 +190,11 @@ public class CharacterMotionController : MotionController
         {
             ContMotionVector.x = 0;
         }
-    }   
+    }
+
+    protected virtual void ResetImpulse()
+    {
+        impulseLastFrame = false;
+    }
 
 }

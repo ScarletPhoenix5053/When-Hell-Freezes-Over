@@ -17,7 +17,7 @@ public class PlayerController : BaseController
     public Action CurrentAction = Action.None;
     public enum Action { None, Attacking, Rolling, Climbing }
 
-    public int Sign { get { if (mc.MoveVector.x == 0) return sign; else return sign = Math.Sign(mc.MoveVector.x); } }
+    public override int Sign { get { if (mc.MoveVector.x == 0) return sign; else return sign = Math.Sign(mc.MoveVector.x); } }
 
     public Canvas TempDeathCanvas;
     #endregion
@@ -25,15 +25,12 @@ public class PlayerController : BaseController
     private PlayerAttackManager am;
     private PlayerAnimationController an;
     private Health hp;
-
-    private InputData currentInputData;
+    
     private IEnumerator currentRollRoutine;
 
     private float jumpLimitSeconds = 0.2f;
     private float jumpLimitTimer = 0;
     private int additionalJumpsUsed = 0;
-
-    private int sign = 1;
     #endregion
 
     #region Unity Runtime Events
@@ -53,8 +50,8 @@ public class PlayerController : BaseController
         if (GameManager.Instance.HitStopActive) return;
 
         if (CurrentState == State.Ready ||
-            (CurrentState == State.InAction && CurrentAction == Action.Attacking))
-            CheckInputByKeyCode();
+            (CurrentState == State.Action && CurrentAction == Action.Attacking))
+            CheckInput();
 
         OrientByMotion();
         an.RunAnimationStateMachine();
@@ -71,16 +68,6 @@ public class PlayerController : BaseController
     #endregion
 
     #region Public Methods
-    /// <summary>
-    /// Checks a <see cref="InputData"/> struct and determines what actions to make based on the data contained.
-    /// </summary>
-    /// <param name="data"></param>
-    public void ReadInput(InputData data)
-    {
-        currentInputData = data;
-        Debug.LogWarning("ReadInput method disabled");
-        //if (CurrentState == State.Ready && CurrentAction == Action.None) CheckInputAsNormal();
-    }
     /// <summary>
     /// Change the player's current action state
     /// </summary>
@@ -103,14 +90,8 @@ public class PlayerController : BaseController
     public override void Die()
     {
         SetState(State.Dead);
-
-        // death anim
-
-        // deactivate hurtbox
-        foreach (Hurtbox hurtbox in GetComponent<Health>().Hurtboxes)
-        {
-            hurtbox.SetInactive();
-        }
+        
+        GetComponent<Health>().Hurtbox.SetState(Hurtbox.State.Inactive);
 
         // display you died message
         TempDeathCanvas.gameObject.SetActive(true);
@@ -130,7 +111,7 @@ public class PlayerController : BaseController
     /// <summary>
     /// Performs input checks as if the character is unaffected by anything.
     /// </summary>
-    private void CheckInputByKeyCode()
+    private void CheckInput()
     {
         // Reset additionalJumps if on ground
         if (additionalJumpsUsed != 0 && mc.IsGrounded)
@@ -141,15 +122,15 @@ public class PlayerController : BaseController
         if (mc.IsGrounded)
         {
             // Light attack button
-            if (Input.GetKeyDown(KeyCode.J) && 
+            if (InputManager.Attack() && 
                 (CurrentAction == Action.Attacking || CurrentAction == Action.None))
             {
-                SetState(State.InAction);
+                SetState(State.Action);
                 SetAction(Action.Attacking);
                 am.NormalAttack();
             }
             // Dodge roll
-            else if (Input.GetKeyDown(KeyCode.L) && CurrentAction == Action.None)
+            else if (InputManager.Roll() && CurrentAction == Action.None)
             {
                 if (currentRollRoutine != null) StopCoroutine(currentRollRoutine);
                 currentRollRoutine = RollRoutine();
@@ -158,15 +139,15 @@ public class PlayerController : BaseController
         }
 
         // Ranged attack button
-        if (Input.GetKeyDown(KeyCode.K))
+        if (InputManager.RangedAttack())
         {
-            SetState(State.InAction);
+            SetState(State.Action);
             SetAction(Action.Attacking);
             am.RangedAttack();
         }
 
         // Jump
-        if (Input.GetKeyDown(KeyCode.W))
+        if (InputManager.Jump())
         {
             if (mc.IsGrounded)
             {
@@ -181,7 +162,7 @@ public class PlayerController : BaseController
             jumpLimitTimer = jumpLimitSeconds;
         }
         // Platform interactions
-        if (Input.GetKey(KeyCode.S))
+        if (InputManager.HoldingDown())
         {
             Physics2D.IgnoreLayerCollision(9, 13, true);
         }
@@ -193,13 +174,9 @@ public class PlayerController : BaseController
         if (CurrentAction == Action.None)
         {
             // Walk
-            var walkAxis = 0;
-            if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D)) { }
-            else if (Input.GetKey(KeyCode.A)) walkAxis = -1;
-            else if (Input.GetKey(KeyCode.D)) walkAxis = 1;
-            if (walkAxis != 0)
+            if (InputManager.MotionAxis() != 0)
             {
-                mc.MoveVector = new Vector2(walkAxis, 0);
+                mc.MoveVector = new Vector2(InputManager.MotionAxis(), 0);
             }
         }
     }
@@ -211,14 +188,12 @@ public class PlayerController : BaseController
     private IEnumerator RollRoutine()
     {
         var capsule = GetComponent<CapsuleCollider2D>();
-        SetState(State.InAction);
+        SetState(State.Action);
         SetAction(Action.Rolling);
         capsule.size = new Vector2(capsule.size.x, capsule.size.y / 2);
         capsule.offset = new Vector2(capsule.offset.x, capsule.offset.y - 0.6f);
-        foreach (Hurtbox hurtbox in hp.Hurtboxes)
-        {
-            hurtbox.SetInactive();
-        }
+        hp.Hurtbox.SetState(Hurtbox.State.Blocking);
+
         Physics2D.IgnoreLayerCollision(9, 10, true);        
         yield return new WaitForSeconds(Sierra.Utility.FramesToSeconds(RollFrames));
         yield return GameManager.Instance.UntillHitStopInactive();
@@ -227,10 +202,8 @@ public class PlayerController : BaseController
         SetAction(Action.None);
         capsule.size = new Vector2(capsule.size.x, capsule.size. y * 2);
         capsule.offset = new Vector2(capsule.offset.x, capsule.offset.y + 0.6f);
-        foreach (Hurtbox hurtbox in hp.Hurtboxes)
-        {
-            hurtbox.SetActive();
-        }
+        hp.Hurtbox.SetState(Hurtbox.State.Vulnerable);
+
         Physics2D.IgnoreLayerCollision(9, 10, false);
     }
     #endregion

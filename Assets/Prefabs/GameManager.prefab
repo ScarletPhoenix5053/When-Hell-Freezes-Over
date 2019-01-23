@@ -146,6 +146,7 @@ GameObject:
   - component: {fileID: 4746834277537396292}
   - component: {fileID: 4746834277537396290}
   - component: {fileID: 4746834277537396291}
+  - component: {fileID: 5155833758004366675}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -197,6 +198,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseEnabled: 0
+  inventoryUI: {fileID: 0}
+  tooltip: {fileID: 0}
+  armorTooltip: {fileID: 0}
+  craftingEnabled: 0
+  craftingUI: {fileID: 0}
+  notEnough: {fileID: 0}
+--- !u!114 &5155833758004366675
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4746834277537396295}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 469813415af298144954ba115c07043a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ControllerAttackButton: 332
+  KeyboardAttackButton: 106
+  ControllerSpecialAttackButton: 333
+  KeyboardSpecialAttackButton: 107
+  ControllerRangedAttackButton: 335
+  KeyboardRangedAttackButton: 108
+  ControllerRollButton: 331
+  KeyboardRollButton: 304
+  ControllerJumpButton: 330
+  KeyboardJumpButton: 32
 --- !u!1 &4746834278871844747
 GameObject:
   m_ObjectHideFlags: 0

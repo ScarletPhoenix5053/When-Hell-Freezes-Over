@@ -20,7 +20,7 @@ public class PlayerMotionController : CharacterMotionController
                 ContMotionVector.y -= Gravity * FallMultiplier;
             // ...otherwise must be rising
             else if
-                (ContMotionVector.y > 0 && !Input.GetKey(KeyCode.W))
+                (ContMotionVector.y > 0 && !InputManager.JumpHeld())
                 ContMotionVector.y -= Gravity * LowJumpMultiplier;
             else
                 ContMotionVector.y -= Gravity;

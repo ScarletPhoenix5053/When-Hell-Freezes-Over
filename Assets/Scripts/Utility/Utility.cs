@@ -1,21 +1,29 @@
 ﻿using UnityEngine;
 using System;
+using System.Collections;
 
 namespace Sierra
 {
     static class Utility
     {
+        private static System.Random Random = new System.Random();
+
         public static float FramesToSeconds(int frames, int framesPerSecond = 60)
         {
             return Convert.ToSingle(frames) / Convert.ToSingle(framesPerSecond);
         }
-        /// <summary>
-        /// Use to throw an exception when a monobehaviour is missing an essential component.
-        /// </summary>
-        /// <param name="name">Name of the <see cref="MonoBehaviour"/></param>
-        public static void ThrowNoComponentException(string name)
+        public static IEnumerator FrameTimer(int timerDuration, int timer)
         {
-            throw new MissingComponentException(name + " is missing an essential component!");
+            while (timer < timerDuration)
+            {
+                if (!GameManager.Instance.HitStopActive) timer++;
+                yield return new WaitForFixedUpdate();
+            }
+        }
+
+        public static float GetRandomFloat()
+        {
+            return Convert.ToSingle(Random.NextDouble());
         }
     }
 }

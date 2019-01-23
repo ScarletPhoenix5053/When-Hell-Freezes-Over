@@ -13,57 +13,47 @@ namespace Sierra.Combat2D
     public class Hurtbox : MonoBehaviour
     {
         public Health hp;
-        // Colldier array/list instead?
-        public Collider2D col;
+        public Collider2D Collider;
         public Colours ColliderColour = new Colours();
+        public bool DrawGizmo = false;
 
-        protected State _state = State.Active;
-        protected IHitboxResponder _sender = null;
+        public State CurrentState = State.Vulnerable;
+        protected IHitboxResponder caller = null;
 
-        public enum State { Inactive, Active }
+        public enum State { Inactive, Vulnerable, Critical, Blocking }
+        /// <summary>
+        /// Containter class for hurtbox draw colours
+        /// </summary>
         [Serializable]
         public class Colours
         {
             public Color Inactive = new Color(0.5f, 0.5f, 0.5f, 0.25f);
-            public Color Active = new Color(0, 0.8f, 0, 0.25f);
+            public Color Vulnerable = new Color(0, 0.8f, 0, 0.25f);
+            public Color Critical = new Color(0.8f, 1, 0, 0.25f);
+            public Color Blocking = new Color(0, 0, 1, 0.25f);
         }
 
         protected virtual void Reset()
         {
-            col = GetComponent<Collider2D>();
-        }
-        protected virtual void Awake()
-        {
-            if (col == null) throw new NullReferenceException("This component needs a collider 2D attatched to " +
-                "the same game object to work!");
-            if (hp == null) throw new NullReferenceException("This component needs to refer to a health script for " +
-                "attack system to work!");
+            Collider = GetComponent<Collider2D>();
         }
         protected virtual void OnDrawGizmos()
         {
-            // Make sure a collider is attatched
-            if (col == null)
-            {                
-                return;
-            }
-
+            if (Collider == null || !DrawGizmo) return;
+            
             SetGizmoColor();
-            Gizmos.matrix = Matrix4x4.TRS(transform.position, transform.rotation, transform.localScale);
-
-            // Drawcube takes the full size, not halfextents
-            Gizmos.DrawCube(
-                Vector3.zero,
-                new Vector3(
-                    col.bounds.extents.x * 2,
-                    col.bounds.extents.y * 2,
-                    2
-                    ));
+            DrawHurtbox();
         }
         
         public virtual bool CheckHit()
         {
-            if (_state != State.Inactive)
+            if (CurrentState != State.Inactive)
             {
+                if (CurrentState == State.Blocking)
+                {
+                    Debug.Log("Blocked");
+                    return false;
+                }
                 return true;
             }
             else
@@ -72,28 +62,69 @@ namespace Sierra.Combat2D
                 return false;
             }
         }
-        public void SetActive()
+        public virtual bool CheckHit(out bool criticalHit)
         {
-            _state = State.Active;
+            criticalHit = false;
+            if (CurrentState != State.Inactive)
+            {
+                if (CurrentState == State.Blocking)
+                {
+                    Debug.Log("Blocked");
+                    return false;
+                }
+                else if (CurrentState == State.Critical)
+                {
+                    Debug.Log("Critical Hit!");
+                    criticalHit = true;
+                    return true;
+                }
+                return true;
+            }
+            else
+            {
+                Debug.Log(name + " is inactive!");
+                return false;
+            }
         }
-        public void SetInactive()
+        public virtual void SetState(State newState)
         {
-            _state = State.Inactive;
+            if (newState != CurrentState) CurrentState = newState;
         }
 
+        protected void DrawHurtbox()
+        {
+            Gizmos.matrix = Matrix4x4.TRS(transform.position, transform.rotation, transform.localScale);
+
+            // Drawcube takes the full size, not halfextents
+            Gizmos.DrawCube(
+                Vector3.zero,
+                new Vector3(
+                    Collider.bounds.extents.x * 2,
+                    Collider.bounds.extents.y * 2,
+                    2
+                    ));
+        }
         /// <summary>
         /// Sets <see cref="Gizmos.color"/> based on the hitboxes state.
         /// </summary>
         protected void SetGizmoColor()
         {
-            switch (_state)
+            switch (CurrentState)
             {
                 case State.Inactive:
                     Gizmos.color = ColliderColour.Inactive;
                     break;
 
-                case State.Active:
-                    Gizmos.color = ColliderColour.Active;
+                case State.Vulnerable:
+                    Gizmos.color = ColliderColour.Vulnerable;
+                    break;
+
+                case State.Critical:
+                    Gizmos.color = ColliderColour.Critical;
+                    break;
+
+                case State.Blocking:
+                    Gizmos.color = ColliderColour.Blocking;
                     break;
             }
         }

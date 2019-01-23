@@ -10,17 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 0}
-  m_Name: StarterBow.rAData
-  m_EditorClassIdentifier: Assembly-CSharp::ProjectileAttackData
-  Startup: 21
-  Active: 1
-  Recovery: 22
-  MotionOnAttack: 5
+  m_Name: LEGACY MeatBlob Damage
+  m_EditorClassIdentifier: Assembly-CSharp::DamageData
   Damage: 1
-  KnockBack: 8
-  KnockUp: 3
-  HitStun: 32
+  KnockBack: 10
+  KnockUp: 10
+  HitStun: 12
   HitStop: 4
-  Sign: 1
-  Speed: 0
-  StartDirection: {x: 0, y: 0}
+  Sign: -1
