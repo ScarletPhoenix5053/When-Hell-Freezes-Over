@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System;
 
-public class MeatBlobController : EnemyController
+public class LEGACYMeatBlobController : EnemyController
 {
     public float ChaseRange = 10f;
 

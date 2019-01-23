@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System;
 
-public class ShieldMeatBlobAnimationController : EnemyAnimationController
+public class LEGACYShieldMeatBlobAnimationController : EnemyAnimationController
 {
-    private MeatBlobShieldedController enm;
+    private LEGACYMeatBlobShieldedController enm;
 
     private AnimState currentAnimationState = AnimState.Idle;
     private enum AnimState
@@ -16,7 +16,7 @@ public class ShieldMeatBlobAnimationController : EnemyAnimationController
     protected override void Awake()
     {
         base.Awake();
-        enm = GetComponent<MeatBlobShieldedController>();
+        enm = GetComponent<LEGACYMeatBlobShieldedController>();
     }
     private void Start()
     {
@@ -29,8 +29,8 @@ public class ShieldMeatBlobAnimationController : EnemyAnimationController
     private void RunAnimationStateMachine()
     {
         if (enm.CurrentState == BaseController.State.Dead) ChangeToDeathState();
-        if (enm.CurrentState == BaseController.State.InHitstun) ChangeToHitState();
-        if (currentAnimationState == AnimState.Hit && enm.CurrentState != BaseController.State.InHitstun) ChangeToIdleState();
+        if (enm.CurrentState == BaseController.State.HitStun) ChangeToHitState();
+        if (currentAnimationState == AnimState.Hit && enm.CurrentState != BaseController.State.HitStun) ChangeToIdleState();
     }
 
     public void ChangeToIdleState()

@@ -71,7 +71,7 @@ public class PlayerAnimationController : AnimationController
                     if (mc.MoveVector.x != 0) ChangeToRunState();
                     if (!mc.IsGrounded && !CloseToGround) ChangeToFallState();
                 }
-                else if (plr.CurrentState == BaseController.State.InAction)
+                else if (plr.CurrentState == BaseController.State.Action)
                 {
                     if (plr.CurrentAction == PlayerController.Action.Rolling) ChangeToRollState();
                     else if (plr.CurrentAction == PlayerController.Action.Attacking) ChangeToAttackState();
@@ -84,7 +84,7 @@ public class PlayerAnimationController : AnimationController
                     if (mc.MoveVector.x == 0) ChangeToIdleState();
                     if (!mc.IsGrounded && !CloseToGround) ChangeToFallState();
                 }
-                else if (plr.CurrentState == BaseController.State.InAction)
+                else if (plr.CurrentState == BaseController.State.Action)
                 {
                     if (plr.CurrentAction == PlayerController.Action.Rolling) ChangeToRollState();
                     else if (plr.CurrentAction == PlayerController.Action.Attacking) ChangeToAttackState();
@@ -97,20 +97,20 @@ public class PlayerAnimationController : AnimationController
                     if (mc.IsGrounded && mc.MoveVector.x != 0) ChangeToRunState();
                     if (mc.IsGrounded) ChangeToIdleState();
                 }
-                else if (plr.CurrentState == BaseController.State.InAction)
+                else if (plr.CurrentState == BaseController.State.Action)
                 {
                     if (plr.CurrentAction == PlayerController.Action.Rolling) ChangeToRollState();
                 }
                 break;
 
             case AnimState.Rolling:
-                if (plr.CurrentState != BaseController.State.InAction || 
+                if (plr.CurrentState != BaseController.State.Action || 
                     plr.CurrentAction != PlayerController.Action.Rolling)
                     ChangeToIdleState();
                 break;
 
             case AnimState.Attacking:
-                if (plr.CurrentState != BaseController.State.InAction ||
+                if (plr.CurrentState != BaseController.State.Action ||
                     plr.CurrentAction != PlayerController.Action.Attacking)
                     ChangeToIdleState();
 

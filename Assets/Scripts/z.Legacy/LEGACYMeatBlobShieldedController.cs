@@ -3,7 +3,7 @@ using System;
 using System.Collections;
 using Sierra.Combat2D;
 
-public class MeatBlobShieldedController : EnemyController
+public class LEGACYMeatBlobShieldedController : EnemyController
 {
     public int TurnDelayFrames = 60;
     public GameObject BouncePadPrefab;
@@ -69,7 +69,7 @@ public class MeatBlobShieldedController : EnemyController
         waitingToTurn = true;
         yield return new WaitForSeconds(Sierra.Utility.FramesToSeconds(TurnDelayFrames));
         yield return GameManager.Instance.UntillHitStopInactive();
-        while (CurrentState == State.InHitstun) yield return null;
+        while (CurrentState == State.HitStun) yield return null;
         
         waitingToTurn = false;
         transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z);

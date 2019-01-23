@@ -27,7 +27,7 @@ public class Health : MonoBehaviour
         mc = GetComponent<CharacterMotionController>();
     }
 
-    public void Damage(AttackData data)
+    public void Damage(AttackData data, bool critical = false)
     {
         // Log warning and return if ALREADY dead
         if (Dead)
@@ -36,7 +36,6 @@ public class Health : MonoBehaviour
             return;
         }
 
-
         atkData = data;
         AdjustHP();
 
@@ -44,8 +43,18 @@ public class Health : MonoBehaviour
         if (Dead) Die();
         else
         {
-            ApplyHitStun();
-            ApplyKnockBack();
+            // Check for critical hit
+            if (critical)
+            {
+                Debug.Log("tracking critical hit");
+                ApplySuperStun();
+                ApplyKnockBack();
+            }
+            else
+            {
+                ApplyHitStun();
+                ApplyKnockBack();
+            }
         }
     }
 
@@ -68,6 +77,12 @@ public class Health : MonoBehaviour
         currentHsRoutine = HitStunRoutine();
         StartCoroutine(currentHsRoutine);
     }
+    private void ApplySuperStun()
+    {
+        if (currentHsRoutine != null) StopCoroutine(currentHsRoutine);
+        currentHsRoutine = SuperStunRoutine();
+        StartCoroutine(currentHsRoutine);
+    }
     private void ApplyKnockBack()
     {
         var sign = Mathf.Sign(transform.localScale.x);
@@ -82,10 +97,21 @@ public class Health : MonoBehaviour
 
     private IEnumerator HitStunRoutine()
     {
-        chr?.SetState(BaseController.State.InHitstun);
+        chr?.SetState(BaseController.State.HitStun);
 
         // Start timer
         yield return Utility.FrameTimer(atkData.HitStun, 0);
+
+        // End timer
+        chr?.SetState(BaseController.State.Ready);
+    }
+    private IEnumerator SuperStunRoutine()
+    {
+        Debug.Log("Applying Superstun for 3.5 seconds");
+        chr?.SetState(BaseController.State.SuperStun);
+
+        // Start timer
+        yield return Utility.FrameTimer(210, 0);
 
         // End timer
         chr?.SetState(BaseController.State.Ready);

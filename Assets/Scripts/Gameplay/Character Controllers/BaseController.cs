@@ -5,7 +5,7 @@ public abstract class BaseController : MonoBehaviour
 {
 
     public State CurrentState = State.Ready;
-    public enum State { Ready, InAction, InHitstun, Dead }
+    public enum State { Ready, Action, HitStun, SuperStun, Dead }
 
     protected CharacterMotionController mc;
     private AnimationController _an;

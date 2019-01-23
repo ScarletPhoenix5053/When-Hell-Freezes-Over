@@ -4,7 +4,7 @@ using System.Collections;
 using Sierra.Combat2D;
 using UnityEngine;
 
-public class BlobAttackManager : EnemyAttackManager, IHitboxResponder
+public class LEGACYBlobAttackManager : EnemyAttackManager, IHitboxResponder
 {
     public override void Attack()
     {

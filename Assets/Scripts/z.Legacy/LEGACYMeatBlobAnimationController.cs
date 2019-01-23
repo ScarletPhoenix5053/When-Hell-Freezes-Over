@@ -2,9 +2,9 @@
 using Spine.Unity;
 using System;
 
-public class MeatBlobAnimationController : EnemyAnimationController
+public class LEGACYMeatBlobAnimationController : EnemyAnimationController
 {
-    private MeatBlobController enm;
+    private LEGACYMeatBlobController enm;
 
     private AnimState currentAnimationState = AnimState.Idle;
     private enum AnimState
@@ -18,7 +18,7 @@ public class MeatBlobAnimationController : EnemyAnimationController
     protected override void Awake()
     {
         base.Awake();
-        enm = GetComponent<MeatBlobController>();
+        enm = GetComponent<LEGACYMeatBlobController>();
     }
     private void Start()
     {
@@ -32,7 +32,7 @@ public class MeatBlobAnimationController : EnemyAnimationController
     private void RunAnimationStateMachine()
     {
         if (enm.CurrentState == BaseController.State.Dead) ChangeToDeathState();
-        if (enm.CurrentState == BaseController.State.InHitstun) ChangeToHitState();
+        if (enm.CurrentState == BaseController.State.HitStun) ChangeToHitState();
     
         switch (currentAnimationState)
         {
@@ -45,7 +45,7 @@ public class MeatBlobAnimationController : EnemyAnimationController
                 break;
 
             case AnimState.Hit:
-                if (enm.CurrentState != BaseController.State.InHitstun) ChangeToHitState();
+                if (enm.CurrentState != BaseController.State.HitStun) ChangeToHitState();
                 break;
 
             case AnimState.Dead:

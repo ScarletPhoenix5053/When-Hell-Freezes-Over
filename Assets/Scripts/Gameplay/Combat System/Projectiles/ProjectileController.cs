@@ -58,7 +58,7 @@ public class ProjectileController : MonoBehaviour, IHitboxResponder
             {
                 // set sign of attack
                 attackData.Sign = xSign;
-                hurtbox.GetComponent<Hurtbox>().hp.Damage(attackData);
+                hurtbox.GetComponent<Hurtbox>().hp.Damage(attackData, criticalHit);
 
                 Destroy(gameObject);
             }

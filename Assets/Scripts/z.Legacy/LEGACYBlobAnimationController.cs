@@ -2,7 +2,7 @@
 using Sierra;
 using UnityEngine;
 
-public class BlobAnimationController : EnemyAnimationController
+public class LEGACYBlobAnimationController : EnemyAnimationController
 {
     public void PlayAttack()
     {

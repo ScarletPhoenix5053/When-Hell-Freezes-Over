@@ -4,21 +4,21 @@ using System.Collections;
 /// <summary>
 /// Core Controller component for blob type enemy.
 /// </summary>
-public class BlobController : EnemyController
+public class LEGACYBlobController : EnemyController
 {
     public float AttackRange = 2f;
     public float ChaseRange = 10f;
     public float LeapHeight = 10f;
     public bool HoldState = false;
 
-    protected BlobAnimationController an;
-    protected BlobAttackManager am;
+    protected LEGACYBlobAnimationController an;
+    protected LEGACYBlobAttackManager am;
 
     protected override void Awake()
     {
         base.Awake();
-        an = GetComponent<BlobAnimationController>();
-        am = GetComponent<BlobAttackManager>();
+        an = GetComponent<LEGACYBlobAnimationController>();
+        am = GetComponent<LEGACYBlobAttackManager>();
     }
     protected virtual void LateUpdate()
     {
@@ -29,7 +29,7 @@ public class BlobController : EnemyController
     public override void SetState(State newState)
     {
         base.SetState(newState);
-        if (newState == State.InHitstun)
+        if (newState == State.HitStun)
         {
             am.StopAttack();
         }

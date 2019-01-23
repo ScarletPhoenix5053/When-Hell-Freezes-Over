@@ -30,7 +30,7 @@ public abstract class EnemyController : BaseController
 
         if (GameManager.Instance.HitStopActive) return;
 
-        if (CurrentState == State.Ready || CurrentState == State.InAction)
+        if (CurrentState == State.Ready || CurrentState == State.Action)
         {
             DecideAction();
             Act();

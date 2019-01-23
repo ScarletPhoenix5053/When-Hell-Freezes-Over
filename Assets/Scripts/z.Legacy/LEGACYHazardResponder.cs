@@ -4,7 +4,7 @@ using Sierra;
 using Sierra.Combat2D;
 using System.Collections;
 
-public class HazardResponder : MonoBehaviour, IHitboxResponder
+public class LEGACYHazardResponder : MonoBehaviour, IHitboxResponder
 {
     public AttackData DamageData;
     public Hitbox Hitbox;

@@ -52,7 +52,7 @@ public class PlayerController : BaseController
         if (GameManager.Instance.HitStopActive) return;
 
         if (CurrentState == State.Ready ||
-            (CurrentState == State.InAction && CurrentAction == Action.Attacking))
+            (CurrentState == State.Action && CurrentAction == Action.Attacking))
             CheckInput();
 
         OrientByMotion();
@@ -133,7 +133,7 @@ public class PlayerController : BaseController
             if (InputManager.Attack() && 
                 (CurrentAction == Action.Attacking || CurrentAction == Action.None))
             {
-                SetState(State.InAction);
+                SetState(State.Action);
                 SetAction(Action.Attacking);
                 am.NormalAttack();
             }
@@ -149,7 +149,7 @@ public class PlayerController : BaseController
         // Ranged attack button
         if (InputManager.RangedAttack())
         {
-            SetState(State.InAction);
+            SetState(State.Action);
             SetAction(Action.Attacking);
             am.RangedAttack();
         }
@@ -196,7 +196,7 @@ public class PlayerController : BaseController
     private IEnumerator RollRoutine()
     {
         var capsule = GetComponent<CapsuleCollider2D>();
-        SetState(State.InAction);
+        SetState(State.Action);
         SetAction(Action.Rolling);
         capsule.size = new Vector2(capsule.size.x, capsule.size.y / 2);
         capsule.offset = new Vector2(capsule.offset.x, capsule.offset.y - 0.6f);
