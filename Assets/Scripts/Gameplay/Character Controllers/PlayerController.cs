@@ -17,7 +17,7 @@ public class PlayerController : BaseController
     public Action CurrentAction = Action.None;
     public enum Action { None, Attacking, Rolling, Climbing }
 
-    public int Sign { get { if (mc.MoveVector.x == 0) return sign; else return sign = Math.Sign(mc.MoveVector.x); } }
+    public override int Sign { get { if (mc.MoveVector.x == 0) return sign; else return sign = Math.Sign(mc.MoveVector.x); } }
 
     public Canvas TempDeathCanvas;
     #endregion
@@ -31,8 +31,6 @@ public class PlayerController : BaseController
     private float jumpLimitSeconds = 0.2f;
     private float jumpLimitTimer = 0;
     private int additionalJumpsUsed = 0;
-
-    private int sign = 1;
     #endregion
 
     #region Unity Runtime Events

@@ -1,11 +1,14 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System;
 
 public abstract class BaseController : MonoBehaviour
 {
 
     public State CurrentState = State.Ready;
     public enum State { Ready, Action, HitStun, SuperStun, Dead }
+
+    public virtual int Sign { get { sign = Math.Sign(transform.localScale.x); return sign; } }
+    protected int sign = 1;
 
     protected CharacterMotionController mc;
     private AnimationController _an;

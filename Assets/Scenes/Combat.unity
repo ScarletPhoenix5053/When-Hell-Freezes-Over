@@ -140,7 +140,7 @@ Transform:
   m_GameObject: {fileID: 289800645}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: -1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 813853057}
   m_RootOrder: 0
@@ -228,9 +228,9 @@ GameObject:
   - component: {fileID: 813853057}
   - component: {fileID: 813853056}
   - component: {fileID: 813853060}
+  - component: {fileID: 813853059}
   - component: {fileID: 813853062}
   - component: {fileID: 813853061}
-  - component: {fileID: 813853059}
   - component: {fileID: 813853055}
   - component: {fileID: 813853058}
   m_Layer: 10
@@ -295,7 +295,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 813853054}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1, y: -2, z: 0}
+  m_LocalPosition: {x: 10, y: -2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 289800646}
@@ -314,8 +314,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9ad26a3b661e214faa899fcb780df73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  HpMax: 6
-  Hp: 6
+  HpMax: 12
+  Hp: 12
   AffectedByKnockback: 1
   AffectedByKnockbackOnCrit: 0
   Hurtbox: {fileID: 0}
@@ -357,7 +357,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &813853061
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -384,10 +384,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CurrentState: 0
   DetectionRange: 12
-  MinimumAttackRange: 2
-  MaximumAttackRange: 5
-  EnterWindupChance: 0.1
-  LeapChance: 0.1
+  MinimumAttackRange: 3
+  MaximumAttackRange: 7
+  MinimumWindupFrames: 60
+  MaximumWindupFrames: 120
+  RecoveryFrames: 180
+  AverageLeapVelocity: {x: 17, y: 16}
+  AverageLeapVariance: {x: 3, y: 3}
+  EnterWindupChance: 0.02
+  LeapChance: 0.02
   CurrentBehaviour: 0
 --- !u!1001 &913530798
 PrefabInstance:

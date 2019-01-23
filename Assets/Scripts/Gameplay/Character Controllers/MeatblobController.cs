@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEditor;
 using Sierra;
@@ -8,6 +9,14 @@ public class MeatblobController : EnemyController
     public float DetectionRange = 12f;
     public float MinimumAttackRange = 2f;
     public float MaximumAttackRange = 5f;
+
+    public int MinimumWindupFrames = 60;
+    public int MaximumWindupFrames = 120;
+    public int RecoveryFrames = 180;
+
+    public Vector2 AverageLeapVelocity = new Vector2(10, 10);
+    public Vector2 AverageLeapVariance = new Vector2(5, 5);
+
     [Range(0, 1)]
     public float EnterWindupChance = 0.1f;
     [Range(0, 1)]
@@ -15,6 +24,8 @@ public class MeatblobController : EnemyController
 
     public Behaviour CurrentBehaviour = Behaviour.Idle;
     public enum Behaviour { Idle, Chasing, WindingUp, Leaping, Recovering }
+
+    protected IEnumerator currentRoutine;
 
     protected void OnDrawGizmosSelected()
     {
@@ -37,22 +48,18 @@ public class MeatblobController : EnemyController
 
     protected override void Act()
     {
+        if (CurrentBehaviour != Behaviour.Leaping &&
+            CurrentBehaviour != Behaviour.Recovering)
+        {
+            FacePlayer();
+        }
+        
         switch (CurrentBehaviour)
         {
             case Behaviour.Chasing:
-                FacePlayer();
                 var dir = 0;
                 if (PlayerToLeft) dir = -1; else dir = 1;
                 mc.MoveVector = new Vector2(dir, 0);
-                break;
-
-            case Behaviour.WindingUp:
-                break;
-
-            case Behaviour.Leaping:
-                break;
-
-            case Behaviour.Recovering:
                 break;
 
             default:
@@ -68,29 +75,88 @@ public class MeatblobController : EnemyController
                 break;
 
             case Behaviour.Chasing:
-                if ((DistToPlayer <= MinimumAttackRange) || 
+                if ((DistToPlayer <= MinimumAttackRange) ||
                     (DistToPlayer <= MaximumAttackRange && Utility.GetRandomFloat() < EnterWindupChance)
                     )
-                    SetBehaviour(Behaviour.WindingUp);
+                    StartWindup();
                 break;
-
-            case Behaviour.WindingUp:                
-                break;
-
+                
             case Behaviour.Leaping:
-                break;
-
-            case Behaviour.Recovering:
+                if (mc.IsGrounded) StartRecovery();
                 break;
 
             default:
                 break;
         }
     }
+
+    protected void StartWindup()
+    {
+        if (currentRoutine != null) StopCoroutine(currentRoutine);
+        currentRoutine = WindupRoutine();
+        StartCoroutine(currentRoutine);
+
+        SetBehaviour(Behaviour.WindingUp);
+    }
+    protected void StartLeap()
+    {
+        SetBehaviour(Behaviour.Leaping);
+
+        var xVariance = AverageLeapVariance.x * Utility.GetRandomFloat();
+        var yVariance = AverageLeapVariance.y * Utility.GetRandomFloat();
+        if (Utility.GetRandomFloat() < 0.5f) xVariance *= -1;
+        if (Utility.GetRandomFloat() < 0.5f) yVariance *= -1;
+        
+        mc.DoImpulse(new Vector2((AverageLeapVelocity.x + xVariance) * Sign, AverageLeapVelocity.y + yVariance));
+    }
+    protected void StartRecovery()
+    {
+        if (currentRoutine != null) StopCoroutine(currentRoutine);
+        currentRoutine = RecoveryRoutine();
+        StartCoroutine(currentRoutine);
+
+        SetBehaviour(Behaviour.Recovering);
+    }
+
     protected void DrawCircle(float radius, Color colour)
     {
         Handles.color = colour;
         Handles.DrawWireDisc(transform.position, Vector3.forward, radius);
     }
 
+    protected IEnumerator WindupRoutine()
+    {
+        var readyToLeap = false;
+        var windupTimer = 0;
+
+        // Minimum wait duration
+        while (windupTimer < MinimumWindupFrames)
+        {
+            windupTimer++;
+            yield return new WaitForFixedUpdate();
+        }
+
+        // Leap after random duration
+        while (!readyToLeap && windupTimer < MaximumWindupFrames)
+        {
+            if (Utility.GetRandomFloat() < LeapChance) readyToLeap = true;
+
+            windupTimer++;
+            yield return new WaitForFixedUpdate();
+        }
+
+        // Begin Leap
+        StartLeap();
+    }
+    protected IEnumerator RecoveryRoutine()
+    {
+        var recoveryTimer = 0;
+        while (recoveryTimer < RecoveryFrames)
+        {
+            recoveryTimer++;
+            yield return new WaitForFixedUpdate();
+        }
+
+        SetBehaviour(Behaviour.Idle);
+     }
 }
