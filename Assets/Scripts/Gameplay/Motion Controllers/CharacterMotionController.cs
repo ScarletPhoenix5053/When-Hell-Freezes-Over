@@ -140,6 +140,7 @@ public class CharacterMotionController : MotionController
     {
         if (impulseLastFrame) return;
 
+        // Check if close enough to stick to ground
         var stickyRay =
             Physics2D.Raycast(
                 new Vector2(
@@ -150,8 +151,7 @@ public class CharacterMotionController : MotionController
                 groundStick,
                 GroundMask);
 
-        Debug.Log((bool)stickyRay);
-
+        // Stick player to ground if close enough
         if ((bool)stickyRay)
         {
             transform.position =

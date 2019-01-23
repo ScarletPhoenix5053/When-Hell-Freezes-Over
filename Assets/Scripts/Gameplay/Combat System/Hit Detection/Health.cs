@@ -7,6 +7,7 @@ using Sierra.Combat2D;
 [RequireComponent(typeof(CharacterMotionController))]
 public class Health : MonoBehaviour
 {
+    #region Public Variables
     public int HpMax = 6;
     public int Hp = 6;
     public float SuperStunMultiplier = 3f;
@@ -17,12 +18,14 @@ public class Health : MonoBehaviour
     public Hurtbox Hurtbox;
 
     public bool Dead { get { return Hp <= 0; } }
-
+    #endregion
+    #region Private Variables
     private CharacterMotionController mc;
     private BaseController chr;
 
     private AttackData atkData;
     private IEnumerator currentHsRoutine;
+    #endregion
 
     private void Awake()
     {
@@ -31,6 +34,7 @@ public class Health : MonoBehaviour
         Hurtbox = GetComponent<Hurtbox>();
     }
 
+    #region Public Methods
     public void Damage(AttackData data, bool critical = false)
     {
         Debug.Log(name + "was damaged");
@@ -71,7 +75,8 @@ public class Health : MonoBehaviour
     {
         Debug.Log(name + " is dead");
     }
-
+    #endregion
+    #region Private Methods
     private void AdjustHP()
     {
 
@@ -90,6 +95,9 @@ public class Health : MonoBehaviour
     }
     private void ApplyHitStun()
     {
+        // Exit early if in superstun to prevent normal hitstun from overriding.
+        if (chr?.CurrentState == BaseController.State.SuperStun) return;
+
         if (currentHsRoutine != null) StopCoroutine(currentHsRoutine);
         currentHsRoutine = HitStunRoutine();
         StartCoroutine(currentHsRoutine);
@@ -136,4 +144,5 @@ public class Health : MonoBehaviour
         // End timer
         chr?.SetState(BaseController.State.Ready);
     }
+    #endregion
 }
