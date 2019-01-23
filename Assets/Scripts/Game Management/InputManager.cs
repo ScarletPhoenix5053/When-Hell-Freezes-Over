@@ -74,7 +74,7 @@ public class InputManager : MonoBehaviour
     }
     public static bool HoldingDown()
     {
-        return VeticalAxis() < booleanDeadZone;
+        return VeticalAxis() < -booleanDeadZone;
     }
     public static bool HoldingUp()
     {
