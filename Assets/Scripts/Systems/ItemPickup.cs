@@ -8,7 +8,7 @@ public class ItemPickup : MonoBehaviour
     public GenericItem item;
     private Inventory inventoryPanel; //Put all the finished items in a group and assign this at once. It's annoying but it works. 
     private SpriteRenderer sprite;
-    private PlayerBrooke player;
+    private PlayerInteract player;
 
     float originalY;
     float floatStrength = 0.5f;
@@ -18,7 +18,7 @@ public class ItemPickup : MonoBehaviour
     {
         inventoryPanel = GameObject.Find("InventoryCanvas").transform.Find("Inventory/CharacterPanel/InventoryPanel").GetComponent<Inventory>();
         sprite = GetComponent<SpriteRenderer>();
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBrooke>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInteract>();
 
         sprite.sprite = item.Icon;
         floatSpeed = UnityEngine.Random.Range(2, 10);

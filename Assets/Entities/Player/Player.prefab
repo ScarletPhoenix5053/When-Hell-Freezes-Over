@@ -303,10 +303,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 8993978443071335208}
-  OnLadder: 0
+  climbingSpeed: 2
+  ladder:
+    serializedVersion: 2
+    m_Bits: 32768
+  isClimbing: 0
   respawnPoint: {x: 0, y: 0, z: 0}
   atForge: 0
   prompt: {fileID: 0}
+  unfrozenForge: {fileID: 21300000, guid: a6ed7ff2195fccb49942d9f7fbfe8526, type: 3}
   itemSpeed: 6
   target: {fileID: 8993978443071335212}
   pickedUp: 0

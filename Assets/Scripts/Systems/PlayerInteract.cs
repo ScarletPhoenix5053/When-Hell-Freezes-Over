@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerBrooke : MonoBehaviour
+public class PlayerInteract : MonoBehaviour
 {
+    PlayerMotionController pM;
 
-    [Header("Ladder Climbing")]
+    [Header("Ladders")]
     private float inputVertical;
     public Rigidbody2D rb;
-    PlayerMotionController pM;
     float gravityStore;
-    public float distance;
+    float distance = 5;
     public float climbingSpeed = 2;
     public LayerMask ladder;
     public bool isClimbing;
@@ -44,6 +44,8 @@ public class PlayerBrooke : MonoBehaviour
 
     private void Update()
     {
+        GlobalControl.Instance.playerPosition = transform.position;
+
         if (health.Dead == true)
         {
             transform.position = respawnPoint;
@@ -144,8 +146,8 @@ public class PlayerBrooke : MonoBehaviour
         {
             pickedUp = false;
         }
-
     }
 
+   
 
 }
