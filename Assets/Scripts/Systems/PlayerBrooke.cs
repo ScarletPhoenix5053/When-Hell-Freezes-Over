@@ -5,24 +5,28 @@ using UnityEngine.UI;
 
 public class PlayerBrooke : MonoBehaviour
 {
+
+    [Header("Ladder Climbing")]
+    private float inputVertical;
     public Rigidbody2D rb;
     PlayerMotionController pM;
+    float gravityStore;
+    public float distance;
+    public float climbingSpeed = 2;
+    public LayerMask ladder;
+    public bool isClimbing;
 
-    //LADDERS
-    public bool OnLadder;
-    //public float climbSpeed;
-    private float climbVelocity;
-    private float gravityStore;
-
-    //RESPAWNING
+    [Header("Checkpoints")]
     public Vector3 respawnPoint;
     protected Health health;
 
-    //FORGES
+    [Header("Forges")]
     public bool atForge;
     public GameObject prompt;
+    public Sprite unfrozenForge;
+    private SpriteRenderer forgeRenderer;
 
-    //ITEMPICKUP
+    [Header("Item Pickup")]
     public float itemSpeed = 6f;
     public Transform target;
     public bool pickedUp;
@@ -40,52 +44,64 @@ public class PlayerBrooke : MonoBehaviour
 
     private void Update()
     {
-        Climbing();
-
-        if(health.Dead == true)
+        if (health.Dead == true)
         {
             transform.position = respawnPoint;
             health.Hp = 6;
         }
-    }
 
-    public void Climbing()
-    {
-        if(OnLadder)
+        //Climbing();
+
+        RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, Vector2.up, distance, ladder);
+
+        if(hitInfo.collider != null)
         {
-            if (Input.GetKey(KeyCode.W))
+            if (Input.GetKeyDown(KeyCode.W))
             {
-                pM.Gravity = 0f;
+                isClimbing = true;
             }
-
-            if (Input.GetKey(KeyCode.S))
-            {
-                pM.Gravity = 0.2f;
-            }
-            //climbVelocity = climbSpeed * Input.GetAxisRaw("Vertical");
-            //rb.velocity = new Vector2(rb.velocity.x, climbVelocity);
         }
-        else if(!OnLadder)
+        else
+        {
+            //if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
+            //{
+                isClimbing = false;
+            //}
+        }
+
+        if(isClimbing) // && hitInfo.collider != null)
+        {
+            inputVertical = Input.GetAxisRaw("Vertical");
+            rb.velocity = new Vector2(rb.velocity.x, inputVertical * climbingSpeed);
+            pM.Gravity = 0f;
+        }
+        else if(isClimbing == false)
         {
             pM.Gravity = gravityStore;
         }
+        
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        //CHECKPOINTS
         if(other.tag == "Checkpoint")
         {
             respawnPoint = other.transform.position;
         }
 
+        //FORGES
         if (other.tag == "Forge")
         {
             atForge = true;
             prompt.SetActive(true);
+
+            //Do I have to create a seperate script to sit on the forge that does this magical change?
+            forgeRenderer = other.GetComponent<SpriteRenderer>();
+            forgeRenderer.sprite = unfrozenForge;
         }
 
-        //
-
+        //HEALTH PICKUPS
         if(other.tag == "Health")
         {
             if(health.Hp < 5)
@@ -100,15 +116,11 @@ public class PlayerBrooke : MonoBehaviour
                 Destroy(other.gameObject);
             }
         }
-
-        if(other.tag == "Interactable")
-        {
-            
-        }
     }
 
     private void OnTriggerStay2D(Collider2D other)
     {
+        //ITEM PICKUPS
         if (other.tag == "Interactable")
         {
             float step = itemSpeed * Time.deltaTime;
