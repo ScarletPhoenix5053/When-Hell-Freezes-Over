@@ -99,7 +99,11 @@ public class PlayerBrooke : MonoBehaviour
                 health.Hp += 1;
                 Destroy(other.gameObject);
             }
-           
+        }
+
+        if(other.tag == "Interactable")
+        {
+            
         }
     }
 
@@ -107,12 +111,11 @@ public class PlayerBrooke : MonoBehaviour
     {
         if (other.tag == "Interactable")
         {
-            pickedUp = true;
-
             float step = itemSpeed * Time.deltaTime;
             other.transform.position = Vector3.MoveTowards(other.transform.position, target.position, step);
+            pickedUp = true;
 
-            if(other.transform.position == target.position)
+            if (other.transform.position == target.position)
                 other.gameObject.SendMessage("PickUp");
         }
     }

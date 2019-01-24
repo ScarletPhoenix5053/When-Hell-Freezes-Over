@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 8993978443071335215}
   - component: {fileID: 8993978443071335222}
   - component: {fileID: 2171353324114756376}
+  - component: {fileID: 1620014276}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -241,10 +242,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9ad26a3b661e214faa899fcb780df73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Hp: 6
+  isPlayer: 1
   HpMax: 6
-  Hurtboxes:
-  - {fileID: 8993978443071335222}
+  Hp: 6
+  SuperStunMultiplier: 3
+  healthImages:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  healthSprites:
+  - {fileID: 21300000, guid: a7dad13fc6cc9f74eb31288df15ac874, type: 3}
+  - {fileID: 21300000, guid: 287a335592b321e4185c11745432e387, type: 3}
+  - {fileID: 21300000, guid: 1b99ce9684ead1548819b6035ec9866b, type: 3}
+  AffectedByKnockback: 1
+  AffectedByKnockbackOnCrit: 1
+  Hurtbox: {fileID: 0}
 --- !u!114 &8993978443071335222
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,10 +270,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: {fileID: 8993978443071335215}
-  col: {fileID: 8993978443071335209}
+  Collider: {fileID: 8993978443071335209}
   ColliderColour:
     Inactive: {r: 0.5, g: 0.5, b: 0.5, a: 0.25}
-    Active: {r: 0, g: 0.8, b: 0, a: 0.25}
+    Vulnerable: {r: 0, g: 0.8, b: 0, a: 0.25}
+    Critical: {r: 0.8, g: 1, b: 0, a: 0.25}
+    Blocking: {r: 0, g: 0, b: 1, a: 0.25}
+  DrawGizmo: 0
+  CurrentState: 1
 --- !u!114 &2171353324114756376
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -274,6 +290,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ad21347323f69a4e9e51fb2264547a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1620014276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8993978443071335221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3944418cf9815a241838842512ad2ab4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rb: {fileID: 8993978443071335208}
+  OnLadder: 0
+  respawnPoint: {x: 0, y: 0, z: 0}
+  atForge: 0
+  prompt: {fileID: 0}
+  itemSpeed: 6
+  target: {fileID: 8993978443071335212}
+  pickedUp: 0
 --- !u!1001 &4160720026958723722
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -285,6 +321,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: WeaponHitbox
+      objectReference: {fileID: 0}
+    - target: {fileID: 5002618943098832105, guid: d2628e4903009ea40999ace6ec72d799,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5002618943098832105, guid: d2628e4903009ea40999ace6ec72d799,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 5002618943098832105, guid: d2628e4903009ea40999ace6ec72d799,
         type: 3}

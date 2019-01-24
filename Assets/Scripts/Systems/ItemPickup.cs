@@ -12,6 +12,7 @@ public class ItemPickup : MonoBehaviour
 
     float originalY;
     float floatStrength = 0.5f;
+    float floatSpeed;
 
     private void Start()
     {
@@ -20,6 +21,7 @@ public class ItemPickup : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerBrooke>();
 
         sprite.sprite = item.Icon;
+        floatSpeed = UnityEngine.Random.Range(2, 10);
         this.originalY = this.transform.position.y;
 
         Float();
@@ -32,8 +34,9 @@ public class ItemPickup : MonoBehaviour
 
     public void PickUp()
     {
-        Debug.Log("Picking up " + item.name);
+        Debug.Log("Picking up " + item.name);     
         inventoryPanel.AddItem(item);
+        player.pickedUp = false;
         Destroy(gameObject);
     }
 
@@ -41,9 +44,9 @@ public class ItemPickup : MonoBehaviour
     {
         if (player.pickedUp == false)
         {
-            //RANDOMISE THE SPEED?
-            transform.position = new Vector3(transform.position.x, originalY
-                + ((float)Math.Sin(Time.time) * floatStrength), transform.position.z);
+            transform.position = new Vector3(transform.position.x, originalY + Mathf.Sin(Time.time * floatSpeed) * floatStrength, transform.position.z);
+            //transform.position = new Vector3(transform.position.x, originalY +
+                //((float)Math.Sin(Time.time) * floatStrength), transform.position.z);
         }
     }
 }

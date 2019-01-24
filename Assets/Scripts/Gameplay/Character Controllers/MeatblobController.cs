@@ -8,7 +8,7 @@ using Sierra.Combat2D;
 
 public class MeatblobController : EnemyController
 {
-    public GameObject bone, eyeball; //Put this in every enemy with what items they drop. Since we only have 3 enemies it's not bad.
+    public GameObject bone, eyeball;//Put this in every enemy with what items they drop. Since we only have 3 enemies it's not bad.
     public Vector2 AverageItemVariance = new Vector2(3, 3);
 
     public float DetectionRange = 12f;
@@ -206,7 +206,7 @@ public class MeatblobController : EnemyController
     public override void Die() //Put this in all 3 types of enemies. 
     {
 
-        int lootNum = UnityEngine.Random.Range(2, 3);
+        int lootNum = UnityEngine.Random.Range(1, 3);
         for (int i = 0; i < lootNum; i++)
         {
             var boneVarianceY = AverageItemVariance.y * Utility.GetRandomFloat();
@@ -227,7 +227,6 @@ public class MeatblobController : EnemyController
 
             Instantiate(bone, boneSpawnPos, transform.rotation);
             Instantiate(eyeball, eyeSpawnPos, transform.rotation);
-
         }
 
         base.Die();
