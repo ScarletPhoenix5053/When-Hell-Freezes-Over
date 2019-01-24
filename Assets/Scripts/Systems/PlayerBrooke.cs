@@ -23,7 +23,10 @@ public class PlayerBrooke : MonoBehaviour
     public GameObject prompt;
 
     //ITEMPICKUP
-    public GameObject currentinterObj = null;
+    public float itemSpeed = 6f;
+    public Transform target;
+    public bool pickedUp;
+
 
     private void Start()
     {
@@ -43,11 +46,6 @@ public class PlayerBrooke : MonoBehaviour
         {
             transform.position = respawnPoint;
             health.Hp = 6;
-        }
-
-        if (Input.GetKey(KeyCode.E) && currentinterObj)
-        {
-            currentinterObj.SendMessage("PickUp");
         }
     }
 
@@ -86,11 +84,7 @@ public class PlayerBrooke : MonoBehaviour
             prompt.SetActive(true);
         }
 
-        if (other.tag == "Interactable")
-        {
-            Debug.Log(other.name);
-            currentinterObj = other.gameObject;
-        }
+        //
 
         if(other.tag == "Health")
         {
@@ -109,6 +103,20 @@ public class PlayerBrooke : MonoBehaviour
         }
     }
 
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.tag == "Interactable")
+        {
+            pickedUp = true;
+
+            float step = itemSpeed * Time.deltaTime;
+            other.transform.position = Vector3.MoveTowards(other.transform.position, target.position, step);
+
+            if(other.transform.position == target.position)
+                other.gameObject.SendMessage("PickUp");
+        }
+    }
+
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.tag == "Forge")
@@ -117,13 +125,11 @@ public class PlayerBrooke : MonoBehaviour
             prompt.SetActive(false);
         }
 
-        if (other.tag =="Interactable")
+        if(other.tag == "Interactable")
         {
-            if (other.gameObject == currentinterObj)
-            {
-                currentinterObj = null;
-            }
+            pickedUp = false;
         }
+
     }
 
 

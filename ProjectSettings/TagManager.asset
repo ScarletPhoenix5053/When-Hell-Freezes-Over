@@ -9,6 +9,7 @@ TagManager:
   - Checkpoint
   - Interactable
   - Health
+  - Inventory
   layers:
   - Default
   - TransparentFX

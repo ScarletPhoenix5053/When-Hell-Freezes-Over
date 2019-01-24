@@ -105,7 +105,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 4.71, y: 8.82}
+  m_Size: {x: 14.72, y: 36.2}
   m_EdgeRadius: 0
 --- !u!114 &5776911592199247893
 MonoBehaviour:
@@ -120,4 +120,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: cdfc058d3abb5b741904190ffd43a259, type: 2}
-  inventoryPanel: {fileID: 0}

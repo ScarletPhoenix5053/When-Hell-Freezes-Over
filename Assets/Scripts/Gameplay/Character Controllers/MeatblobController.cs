@@ -8,6 +8,9 @@ using Sierra.Combat2D;
 
 public class MeatblobController : EnemyController
 {
+    public GameObject bone, eyeball; //Put this in every enemy with what items they drop. Since we only have 3 enemies it's not bad.
+    public Vector2 AverageItemVariance = new Vector2(3, 3);
+
     public float DetectionRange = 12f;
     public float MinimumAttackRange = 2f;
     public float MaximumAttackRange = 5f;
@@ -198,5 +201,35 @@ public class MeatblobController : EnemyController
 
         SetBehaviour(Behaviour.Idle);
         hp.Hurtbox.SetState(Hurtbox.State.Vulnerable);
+    }
+
+    public override void Die() //Put this in all 3 types of enemies. 
+    {
+
+        int lootNum = UnityEngine.Random.Range(2, 3);
+        for (int i = 0; i < lootNum; i++)
+        {
+            var boneVarianceY = AverageItemVariance.y * Utility.GetRandomFloat();
+            var boneVarianceX = AverageItemVariance.x * Utility.GetRandomFloat();
+
+            var eyeVarianceY = AverageItemVariance.y * Utility.GetRandomFloat();
+            var eyeVarianceX = AverageItemVariance.x * Utility.GetRandomFloat();
+
+            var boneSpawnPos = new Vector3(
+                transform.position.x + boneVarianceX,
+                transform.position.y + boneVarianceY,
+                transform.position.z);
+
+            var eyeSpawnPos = new Vector3(
+                transform.position.x + eyeVarianceX,
+                transform.position.y + eyeVarianceY,
+                transform.position.z);
+
+            Instantiate(bone, boneSpawnPos, transform.rotation);
+            Instantiate(eyeball, eyeSpawnPos, transform.rotation);
+
+        }
+
+        base.Die();
     }
 }
