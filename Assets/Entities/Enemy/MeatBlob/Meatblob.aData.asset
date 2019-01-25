@@ -20,5 +20,5 @@ MonoBehaviour:
   KnockBack: 12
   KnockUp: 4
   HitStun: 22
-  HitStop: 4
+  HitStop: 12
   Sign: 1

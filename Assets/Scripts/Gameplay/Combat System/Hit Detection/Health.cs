@@ -43,24 +43,23 @@ public class Health : MonoBehaviour
     }
 
     private void Start()
-    {
+    {/*
         Hp = startHearts * healthPerHeart;
         HpMax = maxHeartAmount * healthPerHeart;
 
-        CheckHealthAmount();
+        CheckHealthAmount();*/
     }
 
     private void Update()
-    {
+    {/*
         if (Hp == HpMax)
         {
             healthImages[0].sprite = healthSprites[2];
             healthImages[1].sprite = healthSprites[2];
             healthImages[2].sprite = healthSprites[2];
-        }
+        }*/
     }
     #region Public Methods
-    public void Damage(AttackData data)
     public void Damage(AttackData data, bool critical = false)
     {
         Debug.Log(name + "was damaged");
