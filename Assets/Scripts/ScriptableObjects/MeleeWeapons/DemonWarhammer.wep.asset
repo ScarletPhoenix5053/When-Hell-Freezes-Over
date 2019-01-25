@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 9d56596401dbeaf4889b2e3d9855a3a5
   Name: Demon Warhammer
-  Desc: A new item.
+  Desc: 'Nothing to it: Hit hard, kill more demons, claim back hell. '
   MaximumStacks: 1
   Icon: {fileID: 21300000, guid: 9e8f7941775bfa945a8811f19385e407, type: 3}
   equipmentType: 1

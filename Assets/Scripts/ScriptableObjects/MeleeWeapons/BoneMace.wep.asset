@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: cc98df64b72554b4ca7c42a4b221e0f1
   Name: Bone Mace
-  Desc: A new item.
+  Desc: 'A mace made of bone. Splintery. '
   MaximumStacks: 1
   Icon: {fileID: 21300000, guid: d4e8a48603a27ff46bf6efa2b0c4ba61, type: 3}
   equipmentType: 1
