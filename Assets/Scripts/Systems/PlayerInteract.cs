@@ -44,7 +44,6 @@ public class PlayerInteract : MonoBehaviour
 
     private void Update()
     {
-        GlobalControl.Instance.playerPosition = transform.position;
 
         if (health.Dead == true)
         {

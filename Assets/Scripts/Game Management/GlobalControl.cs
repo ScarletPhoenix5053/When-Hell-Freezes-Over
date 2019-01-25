@@ -11,9 +11,6 @@ public class GlobalControl : MonoBehaviour
 
     public int currentGold;
     public int forgesReached;
-    public Vector3 playerPosition;
-
-    PauseMenu pauseMenu;
 
     public AudioMixer audioMixer;
 
@@ -30,26 +27,6 @@ public class GlobalControl : MonoBehaviour
         }
     }
 
-    public void Save()
-    {
-        //pauseMenu = GameObject.Find("GameManager").GetComponent<PauseMenu>();
-
-        //if (pauseMenu.pauseEnabled == true)
-        //{
-            Debug.Log("Game is saved.");
-
-            SaveGame.Instance.playerProgress = playerPosition;
-            SaveGame.Save();
-        //}
-    }
-
-    public void Load()
-    {
-        SaveGame.Load();
-
-        Debug.Log("Game is loaded.");
-        playerPosition = SaveGame.Instance.playerProgress;
-    }
 
     public void SetVolume(float volume)
     {
