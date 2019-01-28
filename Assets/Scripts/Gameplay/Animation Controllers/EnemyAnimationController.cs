@@ -11,4 +11,11 @@ public class EnemyAnimationController : AnimationController
             else sk_an.timeScale = 1;
         }
     }
+
+    public virtual void EffectOnDeath()
+    {
+        if (sk_an == null) return;
+
+        sk_an.AnimationState.SetAnimation(0, "Death", false);
+    }
 }

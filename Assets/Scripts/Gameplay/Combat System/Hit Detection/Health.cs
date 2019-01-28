@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using System;
 using System.Collections;
 using UnityEngine.UI;
@@ -43,24 +44,23 @@ public class Health : MonoBehaviour
     }
 
     private void Start()
-    {
+    {/*
         Hp = startHearts * healthPerHeart;
         HpMax = maxHeartAmount * healthPerHeart;
 
-        CheckHealthAmount();
+        CheckHealthAmount();*/
     }
 
     private void Update()
-    {
+    {/*
         if (Hp == HpMax)
         {
             healthImages[0].sprite = healthSprites[2];
             healthImages[1].sprite = healthSprites[2];
             healthImages[2].sprite = healthSprites[2];
-        }
+        }*/
     }
     #region Public Methods
-    public void Damage(AttackData data)
     public void Damage(AttackData data, bool critical = false)
     {
         Debug.Log(name + "was damaged");
@@ -74,7 +74,7 @@ public class Health : MonoBehaviour
 
         atkData = data;
         AdjustHP();
-        UpdateHearts();
+        //UpdateHearts();
 
         // Check if died this frame
         if (Dead) Die();
@@ -146,7 +146,11 @@ public class Health : MonoBehaviour
     private void Die()
     {
         Hp = 0;
-        chr?.Die();
+        if (chr is EnemyController)
+        {
+            var enm = chr as EnemyController;
+            enm.Events.OnDeath.Invoke();
+        }
         StopAllCoroutines();
     }
 
@@ -171,6 +175,7 @@ public class Health : MonoBehaviour
         // End timer
         chr?.SetState(BaseController.State.Ready);
     }
+    /*
     public void CheckHealthAmount()
     {
 
@@ -225,6 +230,6 @@ public class Health : MonoBehaviour
         Hp -= amount;
         Hp = Mathf.Clamp(Hp, 0, startHearts * healthPerHeart);
         UpdateHearts();
-    }
+    }*/
     #endregion
 }

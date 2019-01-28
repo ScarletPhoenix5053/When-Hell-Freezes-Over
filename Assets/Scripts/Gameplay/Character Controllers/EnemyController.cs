@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections;
-using Sierra.Combat2D;
+using UnityEngine.Events;
+using System;
+using Spine.Unity;
 
 [RequireComponent(typeof(EnemyAnimationController))]
 [RequireComponent(typeof(AttackManager))]
@@ -8,6 +9,15 @@ using Sierra.Combat2D;
 [RequireComponent(typeof(Health))]
 public abstract class EnemyController : BaseController
 {
+    public EnemyEvents Events;
+    [Serializable]
+    public class EnemyEvents
+    {
+        public UnityEvent OnDamage;
+        public UnityEvent OnDeath;
+        public UnityEvent OnCritical;
+    }
+
     protected PlayerController plr;
     protected Health hp;
     protected AttackManager am;
@@ -45,9 +55,9 @@ public abstract class EnemyController : BaseController
         Debug.Log(name + "Is Dead.");
         SetState(State.Dead);
         //StopAllCoroutines();
-        
+
         // Despawn
-        Destroy(gameObject, 1f);
+        Destroy(gameObject, 3f);
     }
 
     protected void FacePlayer()
