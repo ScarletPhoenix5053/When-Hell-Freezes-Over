@@ -11,14 +11,14 @@ public class PauseMenu : MonoBehaviour
     public ItemTooltip tooltip, armorTooltip;
 
     public bool craftingEnabled;
-    private PlayerBrooke pB;
+    private PlayerInteract pB;
     public GameObject craftingUI;
     public GameObject notEnough;
     //public Canvas screenUI;
 
     void Start()
     {
-        pB = FindObjectOfType<PlayerBrooke>();
+        pB = FindObjectOfType<PlayerInteract>();
     }
 
 
@@ -85,6 +85,12 @@ public class PauseMenu : MonoBehaviour
 
     public void UnpausedGame()
     {
+        Debug.Log("Game is unpaused.");
         Time.timeScale = 1f;
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
     }
 }

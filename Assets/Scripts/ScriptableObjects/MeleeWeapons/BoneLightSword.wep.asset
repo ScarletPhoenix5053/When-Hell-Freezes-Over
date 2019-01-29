@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 8c337b0c4338dbb41822c6c84617cb5c
   Name: Bone Light Sword
-  Desc: A new item.
+  Desc: 'A small sword made of bone. Quick and efficient. '
   MaximumStacks: 1
   Icon: {fileID: 21300000, guid: 62571e5dd4c604e4fb1d49f72b1d0b06, type: 3}
   equipmentType: 1

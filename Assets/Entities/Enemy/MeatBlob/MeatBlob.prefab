@@ -172,6 +172,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentState: 0
+  bone: {fileID: 5776911592199247892, guid: 722a5bb6955634d4c9274ad200deaec7, type: 3}
+  eyeball: {fileID: 532371373381874444, guid: 48a06ae9cb7159245b61d50683c04b15, type: 3}
+  AverageItemVariance: {x: 3, y: 2}
   DetectionRange: 12
   MinimumAttackRange: 3
   MaximumAttackRange: 7
@@ -244,6 +247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9ad26a3b661e214faa899fcb780df73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPlayer: 0
   HpMax: 12
   Hp: 12
   SuperStunMultiplier: 3

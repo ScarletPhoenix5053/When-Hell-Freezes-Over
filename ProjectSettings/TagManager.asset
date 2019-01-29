@@ -9,6 +9,7 @@ TagManager:
   - Checkpoint
   - Interactable
   - Health
+  - Inventory
   - VisiblitySprite
   - Camera
   layers:
@@ -27,7 +28,7 @@ TagManager:
   - Trigger
   - Platform
   - Interactable
-  - 
+  - Ladder
   - 
   - 
   - 

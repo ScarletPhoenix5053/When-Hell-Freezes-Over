@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: b41f310dfb9ba7e4baa890a98c531baf
   Name: Bone Axe
-  Desc: A new item.
+  Desc: 'A greataxe made of bone. Sturdy and reliable. '
   MaximumStacks: 1
   Icon: {fileID: 21300000, guid: 1082e1dfde3b11e46a5176289dbdc721, type: 3}
   equipmentType: 1
