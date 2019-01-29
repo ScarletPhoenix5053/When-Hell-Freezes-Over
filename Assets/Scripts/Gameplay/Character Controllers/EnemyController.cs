@@ -50,7 +50,7 @@ public abstract class EnemyController : BaseController
         Destroy(gameObject, 1f);
     }
 
-    protected void FacePlayer()
+    protected virtual void FacePlayer()
     {
         if (PlayerToLeft)
         {

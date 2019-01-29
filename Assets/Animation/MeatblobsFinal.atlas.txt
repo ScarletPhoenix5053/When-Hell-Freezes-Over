@@ -1,0 +1,13 @@
+
+MeatblobsFinal.png
+size: 4096,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Standard blob
+  rotate: false
+  xy: 2, 2
+  size: 2108, 1080
+  orig: 2108, 1080
+  offset: 0, 0
+  index: -1

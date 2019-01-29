@@ -10,6 +10,8 @@ TagManager:
   - Interactable
   - Health
   - Inventory
+  - VisiblitySprite
+  - Camera
   layers:
   - Default
   - TransparentFX
