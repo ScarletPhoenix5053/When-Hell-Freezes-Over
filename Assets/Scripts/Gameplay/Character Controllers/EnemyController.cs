@@ -57,7 +57,7 @@ public abstract class EnemyController : BaseController
         //StopAllCoroutines();
 
         // Despawn
-        Destroy(gameObject, 3f);
+        Destroy(gameObject, 1.2f);
     }
 
     protected virtual void FacePlayer()
