@@ -5,9 +5,11 @@ public class TrackingHealthBar : MonoBehaviour
 {
     public Health Health;
     public Transform Meter;
+    public Transform parent;
 
     private Vector3 meterPos;
     private Vector3 originalScale;
+    private Vector3 offset;
 
     private void Awake()
     {
@@ -16,6 +18,8 @@ public class TrackingHealthBar : MonoBehaviour
 
         meterPos = Meter.localPosition;
         originalScale = Meter.localScale;
+        offset = transform.localPosition;
+        //parent = GetComponentInParent<Transform>();
     }
 
     private void FixedUpdate()
@@ -31,12 +35,13 @@ public class TrackingHealthBar : MonoBehaviour
         var percentage = Convert.ToSingle(Health.Hp) / Convert.ToSingle(Health.HpMax);
 
         // Interpolate scale using percentage
-        var newXScale = Mathf.Lerp(0, originalScale.x, percentage);
+        var newXScale = Mathf.Lerp(0, originalScale.x, percentage); 
         Meter.localScale = new Vector3(newXScale, originalScale.y, originalScale.z);
 
         // Interpolate position using percentage
         var newXPos = Mathf.Lerp(meterPos.x + originalScale.x / 2, meterPos.x, percentage);
         Meter.localPosition = new Vector3(newXPos, meterPos.y, meterPos.z);
-        
+
+        transform.localPosition = parent.localPosition + offset;
     }
 }

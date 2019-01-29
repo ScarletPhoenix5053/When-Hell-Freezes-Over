@@ -8,6 +8,7 @@ using Sierra.Combat2D;
 
 public class MeatblobController : EnemyController
 {
+    #region Public Vars
     public GameObject bone, eyeball;//Put this in every enemy with what items they drop. Since we only have 3 enemies it's not bad.
     public Vector2 AverageItemVariance = new Vector2(3, 3);
 
@@ -30,12 +31,15 @@ public class MeatblobController : EnemyController
 
     public Behaviour CurrentBehaviour = Behaviour.Idle;
     public enum Behaviour { Idle, Chasing, WindingUp, Leaping, Recovering }
-
+    #endregion
+    #region Protected Vars
     protected IEnumerator currentRoutine;
 
     protected int leapFrameBuffer = 5;
     protected int leapFrameCurrent = 0;
+    #endregion
 
+    #region Unity Runtime Events
     protected void OnDrawGizmos()
     {
         DrawStateGizmo();
@@ -46,7 +50,9 @@ public class MeatblobController : EnemyController
         DrawCircle(MaximumAttackRange, Color.green);
         DrawCircle(MinimumAttackRange, Color.red);
     }
+    #endregion
 
+    #region Public Methods
     /// <summary>
     /// Change enemy's behaviour state
     /// </summary>
@@ -57,8 +63,38 @@ public class MeatblobController : EnemyController
 
         //Debug.Log(name + " changed behaviour state from " + currentBehaviour + " to " + newBehaviour);
         CurrentBehaviour = newBehaviour;
-    }
+    } 
+    //Put this in all 3 types of enemies. 
+    public override void Die()
+    {
 
+        int lootNum = UnityEngine.Random.Range(1, 3);
+        for (int i = 0; i < lootNum; i++)
+        {
+            var boneVarianceY = AverageItemVariance.y * Utility.GetRandomFloat();
+            var boneVarianceX = AverageItemVariance.x * Utility.GetRandomFloat();
+
+            var eyeVarianceY = AverageItemVariance.y * Utility.GetRandomFloat();
+            var eyeVarianceX = AverageItemVariance.x * Utility.GetRandomFloat();
+
+            var boneSpawnPos = new Vector3(
+                transform.position.x + boneVarianceX,
+                transform.position.y + boneVarianceY,
+                transform.position.z);
+
+            var eyeSpawnPos = new Vector3(
+                transform.position.x + eyeVarianceX,
+                transform.position.y + eyeVarianceY,
+                transform.position.z);
+
+            Instantiate(bone, boneSpawnPos, transform.rotation);
+            Instantiate(eyeball, eyeSpawnPos, transform.rotation);
+        }
+
+        base.Die();
+    }
+    #endregion
+    #region Protected Methods
     protected override void Act()
     {
         if (CurrentBehaviour != Behaviour.Leaping &&
@@ -88,7 +124,7 @@ public class MeatblobController : EnemyController
         switch (CurrentBehaviour)
         {
             case Behaviour.Idle:
-                if (DistToPlayer < DetectionRange) SetBehaviour(Behaviour.Chasing);
+                if (DistToPlayer < DetectionRange) StartChase();
                 break;
 
             case Behaviour.Chasing:
@@ -112,16 +148,23 @@ public class MeatblobController : EnemyController
         }
     }
 
+    protected void StartChase()
+    {
+        Events.OnMotionStart.Invoke();
+        SetBehaviour(Behaviour.Chasing);
+    }
     protected void StartWindup()
     {
         if (currentRoutine != null) StopCoroutine(currentRoutine);
         currentRoutine = WindupRoutine();
         StartCoroutine(currentRoutine);
 
+        Events.OnMotionEnd.Invoke();
         SetBehaviour(Behaviour.WindingUp);
     }
     protected void StartLeap()
     {
+        Events.OnMotionStart.Invoke();
         SetBehaviour(Behaviour.Leaping);
         am.DoAttack(0);
 
@@ -134,6 +177,7 @@ public class MeatblobController : EnemyController
     }
     protected void StartRecovery()
     {
+        Events.OnMotionEnd.Invoke();
         SetBehaviour(Behaviour.Recovering);
         hp.Hurtbox.SetState(Hurtbox.State.Critical);
         am.StopAttack();
@@ -202,33 +246,5 @@ public class MeatblobController : EnemyController
         SetBehaviour(Behaviour.Idle);
         hp.Hurtbox.SetState(Hurtbox.State.Vulnerable);
     }
-
-    public override void Die() //Put this in all 3 types of enemies. 
-    {
-
-        int lootNum = UnityEngine.Random.Range(1, 3);
-        for (int i = 0; i < lootNum; i++)
-        {
-            var boneVarianceY = AverageItemVariance.y * Utility.GetRandomFloat();
-            var boneVarianceX = AverageItemVariance.x * Utility.GetRandomFloat();
-
-            var eyeVarianceY = AverageItemVariance.y * Utility.GetRandomFloat();
-            var eyeVarianceX = AverageItemVariance.x * Utility.GetRandomFloat();
-
-            var boneSpawnPos = new Vector3(
-                transform.position.x + boneVarianceX,
-                transform.position.y + boneVarianceY,
-                transform.position.z);
-
-            var eyeSpawnPos = new Vector3(
-                transform.position.x + eyeVarianceX,
-                transform.position.y + eyeVarianceY,
-                transform.position.z);
-
-            Instantiate(bone, boneSpawnPos, transform.rotation);
-            Instantiate(eyeball, eyeSpawnPos, transform.rotation);
-        }
-
-        base.Die();
-    }
+    #endregion
 }
