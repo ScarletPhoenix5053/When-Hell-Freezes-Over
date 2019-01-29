@@ -28,6 +28,14 @@ public class Health : MonoBehaviour
 
     public Hurtbox Hurtbox;
 
+    public EnemyEvents Events;
+    [Serializable]
+    public class EnemyEvents
+    {
+        public UnityEvent OnDamage;
+        public UnityEvent OnDeath;
+        public UnityEvent OnCritical;
+    }
     public bool Dead { get { return Hp <= 0; } }
     #endregion
     #region Private Variables
@@ -86,11 +94,13 @@ public class Health : MonoBehaviour
             {
                 ApplySuperStun();
                 ApplyKnockBack();
+                Events.OnCritical.Invoke();
             }
             else
             {
                 ApplyHitStun();
                 ApplyKnockBack();
+                Events.OnDamage.Invoke();
             }
         }
     }
@@ -212,7 +222,7 @@ public class Health : MonoBehaviour
         if (chr is EnemyController)
         {
             var enm = chr as EnemyController;
-            enm.Events.OnDeath.Invoke();
+            Events.OnDeath.Invoke();
         }
         StopAllCoroutines();
     }

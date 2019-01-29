@@ -13,9 +13,8 @@ public abstract class EnemyController : BaseController
     [Serializable]
     public class EnemyEvents
     {
-        public UnityEvent OnDamage;
-        public UnityEvent OnDeath;
-        public UnityEvent OnCritical;
+        public UnityEvent OnMotionStart;
+        public UnityEvent OnMotionEnd;
     }
 
     protected PlayerController plr;
@@ -54,7 +53,6 @@ public abstract class EnemyController : BaseController
     {
         Debug.Log(name + "Is Dead.");
         SetState(State.Dead);
-        //StopAllCoroutines();
 
         // Despawn
         Destroy(gameObject, 1.2f);
