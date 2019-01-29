@@ -54,13 +54,30 @@ public class ProjectileController : MonoBehaviour, IHitboxResponder
                 Destroy(gameObject);
             }
             // else must have hit a character
-            else if (hb.CheckHit(out criticalHit))
+            else
             {
-                // set sign of attack
-                attackData.Sign = xSign;
-                hurtbox.GetComponent<Hurtbox>().hp.Damage(attackData, criticalHit);
+                var hurtState = hb.GetHurtboxState();
+                switch (hurtState)
+                {
+                    case Hurtbox.State.Inactive:
+                        Debug.Log("Hit inactive hurtbox");
+                        return;
 
-                Destroy(gameObject);
+                    case Hurtbox.State.Vulnerable:
+                        ApplyAttackDamageTo(hurtbox, hurtState);
+                        break;
+
+                    case Hurtbox.State.Critical:
+                        ApplyAttackDamageTo(hurtbox, hurtState);
+                        break;
+
+                    case Hurtbox.State.Blocking:
+                        Debug.Log("Attack was blocked");
+                        break;
+
+                    default:
+                        return;
+                }
             }
         }
     }
@@ -85,5 +102,25 @@ public class ProjectileController : MonoBehaviour, IHitboxResponder
     public void SetAttackData(AttackData newData)
     {
         attackData = newData;
+    }
+
+    /// <summary>
+    /// Deal damage to a hit hurtbox. Do not call this method outside of <see cref="Hit(Collider2D)"/>
+    /// </summary>
+    /// <param name="hurtbox"></param>
+    /// <param name="hurtState"></param>
+    protected void ApplyAttackDamageTo(Collider2D hurtbox, Hurtbox.State hurtState)
+    {
+        // Initialize
+        var hp = hurtbox.GetComponent<Hurtbox>().hp;
+        attackData.Sign = xSign;
+
+        // Deal Damage
+        if (hurtState == Hurtbox.State.Critical) hp.DealDamageCritical(attackData);
+        else if (hurtState == Hurtbox.State.Armored) hp.DealDamageArmored(attackData);
+        else hp.DealDamageNormal(attackData);
+
+        // Destroy self on impact
+        Destroy(gameObject);
     }
 }

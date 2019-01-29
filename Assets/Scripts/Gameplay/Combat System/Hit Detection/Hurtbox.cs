@@ -20,7 +20,7 @@ namespace Sierra.Combat2D
         public State CurrentState = State.Vulnerable;
         protected IHitboxResponder caller = null;
 
-        public enum State { Inactive, Vulnerable, Critical, Blocking }
+        public enum State { Inactive, Vulnerable, Critical, Blocking, Armored}
         /// <summary>
         /// Containter class for hurtbox draw colours
         /// </summary>
@@ -31,6 +31,7 @@ namespace Sierra.Combat2D
             public Color Vulnerable = new Color(0, 0.8f, 0, 0.25f);
             public Color Critical = new Color(0.8f, 1, 0, 0.25f);
             public Color Blocking = new Color(0, 0, 1, 0.25f);
+            public Color Armored = new Color(1, 1, 0, 0.25f);
         }
 
         protected virtual void Reset()
@@ -44,7 +45,12 @@ namespace Sierra.Combat2D
             SetGizmoColor();
             DrawHurtbox();
         }
-        
+
+        public virtual State GetHurtboxState()
+        {
+            return CurrentState;
+        }
+
         public virtual bool CheckHit()
         {
             if (CurrentState != State.Inactive)
@@ -62,29 +68,11 @@ namespace Sierra.Combat2D
                 return false;
             }
         }
-        public virtual bool CheckHit(out bool criticalHit)
+        public virtual bool CheckHit(out bool criticalHit, out bool tanked)
         {
             criticalHit = false;
-            if (CurrentState != State.Inactive)
-            {
-                if (CurrentState == State.Blocking)
-                {
-                    Debug.Log("Blocked");
-                    return false;
-                }
-                else if (CurrentState == State.Critical)
-                {
-                    Debug.Log("Critical Hit!");
-                    criticalHit = true;
-                    return true;
-                }
-                return true;
-            }
-            else
-            {
-                Debug.Log(name + " is inactive!");
-                return false;
-            }
+            tanked = false;
+            return false;
         }
         public virtual void SetState(State newState)
         {
@@ -125,6 +113,10 @@ namespace Sierra.Combat2D
 
                 case State.Blocking:
                     Gizmos.color = ColliderColour.Blocking;
+                    break;
+
+                case State.Armored:
+                    Gizmos.color = ColliderColour.Armored;
                     break;
             }
         }
