@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 6b669d10dc7eb84469310a4d346327cc
   Name: Bone Greatsword
-  Desc: A new item.
+  Desc: 'Not so sharp, but blunt force should get the job done. '
   MaximumStacks: 1
   Icon: {fileID: 21300000, guid: 6bd3ff41d11aefa4cba177a58dfb97ae, type: 3}
   equipmentType: 1

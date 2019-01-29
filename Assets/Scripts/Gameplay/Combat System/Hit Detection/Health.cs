@@ -10,6 +10,8 @@ using Sierra.Combat2D;
 public class Health : MonoBehaviour
 {
     #region Public Variables
+    public bool isPlayer;
+
     public int HpMax = 6;
     public int Hp = 6;
     public float SuperStunMultiplier = 3f;
@@ -44,21 +46,24 @@ public class Health : MonoBehaviour
     }
 
     private void Start()
-    {/*
-        Hp = startHearts * healthPerHeart;
-        HpMax = maxHeartAmount * healthPerHeart;
+    {
+        if (isPlayer)
+        {
+            Hp = startHearts * healthPerHeart;
+            HpMax = maxHeartAmount * healthPerHeart;
 
-        CheckHealthAmount();*/
+            CheckHealthAmount();
+        }
     }
 
     private void Update()
-    {/*
-        if (Hp == HpMax)
+    {
+        if (isPlayer && Hp == HpMax)
         {
             healthImages[0].sprite = healthSprites[2];
             healthImages[1].sprite = healthSprites[2];
             healthImages[2].sprite = healthSprites[2];
-        }*/
+        }
     }
     #region Public Methods
     public void Damage(AttackData data, bool critical = false)
@@ -116,6 +121,7 @@ public class Health : MonoBehaviour
             else
             {
                 Hp -= atkData.Damage;
+                UpdateHearts();
             }
         }
         LogHp();
@@ -178,48 +184,53 @@ public class Health : MonoBehaviour
     /*
     public void CheckHealthAmount()
     {
-
-        for (int i = 0; i < maxHeartAmount; i++)
+        if (isPlayer)
         {
-            if(startHearts <= i)
+            for (int i = 0; i < maxHeartAmount; i++)
             {
-                healthImages[i].enabled = false;
+                if (startHearts <= i)
+                {
+                    healthImages[i].enabled = false;
+                }
+                else
+                {
+                    healthImages[i].enabled = true;
+                }
             }
-            else
-            {
-                healthImages[i].enabled = true;
-            }
-        }
 
-        UpdateHearts();
+            UpdateHearts();
+        }
     }
 
     public void UpdateHearts()
     {
-        bool empty = false;
-        int i = 0;
-
-        foreach(Image image in healthImages)
+        if (isPlayer)
         {
+            bool empty = false;
+            int i = 0;
 
-            if (empty)
+            foreach (Image image in healthImages)
             {
-                image.sprite = healthSprites[0];
-            }
-            else
-            {
-                i++;
-                if(Hp >= i * healthPerHeart)
+
+                if (empty)
                 {
-                    image.sprite = healthSprites[healthSprites.Length - 1];
+                    image.sprite = healthSprites[0];
                 }
                 else
                 {
-                    int currentHeartHealth = (int)(healthPerHeart - (healthPerHeart*i - Hp));
-                    int healthPerImage = healthPerHeart / (healthSprites.Length - 1);
-                    int imageIndex = currentHeartHealth / healthPerImage;
-                    image.sprite = healthSprites[imageIndex];
-                    empty = true;
+                    i++;
+                    if (Hp >= i * healthPerHeart)
+                    {
+                        image.sprite = healthSprites[healthSprites.Length - 1];
+                    }
+                    else
+                    {
+                        int currentHeartHealth = (int)(healthPerHeart - (healthPerHeart * i - Hp));
+                        int healthPerImage = healthPerHeart / (healthSprites.Length - 1);
+                        int imageIndex = currentHeartHealth / healthPerImage;
+                        image.sprite = healthSprites[imageIndex];
+                        empty = true;
+                    }
                 }
             }
         }

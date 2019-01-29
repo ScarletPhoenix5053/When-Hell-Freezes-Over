@@ -9,6 +9,9 @@ TagManager:
   - Checkpoint
   - Interactable
   - Health
+  - Inventory
+  - VisiblitySprite
+  - Camera
   layers:
   - Default
   - TransparentFX
@@ -25,7 +28,7 @@ TagManager:
   - Trigger
   - Platform
   - Interactable
-  - 
+  - Ladder
   - 
   - 
   - 
