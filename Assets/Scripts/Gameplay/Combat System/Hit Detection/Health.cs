@@ -16,12 +16,12 @@ public class Health : MonoBehaviour
     public int Hp = 6;
     public float SuperStunMultiplier = 3f;
 
-    private int startHearts = 3;
-    private int healthPerHeart = 2;
-    private int maxHeartAmount = 3;
+    private int StartHearts = 3;
+    private int HealthPerHeart = 2;
+    private int MaxHeartAmount = 3;
 
-    public Image[] healthImages;
-    public Sprite[] healthSprites;
+    public Image[] HealthImages;
+    public Sprite[] HealthSprites;
 
     public bool AffectedByKnockback = true;
     public bool AffectedByKnockbackOnCrit = true;
@@ -31,6 +31,8 @@ public class Health : MonoBehaviour
     public bool Dead { get { return Hp <= 0; } }
     #endregion
     #region Private Variables
+    private bool loggedHeartWarning;
+
     private CharacterMotionController mc;
     private BaseController chr;
 
@@ -44,27 +46,21 @@ public class Health : MonoBehaviour
         mc = GetComponent<CharacterMotionController>();
         Hurtbox = GetComponent<Hurtbox>();
     }
-
     private void Start()
     {
         if (isPlayer)
         {
-            Hp = startHearts * healthPerHeart;
-            HpMax = maxHeartAmount * healthPerHeart;
+            Hp = StartHearts * HealthPerHeart;
+            HpMax = MaxHeartAmount * HealthPerHeart;
 
             CheckHealthAmount();
         }
     }
-
     private void Update()
     {
-        if (isPlayer && Hp == HpMax)
-        {
-            healthImages[0].sprite = healthSprites[2];
-            healthImages[1].sprite = healthSprites[2];
-            healthImages[2].sprite = healthSprites[2];
-        }
+        UpdateHeartImages();
     }
+
     #region Public Methods
     public void Damage(AttackData data, bool critical = false)
     {
@@ -106,6 +102,67 @@ public class Health : MonoBehaviour
     public void LogDeath()
     {
         Debug.Log(name + " is dead");
+    }
+    public void UpdateHearts()
+    {
+        if (isPlayer)
+        {
+            bool empty = false;
+            int i = 0;
+
+            foreach (Image image in HealthImages)
+            {
+
+                if (empty)
+                {
+                    image.sprite = HealthSprites[0];
+                }
+                else
+                {
+                    i++;
+                    if (Hp >= i * HealthPerHeart)
+                    {
+                        image.sprite = HealthSprites[HealthSprites.Length - 1];
+                    }
+                    else
+                    {
+                        int currentHeartHealth = (int)(HealthPerHeart - (HealthPerHeart * i - Hp));
+                        int healthPerImage = HealthPerHeart / (HealthSprites.Length - 1);
+                        int imageIndex = currentHeartHealth / healthPerImage;
+                        image.sprite = HealthSprites[imageIndex];
+                        empty = true;
+                    }
+                }
+            }
+        }
+    }
+    public void CheckHealthAmount()
+    {
+        if (HealthImages == null) return;
+        if (HealthImages.Length < MaxHeartAmount) return;
+
+        if (isPlayer)
+        {
+            for (int i = 0; i < MaxHeartAmount; i++)
+            {
+                if (StartHearts <= i)
+                {
+                    HealthImages[i].enabled = false;
+                }
+                else
+                {
+                    HealthImages[i].enabled = true;
+                }
+            }
+
+            UpdateHearts();
+        }
+    }
+    public void TakeDamage(int amount)
+    {
+        Hp -= amount;
+        Hp = Mathf.Clamp(Hp, 0, StartHearts * HealthPerHeart);
+        UpdateHearts();
     }
     #endregion
     #region Private Methods
@@ -159,6 +216,18 @@ public class Health : MonoBehaviour
         }
         StopAllCoroutines();
     }
+    private void UpdateHeartImages()
+    {
+        if (HealthImages == null) return;
+        if (HealthImages.Length < 3) return;
+
+        if (isPlayer && Hp == HpMax)
+        {
+            HealthImages[0].sprite = HealthSprites[2];
+            HealthImages[1].sprite = HealthSprites[2];
+            HealthImages[2].sprite = HealthSprites[2];
+        }
+    }
 
     private IEnumerator HitStunRoutine()
     {
@@ -180,67 +249,6 @@ public class Health : MonoBehaviour
 
         // End timer
         chr?.SetState(BaseController.State.Ready);
-    }
-    /*
-    public void CheckHealthAmount()
-    {
-        if (isPlayer)
-        {
-            for (int i = 0; i < maxHeartAmount; i++)
-            {
-                if (startHearts <= i)
-                {
-                    healthImages[i].enabled = false;
-                }
-                else
-                {
-                    healthImages[i].enabled = true;
-                }
-            }
-
-            UpdateHearts();
-        }
-    }
-
-    public void UpdateHearts()
-    {
-        if (isPlayer)
-        {
-            bool empty = false;
-            int i = 0;
-
-            foreach (Image image in healthImages)
-            {
-
-                if (empty)
-                {
-                    image.sprite = healthSprites[0];
-                }
-                else
-                {
-                    i++;
-                    if (Hp >= i * healthPerHeart)
-                    {
-                        image.sprite = healthSprites[healthSprites.Length - 1];
-                    }
-                    else
-                    {
-                        int currentHeartHealth = (int)(healthPerHeart - (healthPerHeart * i - Hp));
-                        int healthPerImage = healthPerHeart / (healthSprites.Length - 1);
-                        int imageIndex = currentHeartHealth / healthPerImage;
-                        image.sprite = healthSprites[imageIndex];
-                        empty = true;
-                    }
-                }
-            }
-        }
-    }
-
-    public void TakeDamage(int amount)
-    {
-        Hp -= amount;
-        Hp = Mathf.Clamp(Hp, 0, startHearts * healthPerHeart);
-        UpdateHearts();
-    }*/
+    }    
     #endregion
 }

@@ -16,6 +16,9 @@ public class ItemPickup : MonoBehaviour
 
     private void Start()
     {
+        Debug.LogWarning("Temporarily disabling item pickups ~ Sierra");
+        Destroy(gameObject);
+        /*
         inventoryPanel = GameObject.Find("InventoryCanvas").transform.Find("Inventory/CharacterPanel/InventoryPanel").GetComponent<Inventory>();
         sprite = GetComponent<SpriteRenderer>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerInteract>();
@@ -24,7 +27,7 @@ public class ItemPickup : MonoBehaviour
         floatSpeed = UnityEngine.Random.Range(2, 10);
         this.originalY = this.transform.position.y;
 
-        Float();
+        Float();*/
     }
 
     private void Update()
