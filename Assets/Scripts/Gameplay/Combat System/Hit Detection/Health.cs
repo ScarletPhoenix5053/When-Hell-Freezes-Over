@@ -60,7 +60,6 @@ public class Health : MonoBehaviour
         }
     }
     #region Public Methods
-    public void Damage(AttackData data)
     public void Damage(AttackData data, bool critical = false)
     {
         Debug.Log(name + "was damaged");

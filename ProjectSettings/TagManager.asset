@@ -9,6 +9,8 @@ TagManager:
   - Checkpoint
   - Interactable
   - Health
+  - VisiblitySprite
+  - Camera
   layers:
   - Default
   - TransparentFX
