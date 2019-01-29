@@ -10,6 +10,7 @@ TagManager:
   - Interactable
   - Health
   - VisiblitySprite
+  - Camera
   layers:
   - Default
   - TransparentFX
