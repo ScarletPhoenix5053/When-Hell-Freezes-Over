@@ -15,6 +15,7 @@ public abstract class EnemyController : BaseController
     {
         public UnityEvent OnMotionStart;
         public UnityEvent OnMotionEnd;
+        public UnityEvent OnAttack;
     }
 
     protected PlayerController plr;

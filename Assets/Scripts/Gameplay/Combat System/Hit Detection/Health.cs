@@ -75,7 +75,6 @@ public class Health : MonoBehaviour
     {
         if (AlreadyDead()) return;
 
-        Debug.Log(name + " was damaged");
         atkData = data;
         AdjustHP();
         //UpdateHearts();
@@ -92,8 +91,7 @@ public class Health : MonoBehaviour
     public void DealDamageCritical(AttackData data)
     {
         if (AlreadyDead()) return;
-
-        Debug.Log(name + " was damaged - crit!");
+        
         atkData = data;
         AdjustHP();
         //UpdateHearts();
@@ -211,7 +209,6 @@ public class Health : MonoBehaviour
                 UpdateHearts();
             }
         }
-        LogHp();
     }
     private void ApplyHitStun()
     {

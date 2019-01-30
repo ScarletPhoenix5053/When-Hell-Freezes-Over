@@ -35,6 +35,18 @@ public class ShieldBlobController : EnemyController
     {
         CurrentBehaviour = newBehaviour;
     }
+    public void StopCurrentTurnRoutine()
+    {
+        if (currentTurnRoutine == null)
+        {
+            Debug.Log("hi");
+            return;
+        }
+
+        Debug.Log("stopping t urn");
+        StopCoroutine(currentTurnRoutine);
+        turning = false;
+    }
 
     protected override void Act()
     {
@@ -42,7 +54,12 @@ public class ShieldBlobController : EnemyController
         if ((Sign == -1 && !PlayerToLeft) ||
             (Sign == 1 && PlayerToLeft))
             {
-                if (!turning) StartCoroutine(TurnRoutine());
+            if (!turning)
+            {
+                StopCurrentTurnRoutine();
+                currentTurnRoutine = TurnRoutine();
+                StartCoroutine(currentTurnRoutine);
+            }
             }
 
         //  Block if facing player, be critical if not
@@ -58,10 +75,17 @@ public class ShieldBlobController : EnemyController
 
 
         // READYTOPUSH
-        // Push player if stays close for too long
-        if (CurrentBehaviour == Behaviour.ReadyToPush)
+        // Push player if facing them
+        if (CurrentBehaviour == Behaviour.ReadyToPush &&
+            CurrentState == State.Ready &&
+            (
+            Sign == -1 && PlayerToLeft ||
+            Sign == 1 && !PlayerToLeft
+            ))
         {
-            //am.Attack();
+            am.Attack();
+            Events.OnAttack.Invoke();
+            CurrentState = State.Action;
         }
     }
     protected override void DecideAction()

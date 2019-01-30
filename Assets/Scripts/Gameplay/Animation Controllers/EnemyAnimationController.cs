@@ -51,6 +51,11 @@ public class EnemyAnimationController : AnimationController
 
         //FlashMaterialColour(ColourOnHit);
     }
+    public virtual void EffectOnAttack()
+    {
+        sk_an.AnimationState.SetAnimation(0, "Attack", false);
+        sk_an.AnimationState.AddAnimation(0, "Idle", true, 0);
+    }
 
     protected void FlashMaterialColour(Color flashColour)
     {
