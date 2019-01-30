@@ -804,6 +804,11 @@ PrefabInstance:
       propertyPath: prompt
       value: 
       objectReference: {fileID: 128075751}
+    - target: {fileID: 5729220773539553565, guid: 299c53565037cd24dacc737c83af3fc5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3950877417624386931, guid: 299c53565037cd24dacc737c83af3fc5,
         type: 3}
       propertyPath: m_Mesh

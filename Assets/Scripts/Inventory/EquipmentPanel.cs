@@ -36,6 +36,11 @@ public class EquipmentPanel : MonoBehaviour
                     pam.MeleeWeapon = ((MeleeWeaponItem)item);
                 }
 
+                if (item is RangedWeaponItem)
+                {
+                    pam.RangedWeapon = ((RangedWeaponItem)item);
+                }
+
                 return true;
             }
         }
@@ -50,7 +55,11 @@ public class EquipmentPanel : MonoBehaviour
             if (equipmentSlots[i].Item == item)
             {
                 equipmentSlots[i].Item = null;
-                equippedItems.Remove(item); 
+                equippedItems.Remove(item);
+
+                pam.MeleeWeapon = null;
+                pam.RangedWeapon = null;
+
                 return true;
 
             }
