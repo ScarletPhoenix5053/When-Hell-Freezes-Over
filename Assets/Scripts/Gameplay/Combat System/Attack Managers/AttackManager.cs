@@ -177,7 +177,7 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
         yield return Utility.FrameTimer(Attacks[currentAttackIndex].Recovery, attackTimer);
 
         // End
-        GetComponent<BaseController>().SetState(BaseController.State.Ready);
+        GetComponent<BaseController>()?.SetState(BaseController.State.Ready);
         AtkStage = AttackStage.Ready;
         Attacking = false;
     }
