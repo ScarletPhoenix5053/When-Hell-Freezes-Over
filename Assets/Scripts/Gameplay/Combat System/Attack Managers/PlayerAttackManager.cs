@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class PlayerAttackManager : AttackManager, IHitboxResponder
 {
+
     public MeleeWeaponItem MeleeWeapon;
     public RangedWeaponItem RangedWeapon;
     public int ArrowCapacity = 3;

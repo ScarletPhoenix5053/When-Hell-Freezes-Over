@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class EquipmentPanel : MonoBehaviour
 {
+    public PlayerAttackManager pam;
+
     [SerializeField] Transform equipmentSlotsParent;
     [SerializeField] EquipmentSlot[] equipmentSlots;
     public List<GenericItem> equippedItems = new List<GenericItem>();
@@ -27,7 +29,13 @@ public class EquipmentPanel : MonoBehaviour
             {
                 previousItem = (GenericItem)equipmentSlots[i].Item;
                 equipmentSlots[i].Item = item;
-                equippedItems.Add(item); //added not tested
+                equippedItems.Add(item);
+
+                if (item is MeleeWeaponItem)
+                {
+                    pam.MeleeWeapon = ((MeleeWeaponItem)item);
+                }
+
                 return true;
             }
         }
@@ -42,7 +50,7 @@ public class EquipmentPanel : MonoBehaviour
             if (equipmentSlots[i].Item == item)
             {
                 equipmentSlots[i].Item = null;
-                equippedItems.Remove(item); //added not tested
+                equippedItems.Remove(item); 
                 return true;
 
             }
