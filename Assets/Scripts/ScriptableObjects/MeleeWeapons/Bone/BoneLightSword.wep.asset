@@ -19,6 +19,11 @@ MonoBehaviour:
   Icon: {fileID: 21300000, guid: 62571e5dd4c604e4fb1d49f72b1d0b06, type: 3}
   equipmentType: 1
   NormalAttackChainLength: 0
-  NormalAtkData: []
+  NormalAtkData:
+  - {fileID: 11400000, guid: c1ec91413d07e7346b95b00dfe4e273c, type: 2}
+  - {fileID: 11400000, guid: 52e47bff4652a194388a719a38b61ac8, type: 2}
+  - {fileID: 11400000, guid: 416b93637044ac34696a93997492f3f6, type: 2}
+  - {fileID: 11400000, guid: 2d766fe201b87744fa80ea643172593f, type: 2}
+  - {fileID: 11400000, guid: 9634d8d591904624b804afeb1b73ec73, type: 2}
   SpecialAtkData: {fileID: 0}
   Type: 0
