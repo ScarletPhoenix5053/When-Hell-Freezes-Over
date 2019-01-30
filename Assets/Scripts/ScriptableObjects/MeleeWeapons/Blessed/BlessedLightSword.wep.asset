@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 911b52c54ce470740ae628eac3bf9c46, type: 3}
+  m_Name: BlessedLightSword.wep
+  m_EditorClassIdentifier: 
+  id: 7171afdbb704d3d42906185038c1d51b
+  Name: Blessed Light Sword
+  Desc: A new item.
+  MaximumStacks: 1
+  Icon: {fileID: 21300000, guid: 764a029023c74a0488acf17e08432c73, type: 3}
+  equipmentType: 1
+  NormalAttackChainLength: 0
+  NormalAtkData:
+  - {fileID: 11400000, guid: 5a748fa3a5779b64f97ce145f3c61a0f, type: 2}
+  - {fileID: 11400000, guid: 84f9b5e94fd5b61458cfa126350c424b, type: 2}
+  - {fileID: 11400000, guid: 61eaf394c9785c04985ae35fddf336ba, type: 2}
+  - {fileID: 11400000, guid: fc777d964f355fc4397e26b45e6a3779, type: 2}
+  - {fileID: 11400000, guid: 7c9d001fdd6a286489ab9b4c9dffae42, type: 2}
+  SpecialAtkData: {fileID: 0}
+  Type: 0

@@ -666,15 +666,15 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2224078459265338959, guid: 7071b878b255b894bb173e712acf7629,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 6763183356060681103, guid: 7071b878b255b894bb173e712acf7629,
         type: 3}
       propertyPath: m_Name
       value: ShieldBlob
+      objectReference: {fileID: 0}
+    - target: {fileID: 2224078459265338959, guid: 7071b878b255b894bb173e712acf7629,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6763183356060681072, guid: 7071b878b255b894bb173e712acf7629,
         type: 3}
@@ -894,6 +894,35 @@ PrefabInstance:
       propertyPath: TempDeathCanvas
       value: 
       objectReference: {fileID: 1355049141}
+    - target: {fileID: 192936917267964973, guid: 299c53565037cd24dacc737c83af3fc5,
+        type: 3}
+      propertyPath: Attacks.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 192936917267964973, guid: 299c53565037cd24dacc737c83af3fc5,
+        type: 3}
+      propertyPath: Attacks.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: 25dfdfa3b27bf8b4091941dbffa5d671,
+        type: 2}
+    - target: {fileID: 192936917267964973, guid: 299c53565037cd24dacc737c83af3fc5,
+        type: 3}
+      propertyPath: Attacks.Array.data[3]
+      value: 
+      objectReference: {fileID: 11400000, guid: 6d381fdf2c129664f9582e8da87ab9b0,
+        type: 2}
+    - target: {fileID: 192936917267964973, guid: 299c53565037cd24dacc737c83af3fc5,
+        type: 3}
+      propertyPath: Attacks.Array.data[4]
+      value: 
+      objectReference: {fileID: 11400000, guid: a4823146f75c62d449650c8eddb09be1,
+        type: 2}
+    - target: {fileID: 192936917267964973, guid: 299c53565037cd24dacc737c83af3fc5,
+        type: 3}
+      propertyPath: MeleeWeapon
+      value: 
+      objectReference: {fileID: 11400000, guid: 69b9ff052498ef247ba4ff2eb4aefbd2,
+        type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 299c53565037cd24dacc737c83af3fc5, type: 3}
 --- !u!4 &9187420206283482851 stripped
