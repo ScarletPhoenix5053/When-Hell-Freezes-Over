@@ -10,7 +10,7 @@ using Sierra.Combat2D;
 public class Health : MonoBehaviour
 {
     #region Public Variables
-    public bool isPlayer;
+    public bool isPlayer { get { return GetComponent<BaseController>() is PlayerController; } }
 
     public int HpMax = 6;
     public int Hp = 6;
@@ -77,7 +77,7 @@ public class Health : MonoBehaviour
 
         atkData = data;
         AdjustHP();
-        //UpdateHearts();
+        UpdateHearts();
 
         // Check if died this frame
         if (Dead) Die();
@@ -94,7 +94,7 @@ public class Health : MonoBehaviour
         
         atkData = data;
         AdjustHP();
-        //UpdateHearts();
+        UpdateHearts();
 
         // Check if died this frame
         if (Dead) Die();
@@ -112,7 +112,7 @@ public class Health : MonoBehaviour
         Debug.Log(name + "was damaged - armored!");
         atkData = data;
         AdjustHP();
-        //UpdateHearts();
+        UpdateHearts();
 
         // Check if died this frame
         if (Dead) Die();
@@ -132,6 +132,7 @@ public class Health : MonoBehaviour
     }
     public void UpdateHearts()
     {
+
         if (isPlayer)
         {
             bool empty = false;
