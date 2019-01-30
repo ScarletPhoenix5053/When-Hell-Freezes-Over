@@ -17,6 +17,7 @@ MonoBehaviour:
   Desc: A blacksmith's trusty hammer. Not bad to start with.
   MaximumStacks: 1
   Icon: {fileID: 21300000, guid: 250e9e68439872b4d973071be6edf14a, type: 3}
+  iconInventory: {fileID: 21300000, guid: 4115c6f1516da114687b2a63cb7c9d06, type: 3}
   equipmentType: 1
   NormalAttackChainLength: 0
   NormalAtkData:

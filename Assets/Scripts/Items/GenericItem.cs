@@ -22,7 +22,9 @@ public class GenericItem : ScriptableObject
     [TextArea(3 , 10)]
     public string Desc = "A new item.";
     public int MaximumStacks = 1;
+
     public Sprite Icon;
+    public Sprite iconInventory = null;
 
     public EquipmentType equipmentType;
 
