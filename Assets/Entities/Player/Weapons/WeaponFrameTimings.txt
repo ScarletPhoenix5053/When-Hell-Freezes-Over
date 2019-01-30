@@ -4,7 +4,7 @@ Bow
 12,1,18
 
 Hammer/Mace
-
+19,2,18; 19,3,16; 39,4,28;
 
 Warhammer/Greataxe
 78,3,92; 42,3,105

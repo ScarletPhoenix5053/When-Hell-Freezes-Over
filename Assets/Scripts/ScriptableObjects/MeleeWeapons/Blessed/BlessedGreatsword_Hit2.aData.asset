@@ -10,14 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eb82047a286ce7148b5718176ec43ce7, type: 3}
-  m_Name: BlacksmithHammer_Special.aData
+  m_Name: BlessedGreatsword_Hit2.aData
   m_EditorClassIdentifier: 
-  Damage: 1
-  Startup: 12
-  Active: 4
-  Recovery: 20
-  HitStun: 32
-  HitStop: 12
+  Startup: 19
+  Active: 1
+  Recovery: 32
+  MotionOnAttack: 5
+  Damage: 3
+  KnockBack: 6
+  KnockUp: 9
+  HitStun: 50
+  HitStop: 8
   Sign: 1
-  KnockBack: 8
-  KnockUp: 3

@@ -10,15 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 911b52c54ce470740ae628eac3bf9c46, type: 3}
-  m_Name: BlessedWarhammer.wep
+  m_Name: BlessedMace.wep
   m_EditorClassIdentifier: 
-  id: cc2e0c901576fed459b85e4237bbc39f
-  Name: Blessed Warhammer
+  id: 4bb56cf5700e097458624850e50abff0
+  Name: Blessed Mace
   Desc: A new item.
   MaximumStacks: 1
-  Icon: {fileID: 21300000, guid: b3f17f5793814ee459ed54e320cf9243, type: 3}
+  Icon: {fileID: 21300000, guid: 4c05b72c362213241a8fb64642d2ed4c, type: 3}
   equipmentType: 1
   NormalAttackChainLength: 0
-  NormalAtkData: []
+  NormalAtkData:
+  - {fileID: 11400000, guid: 07532a3d054295d458710f42a51b30ac, type: 2}
+  - {fileID: 11400000, guid: af9eb7254bfbf2a4a87de69eed6fa114, type: 2}
+  - {fileID: 11400000, guid: 1e4b4bc5267d8b440b4e1a3076d5a5e6, type: 2}
   SpecialAtkData: {fileID: 0}
-  Type: 3
+  Type: 2

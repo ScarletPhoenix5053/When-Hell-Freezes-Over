@@ -10,14 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eb82047a286ce7148b5718176ec43ce7, type: 3}
-  m_Name: BlacksmithHammer_Hit1.aData
+  m_Name: BlessedAxe_Hit3.aData
   m_EditorClassIdentifier: 
-  Damage: 1
-  Startup: 12
+  Startup: 39
   Active: 4
-  Recovery: 20
-  HitStun: 50
-  HitStop: 3
-  Sign: -1
-  KnockBack: 2
-  KnockUp: 0
+  Recovery: 28
+  MotionOnAttack: 5
+  Damage: 5
+  KnockBack: 4
+  KnockUp: 8
+  HitStun: 60
+  HitStop: 12
+  Sign: 1
