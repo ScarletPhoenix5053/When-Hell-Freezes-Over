@@ -52,6 +52,13 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
 
                     default:
                         ApplyAttackDamageTo(hurtbox, hurtState);
+
+                        // Give arrows back on succesful melee hits
+                        if (this is PlayerAttackManager)
+                        {
+                            var plr = this as PlayerAttackManager;
+                            if (plr.Arrows < plr.ArrowCapacity) plr.Arrows++;
+                        }
                         return;
                 }               
             }

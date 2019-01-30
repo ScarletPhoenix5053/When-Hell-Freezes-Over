@@ -8,6 +8,10 @@ public class PlayerAttackManager : AttackManager, IHitboxResponder
 {
     public MeleeWeaponItem MeleeWeapon;
     public RangedWeaponItem RangedWeapon;
+    public int ArrowCapacity = 3;
+    [ReadOnly]
+    public int Arrows = 3;
+
     public AttackData SpecialAttackData { get { return Attacks[0]; } }
     public AttackData ArrowAttackData { get { return Attacks[1]; } }
     public AttackState AtkState = AttackState.None;
@@ -82,13 +86,6 @@ public class PlayerAttackManager : AttackManager, IHitboxResponder
                 Debug.Log(MeleeWeapon.Name + " does not allow chaining to this extent");
                 break;
         }
-    }
-    /// <summary>
-    /// Performs special attack actions.
-    /// </summary>
-    public void SpecialAttack()
-    {
-        throw new NotImplementedException();
     }
     /// <summary>
     /// Perfroms ranged attack actions.
