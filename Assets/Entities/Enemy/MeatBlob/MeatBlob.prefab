@@ -507,7 +507,7 @@ PrefabInstance:
         type: 3}
       propertyPath: parent
       value: 
-      objectReference: {fileID: 6343249811088249669}
+      objectReference: {fileID: 4220254680755401221}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9aad48fde932f4945b506564e167b964, type: 3}
 --- !u!4 &2439435984238437791 stripped
