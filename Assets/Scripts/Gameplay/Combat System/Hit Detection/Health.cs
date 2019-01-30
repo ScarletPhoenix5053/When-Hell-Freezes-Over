@@ -285,6 +285,7 @@ public class Health : MonoBehaviour
     {
         Debug.Log("Applying Superstun for 3.5 seconds");
         chr?.SetState(BaseController.State.SuperStun);
+        Hurtbox.SetState(Hurtbox.State.Vulnerable);
 
         // Start timer
         yield return Utility.FrameTimer(210, 0);

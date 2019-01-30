@@ -43,7 +43,6 @@ public class ProjectileController : MonoBehaviour, IHitboxResponder
         // On successful hit, deal damage and other effects to the character attatched to the hurtbox
         // Disable hitbox on hit.        
         var hb = hurtbox.GetComponent<Hurtbox>();
-        var criticalHit = false;
         if (hb != null)
         {
             // if hit a button
