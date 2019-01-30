@@ -1,12 +1,12 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.Events;
 using Spine.Unity;
 
 public class BouncePad : MonoBehaviour
 {
     public float DelayBetweenActivations = 1f;
     public float Velocity = 20f;
+    public UnityEvent OnBounce;
 
     protected Collider2D trigger;
     protected CharacterMotionController otherMC;
@@ -34,6 +34,9 @@ public class BouncePad : MonoBehaviour
             skeletonAnimation.AnimationState.AddAnimation(0, "Idle", true, 0);
             otherMC = other.GetComponent<CharacterMotionController>();
             otherMC.DoImpulse(Vector2.up * Velocity);
+
+            // Invoke event
+            OnBounce.Invoke();
 
             // timer
             timeSinceLastActivation = 0;

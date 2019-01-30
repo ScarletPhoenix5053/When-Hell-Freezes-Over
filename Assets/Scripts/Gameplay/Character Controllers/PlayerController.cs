@@ -139,11 +139,13 @@ public class PlayerController : BaseController
         }
 
         // Ranged attack button
-        if (InputManager.RangedAttack())
-        {
+        if (InputManager.RangedAttack() && am.Arrows > 0)
+        {            
             SetState(State.Action);
             SetAction(Action.Attacking);
             am.RangedAttack();
+            Debug.Log("Called");
+            am.Arrows-= 1;
         }
 
         // Jump
