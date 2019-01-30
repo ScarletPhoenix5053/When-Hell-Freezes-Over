@@ -29,7 +29,6 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
         // On successful hit, deal damage and other effects to the character attatched to the hurtbox
         // Disable hitbox on hit.
         var hb = hurtbox.GetComponent<Hurtbox>();
-        var criticalHit = false;
         if (hb != null)
         {
             // if hit a button
@@ -38,15 +37,23 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
                 hb.CheckHit();
             }
             // else must have hit a character
-            else if (hb.CheckHit(out criticalHit))
+            else
             {
-                // set sign of attack
-                Attacks[currentAttackIndex].Sign = Math.Sign(transform.localScale.x);
-                hurtbox.GetComponent<Hurtbox>().hp.Damage(Attacks[currentAttackIndex]);
-                GameManager.Instance.HitStopFor(Attacks[currentAttackIndex].HitStop);
-                //hurtbox.GetComponent<Hurtbox>().Health.LogHp();
-                
-                Hitbox.SetInactive();                
+                var hurtState = hb.GetHurtboxState();
+                switch (hurtState)
+                {
+                    case Hurtbox.State.Inactive:
+                        Debug.Log("Hit inactive hurtbox");
+                        return;
+
+                    case Hurtbox.State.Blocking:
+                        Debug.Log("Attack was blocked");
+                        return;
+
+                    default:
+                        ApplyAttackDamageTo(hurtbox, hurtState);
+                        return;
+                }               
             }
         }
     }
@@ -94,6 +101,26 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
         Attacking = false;
     }
 
+    /// <summary>
+    /// Deal damage to a hit hurtbox. Do not call this method outside of <see cref="Hit(Collider2D)"/>
+    /// </summary>
+    /// <param name="hurtbox"></param>
+    protected void ApplyAttackDamageTo(Collider2D hurtbox, Hurtbox.State hurtState)
+    {
+        // Initialize
+        var hp = hurtbox.GetComponent<Hurtbox>().hp;
+        Attacks[currentAttackIndex].Sign = Math.Sign(transform.localScale.x);
+
+        // melee cannot trigger superstun, so we will never need to call DealDamageCritical
+        if (hurtState == Hurtbox.State.Armored) hp.DealDamageArmored(Attacks[currentAttackIndex]);
+        else hp.DealDamageNormal(Attacks[currentAttackIndex]);
+
+        GameManager.Instance.HitStopFor(Attacks[currentAttackIndex].HitStop);
+
+        //hurtbox.GetComponent<Hurtbox>().Health.LogHp();
+
+        Hitbox.SetInactive();
+    }
     /// <summary>
     /// Creates an impulse that moves the characer basted on <see cref="AttackData.MotionOnAttack"/>
     /// </summary>

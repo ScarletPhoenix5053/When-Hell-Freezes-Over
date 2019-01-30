@@ -224,8 +224,8 @@ MonoBehaviour:
   DetectionRange: 12
   MinimumAttackRange: 3
   MaximumAttackRange: 7
-  WindupFrames: 60
-  RecoveryFrames: 80
+  WindupFrames: 48
+  RecoveryFrames: 60
   AverageLeapVelocity: {x: 20, y: 16.1}
   AverageLeapVariance: {x: 0, y: 0}
   EnterWindupChance: 0.02
@@ -279,6 +279,7 @@ MonoBehaviour:
     Vulnerable: {r: 0, g: 0.8, b: 0, a: 0.25}
     Critical: {r: 0.81218004, g: 1, b: 0, a: 0.25}
     Blocking: {r: 0, g: 0, b: 1, a: 0.25}
+    Armored: {r: 1, g: 1, b: 0, a: 0.25}
   DrawGizmo: 1
   CurrentState: 1
 --- !u!114 &4220254680755401222
@@ -335,20 +336,14 @@ MonoBehaviour:
           m_CallState: 2
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-    OnCritical:
+    OnCriticalHit:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 4220254680755401217}
-          m_MethodName: EffectOnHit
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+    OnArmoredHit:
+      m_PersistentCalls:
+        m_Calls: []
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
 --- !u!1 &6343249809662990617
@@ -443,11 +438,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6343249811088249669}
     m_Modifications:
-    - target: {fileID: 3652264176055349420, guid: 9aad48fde932f4945b506564e167b964,
-        type: 3}
-      propertyPath: m_Name
-      value: Health Bar
-      objectReference: {fileID: 0}
     - target: {fileID: 3652264176055349421, guid: 9aad48fde932f4945b506564e167b964,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -502,6 +492,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3652264176055349420, guid: 9aad48fde932f4945b506564e167b964,
+        type: 3}
+      propertyPath: m_Name
+      value: Health Bar
       objectReference: {fileID: 0}
     - target: {fileID: 3652264176055349418, guid: 9aad48fde932f4945b506564e167b964,
         type: 3}
