@@ -26,11 +26,16 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
                 //Not being enabled until I open the inventory before picking up the items.
                 image.enabled = true;
                 image.sprite = _item.Icon;
+
+                if (_item is MeleeWeaponItem)
+                {
+                    image.sprite = _item.iconInventory;
+                }
             }
         }
     }
 
-    [SerializeField] Image image;
+    public Image image;
     [SerializeField] ItemTooltip tooltip;
     [SerializeField] Text amountText;
 
@@ -65,7 +70,7 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
         }
     }
 
-    public void Update()
+    protected virtual void Update()
     {
         
     }

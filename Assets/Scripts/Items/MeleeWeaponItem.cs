@@ -9,7 +9,6 @@ public class MeleeWeaponItem : GenericItem
     public AttackData SpecialAtkData;
     public WeaponType Type;
 
-
     public enum WeaponType
     {
         LightSword, GreatSword, Mace, Warhammer

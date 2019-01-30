@@ -30,6 +30,7 @@ public class Health : MonoBehaviour
 
     public EnemyEvents Events;
     [Serializable]
+
     public class EnemyEvents
     {
         public UnityEvent OnDamage;
