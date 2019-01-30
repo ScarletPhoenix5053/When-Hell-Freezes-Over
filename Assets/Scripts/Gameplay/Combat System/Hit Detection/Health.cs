@@ -34,7 +34,8 @@ public class Health : MonoBehaviour
     {
         public UnityEvent OnDamage;
         public UnityEvent OnDeath;
-        public UnityEvent OnCritical;
+        public UnityEvent OnCriticalHit;
+        public UnityEvent OnArmoredHit;
     }
     public bool Dead { get { return Hp <= 0; } }
     #endregion
@@ -70,17 +71,11 @@ public class Health : MonoBehaviour
     }
 
     #region Public Methods
-    public void Damage(AttackData data, bool critical = false)
+    public void DealDamageNormal(AttackData data)
     {
-        Debug.Log(name + "was damaged");
+        if (AlreadyDead()) return;
 
-        // Log warning and return if ALREADY dead
-        if (Dead)
-        {
-            Debug.LogWarning(name + " is already dead");
-            return;
-        }
-
+        Debug.Log(name + " was damaged");
         atkData = data;
         AdjustHP();
         //UpdateHearts();
@@ -89,19 +84,43 @@ public class Health : MonoBehaviour
         if (Dead) Die();
         else
         {
-            // Check for critical hit
-            if (critical)
-            {
-                ApplySuperStun();
-                ApplyKnockBack();
-                Events.OnCritical.Invoke();
-            }
-            else
-            {
-                ApplyHitStun();
-                ApplyKnockBack();
-                Events.OnDamage.Invoke();
-            }
+            ApplyHitStun();
+            ApplyKnockBack();
+            Events.OnDamage.Invoke();
+        }
+    }
+    public void DealDamageCritical(AttackData data)
+    {
+        if (AlreadyDead()) return;
+
+        Debug.Log(name + " was damaged - crit!");
+        atkData = data;
+        AdjustHP();
+        //UpdateHearts();
+
+        // Check if died this frame
+        if (Dead) Die();
+        else
+        {
+            ApplySuperStun();
+            ApplyKnockBack();
+            Events.OnCriticalHit.Invoke();
+        }
+    }
+    public void DealDamageArmored(AttackData data)
+    {
+        if (AlreadyDead()) return;
+
+        Debug.Log(name + "was damaged - armored!");
+        atkData = data;
+        AdjustHP();
+        //UpdateHearts();
+
+        // Check if died this frame
+        if (Dead) Die();
+        else
+        {
+            Events.OnArmoredHit.Invoke();
         }
     }
 
@@ -181,6 +200,7 @@ public class Health : MonoBehaviour
 
         if (atkData.Damage != 0)
         {
+            // Use "Armore Factor" instead? (character controllers carry a multiplier for incoming damage)
             if (chr?.CurrentState == BaseController.State.SuperStun)
             {
                 Hp -= Convert.ToInt32(atkData.Damage * SuperStunMultiplier);
@@ -238,6 +258,18 @@ public class Health : MonoBehaviour
             HealthImages[2].sprite = HealthSprites[2];
         }
     }
+    /// <summary>
+    /// Log warning and return if ALREADY dead
+    /// </summary>
+    private bool AlreadyDead()
+    {
+        if (Dead)
+        {
+            Debug.LogWarning(name + " is already dead");
+            return true;
+        }
+        else return false;
+    }
 
     private IEnumerator HitStunRoutine()
     {
@@ -253,6 +285,7 @@ public class Health : MonoBehaviour
     {
         Debug.Log("Applying Superstun for 3.5 seconds");
         chr?.SetState(BaseController.State.SuperStun);
+        Hurtbox.SetState(Hurtbox.State.Vulnerable);
 
         // Start timer
         yield return Utility.FrameTimer(210, 0);

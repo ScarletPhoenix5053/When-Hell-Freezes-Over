@@ -5,7 +5,7 @@ public class TrackingHealthBar : MonoBehaviour
 {
     public Health Health;
     public Transform Meter;
-    public Transform parent;
+    private Transform parent;
 
     private Vector3 meterPos;
     private Vector3 originalScale;
@@ -19,7 +19,7 @@ public class TrackingHealthBar : MonoBehaviour
         meterPos = Meter.localPosition;
         originalScale = Meter.localScale;
         offset = transform.localPosition;
-        //parent = GetComponentInParent<Transform>();
+        parent = transform.parent.GetComponentInChildren<BaseController>().transform;
     }
 
     private void FixedUpdate()

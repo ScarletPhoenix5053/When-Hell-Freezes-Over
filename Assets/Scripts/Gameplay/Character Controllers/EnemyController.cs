@@ -55,7 +55,7 @@ public abstract class EnemyController : BaseController
         SetState(State.Dead);
 
         // Despawn
-        Destroy(gameObject, 1.2f);
+        Destroy(transform.parent.gameObject, 1.2f);
     }
 
     protected virtual void FacePlayer()

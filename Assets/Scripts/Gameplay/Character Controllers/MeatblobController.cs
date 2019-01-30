@@ -166,6 +166,7 @@ public class MeatblobController : EnemyController
     {
         Events.OnMotionStart.Invoke();
         SetBehaviour(Behaviour.Leaping);
+        hp.Hurtbox.SetState(Hurtbox.State.Armored);
         am.DoAttack(0);
 
         var xVariance = AverageLeapVariance.x * Utility.GetRandomFloat();
@@ -244,7 +245,7 @@ public class MeatblobController : EnemyController
         yield return Utility.FrameTimer(RecoveryFrames, recoveryTimer);
 
         SetBehaviour(Behaviour.Idle);
-        hp.Hurtbox.SetState(Hurtbox.State.Vulnerable);
+        hp.Hurtbox.SetState(Hurtbox.State.Armored);
     }
     #endregion
 }
