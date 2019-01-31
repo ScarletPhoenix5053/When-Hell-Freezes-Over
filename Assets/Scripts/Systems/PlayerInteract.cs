@@ -26,6 +26,8 @@ public class PlayerInteract : MonoBehaviour
     public Sprite unfrozenForge;
     private SpriteRenderer forgeRenderer;
 
+    private bool forgeUnfreeze;
+
     [Header("Item Pickup")]
     public float itemSpeed = 6f;
     public Transform target;
@@ -95,11 +97,13 @@ public class PlayerInteract : MonoBehaviour
         if (other.tag == "Forge")
         {
             atForge = true;
+            FindObjectOfType<AudioManager>().Play("Forge");
             prompt.SetActive(true);
 
             //Do I have to create a seperate script to sit on the forge that does this magical change?
             forgeRenderer = other.GetComponent<SpriteRenderer>();
             forgeRenderer.sprite = unfrozenForge;
+
         }
 
         //HEALTH PICKUPS
@@ -108,12 +112,14 @@ public class PlayerInteract : MonoBehaviour
             if(health.Hp < 5)
             {
                 health.Hp += 2;
+                FindObjectOfType<AudioManager>().Play("HealthPickup");
                 Destroy(other.gameObject);
             }
 
             else if(health.Hp == 5)
             {
                 health.Hp += 1;
+                FindObjectOfType<AudioManager>().Play("HealthPickup");
                 Destroy(other.gameObject);
             }
         }

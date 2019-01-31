@@ -16,7 +16,8 @@ MonoBehaviour:
   Name: Demon Light Sword
   Desc: 'A demon light sword. Small, yet deadly. '
   MaximumStacks: 1
-  Icon: {fileID: 21300000, guid: 51195630a2e14e7409fa430d6274ad87, type: 3}
+  Icon: {fileID: 21300000, guid: 1d66a6d3ec224494dbaa43b8f4e5e99b, type: 3}
+  iconInventory: {fileID: 21300000, guid: 8f4bf1262c24ac944a2449e0f83a0d6d, type: 3}
   equipmentType: 1
   NormalAttackChainLength: 0
   NormalAtkData: []

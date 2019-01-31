@@ -42,6 +42,7 @@ public class CraftingRecipeUI : MonoBehaviour
             }
             else
             {
+                FindObjectOfType<AudioManager>().Play("CantCraft"); //CANT CRAFT SOUND
                 StartCoroutine(NotEnoughMaterials());
             }
         }

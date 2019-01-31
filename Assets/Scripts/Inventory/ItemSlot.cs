@@ -10,6 +10,8 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
     public event Action<GenericItem> OnLeftClickEvent;
     public event Action<GenericItem> OnRightClickEvent;
 
+    private Vector3 originalScale;
+
     private GenericItem _item;
     public GenericItem Item
     {
@@ -70,6 +72,11 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
         }
     }
 
+    void start()
+    {
+        originalScale = transform.localScale;
+    }
+
     protected virtual void Update()
     {
         
@@ -99,10 +106,22 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
     public void OnPointerEnter(PointerEventData eventData)
     {
         tooltip.ShowTooltip(Item, transform.position);
+        Grow();
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         tooltip.HideTooltip();
+        Shrink();
+    }
+
+    public void Grow()
+    {
+        transform.localScale += new Vector3(0.5F, 0.5f, originalScale.z);
+    }
+
+    public void Shrink()
+    {
+        transform.localScale -= new Vector3(0.5F, 0.5f, originalScale.z);
     }
 }

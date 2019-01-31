@@ -16,7 +16,8 @@ MonoBehaviour:
   Name: Bone Mace
   Desc: 'A mace made of bone. Splintery. '
   MaximumStacks: 1
-  Icon: {fileID: 21300000, guid: d4e8a48603a27ff46bf6efa2b0c4ba61, type: 3}
+  Icon: {fileID: 21300000, guid: 1ae637c3c622f42439c12119f5e2c14d, type: 3}
+  iconInventory: {fileID: 21300000, guid: e40e584393142924d80746be3d318660, type: 3}
   equipmentType: 1
   NormalAttackChainLength: 0
   NormalAtkData: []
