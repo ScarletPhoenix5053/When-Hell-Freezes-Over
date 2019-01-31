@@ -865,6 +865,12 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: f870ecd4ead64ac45857d3d144fa684c, type: 2}
+    - target: {fileID: 192936917267964973, guid: 299c53565037cd24dacc737c83af3fc5,
+        type: 3}
+      propertyPath: MeleeWeapon
+      value: 
+      objectReference: {fileID: 11400000, guid: 535bf0fdb8219a64eb135ee01d0cf8c1,
+        type: 2}
     - target: {fileID: 192936917267964972, guid: 299c53565037cd24dacc737c83af3fc5,
         type: 3}
       propertyPath: HealthImages.Array.size
