@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 4220254680755401223}
   - component: {fileID: 4220254680755401218}
   - component: {fileID: 4220254680755401219}
-  - component: {fileID: 4220254680755401217}
+  - component: {fileID: 3366822089299851845}
   - component: {fileID: 4220254680755401467}
   - component: {fileID: 4220254680755401222}
   m_Layer: 10
@@ -185,28 +185,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentState: 0
-  Events:
+  GenericEvents:
     OnMotionStart:
       m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 4220254680755401217}
-          m_MethodName: EffectOnMoveStart
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+        m_Calls: []
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
     OnMotionEnd:
       m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+    OnAttack:
+      m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4220254680755401217}
-          m_MethodName: EffectOnMoveEnd
+        - m_Target: {fileID: 3366822089299851845}
+          m_MethodName: EffectOnAttack
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -218,9 +212,26 @@ MonoBehaviour:
           m_CallState: 2
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
-    OnAttack:
+  BlobEvents:
+    OnWindup:
       m_PersistentCalls:
         m_Calls: []
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+    OnLand:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3366822089299851845}
+          m_MethodName: EffectOnLand
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
   bone: {fileID: 5776911592199247892, guid: 722a5bb6955634d4c9274ad200deaec7, type: 3}
@@ -253,7 +264,7 @@ MonoBehaviour:
   Attacks:
   - {fileID: 11400000, guid: d5c86b8c177c741498c66f2e8b4b655c, type: 2}
   AtkStage: 0
---- !u!114 &4220254680755401217
+--- !u!114 &3366822089299851845
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -262,7 +273,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4220254680755401466}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3a665b461db554b44a0161e0944d9d3c, type: 3}
+  m_Script: {fileID: 11500000, guid: 7cc9101bfb1bde3478b7a7e2642e190a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ColorFlashFrames: 12
@@ -301,7 +312,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9ad26a3b661e214faa899fcb780df73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPlayer: 0
   HpMax: 12
   Hp: 12
   SuperStunMultiplier: 3
@@ -341,7 +351,7 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
-        - m_Target: {fileID: 4220254680755401217}
+        - m_Target: {fileID: 3366822089299851845}
           m_MethodName: EffectOnDeath
           m_Mode: 1
           m_Arguments:
@@ -368,8 +378,8 @@ MonoBehaviour:
     OnCriticalHit:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 4220254680755401217}
-          m_MethodName: EffectOnHit
+        - m_Target: {fileID: 3366822089299851845}
+          m_MethodName: EffectOnCrit
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -402,6 +412,22 @@ MonoBehaviour:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 2
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+    OnRecovery:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3366822089299851845}
+          m_MethodName: EffectOnMoveEnd
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
             m_BoolArgument: 0
