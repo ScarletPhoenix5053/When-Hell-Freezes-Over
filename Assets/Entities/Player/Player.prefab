@@ -101,7 +101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d247ba06193faa74d9335f5481b2b56c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skeletonDataAsset: {fileID: 11400000, guid: 8674dc34e64862241807f49c5306c04d, type: 2}
+  skeletonDataAsset: {fileID: 11400000, guid: 9654cbc8d4ef9b048acd040a0963b905, type: 2}
   initialSkinName: 
   initialFlipX: 0
   initialFlipY: 0
@@ -197,6 +197,8 @@ MonoBehaviour:
   AtkStage: 0
   MeleeWeapon: {fileID: 11400000, guid: aa662c7224db3f146a6e094d97e8e559, type: 2}
   RangedWeapon: {fileID: 11400000, guid: 00cec8ad545caf44b97fcb42cbdcc884, type: 2}
+  ArrowCapacity: 3
+  Arrows: 3
   AtkState: 0
 --- !u!114 &9012282343601775442
 MonoBehaviour:
@@ -242,7 +244,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9ad26a3b661e214faa899fcb780df73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPlayer: 1
   HpMax: 6
   Hp: 6
   SuperStunMultiplier: 3
@@ -639,22 +640,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3652264175003819108, guid: 9aad48fde932f4945b506564e167b964,
+    - target: {fileID: 3652264174964108992, guid: 9aad48fde932f4945b506564e167b964,
         type: 3}
       propertyPath: m_LocalScale.x
       value: 10
       objectReference: {fileID: 0}
-    - target: {fileID: 3652264175003819108, guid: 9aad48fde932f4945b506564e167b964,
+    - target: {fileID: 3652264174964108992, guid: 9aad48fde932f4945b506564e167b964,
         type: 3}
       propertyPath: m_LocalScale.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 3652264174964108992, guid: 9aad48fde932f4945b506564e167b964,
+    - target: {fileID: 3652264175003819108, guid: 9aad48fde932f4945b506564e167b964,
         type: 3}
       propertyPath: m_LocalScale.x
       value: 10
       objectReference: {fileID: 0}
-    - target: {fileID: 3652264174964108992, guid: 9aad48fde932f4945b506564e167b964,
+    - target: {fileID: 3652264175003819108, guid: 9aad48fde932f4945b506564e167b964,
         type: 3}
       propertyPath: m_LocalScale.y
       value: 0.5

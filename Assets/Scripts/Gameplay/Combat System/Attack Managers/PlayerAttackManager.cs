@@ -47,38 +47,37 @@ public class PlayerAttackManager : AttackManager, IHitboxResponder
         // Attacks[2]+ are for the normal attack chain.
         // For clarity i will use this int array to refer to the correct values
         // count from [1] not [0]
-        int[] normalAttack = new int[] { -1, 2, 3, 4, 5, 6 };
 
 
         // Check if can chain   
         switch (AtkState)
         {
             case AttackState.None: // Allow attack
-                DoAttack(normalAttack[1]);
+                DoAttack(1);
                 SetAtkState(AttackState.N1);
                 break;
 
             case AttackState.N1:  // Allow attack if weapon allows chaining to the next attack && in recovery
                 if (AtkStage != AttackStage.Recovery) return;
-                if (MeleeWeapon.NormalAtkData.Length >= 2) DoAttack(normalAttack[2]); else goto default;
+                if (MeleeWeapon.NormalAtkData.Length >= 2) DoAttack(2); else goto default;
                 SetAtkState(AttackState.N2);
                 break;
 
             case AttackState.N2:  // Allow attack if weapon allows chaining to the next && in recovery
                 if (AtkStage != AttackStage.Recovery) return;
-                if (MeleeWeapon.NormalAtkData.Length >= 3) DoAttack(normalAttack[3]); else goto default;
+                if (MeleeWeapon.NormalAtkData.Length >= 3) DoAttack(3); else goto default;
                 SetAtkState(AttackState.N3);
                 break;
 
             case AttackState.N3:  // Allow attack if weapon allows chaining to the next attack && in recovery
                 if (AtkStage != AttackStage.Recovery) return;
-                if (MeleeWeapon.NormalAtkData.Length >= 4) DoAttack(normalAttack[4]); else goto default;
+                if (MeleeWeapon.NormalAtkData.Length >= 4) DoAttack(4); else goto default;
                 SetAtkState(AttackState.N4);
                 break;
 
             case AttackState.N4:  // Allow attack if weapon allows chaining to the next attack && in recovery
                 if (AtkStage != AttackStage.Recovery) return;
-                if (MeleeWeapon.NormalAtkData.Length >= 5) DoAttack(normalAttack[5]); else goto default;
+                if (MeleeWeapon.NormalAtkData.Length >= 5) DoAttack(5); else goto default;
                 SetAtkState(AttackState.N5);
                 break;
 
@@ -110,11 +109,10 @@ public class PlayerAttackManager : AttackManager, IHitboxResponder
         // Melee
         if (MeleeWeapon != null)
         {
-            newAttacks = new AttackData[MeleeWeapon.NormalAtkData.Length + 2];
-            newAttacks[1] = MeleeWeapon.SpecialAtkData;
+            newAttacks = new AttackData[MeleeWeapon.NormalAtkData.Length + 1];
             for (int i = 0; i < MeleeWeapon.NormalAtkData.Length; i++)
             {
-                newAttacks[i + 2] = MeleeWeapon.NormalAtkData[i];
+                newAttacks[i + 1] = MeleeWeapon.NormalAtkData[i];
             }
         }
 

@@ -6,15 +6,13 @@ public class MeleeWeaponItem : GenericItem
     [HideInInspector]
     public int NormalAttackChainLength;
     public AttackData[] NormalAtkData;
-    public AttackData SpecialAtkData;
     public WeaponType Type;
 
     public enum WeaponType
     {
         LightSword, GreatSword, Mace, Warhammer
     }
-
-
+    
     public override GenericItem GetCopy()
     {
         return Instantiate(this);
