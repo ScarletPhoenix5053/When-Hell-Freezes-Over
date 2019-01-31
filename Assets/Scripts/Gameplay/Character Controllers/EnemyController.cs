@@ -9,7 +9,7 @@ using Spine.Unity;
 [RequireComponent(typeof(Health))]
 public abstract class EnemyController : BaseController
 {
-    public EnemyEvents Events;
+    public EnemyEvents GenericEvents;
     [Serializable]
     public class EnemyEvents
     {
@@ -46,6 +46,7 @@ public abstract class EnemyController : BaseController
 
         mc.UpdatePosition();
     }
+
 
     /// <summary>
     /// Perform death actions for this enemy.
