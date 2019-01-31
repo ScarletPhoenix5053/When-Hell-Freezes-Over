@@ -16,7 +16,8 @@ MonoBehaviour:
   Name: Bone Greatsword
   Desc: 'Not so sharp, but blunt force should get the job done. '
   MaximumStacks: 1
-  Icon: {fileID: 21300000, guid: 6bd3ff41d11aefa4cba177a58dfb97ae, type: 3}
+  Icon: {fileID: 21300000, guid: 9007aa26755a81b42bb053105c88ece2, type: 3}
+  iconInventory: {fileID: 21300000, guid: 25656ae90d6892e45b71caa369aa56ec, type: 3}
   equipmentType: 1
   NormalAttackChainLength: 0
   NormalAtkData: []

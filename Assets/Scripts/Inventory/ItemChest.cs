@@ -22,7 +22,7 @@ public class ItemChest : MonoBehaviour
     {
         if(inventory == null)
         {
-            inventory = FindObjectOfType<Inventory>();
+            inventory = GameObject.Find("InventoryCanvas").transform.Find("Inventory/CharacterPanel/InventoryPanel").GetComponent<Inventory>();
         }
 
         spriteRenderer.sprite = item.Icon;
@@ -38,6 +38,7 @@ public class ItemChest : MonoBehaviour
             //Item tooltip isn't appearing
             if (inventory.AddItem(itemCopy))
             {
+                FindObjectOfType<AudioManager>().Play("ChestOpen");
                 amount--;
                 if (amount == 0)
                 {

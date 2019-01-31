@@ -16,7 +16,8 @@ MonoBehaviour:
   Name: Bone Light Sword
   Desc: 'A small sword made of bone. Quick and efficient. '
   MaximumStacks: 1
-  Icon: {fileID: 21300000, guid: 62571e5dd4c604e4fb1d49f72b1d0b06, type: 3}
+  Icon: {fileID: 21300000, guid: 6e58043f0db02de4990de5ab54b8ad42, type: 3}
+  iconInventory: {fileID: 21300000, guid: a0efbcf2d6b207f4abe64de0ad478469, type: 3}
   equipmentType: 1
   NormalAttackChainLength: 0
   NormalAtkData:

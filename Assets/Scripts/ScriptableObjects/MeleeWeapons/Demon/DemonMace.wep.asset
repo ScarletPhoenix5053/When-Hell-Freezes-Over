@@ -16,7 +16,8 @@ MonoBehaviour:
   Name: Demon Mace
   Desc: A powerful mace, soon to be bloodied by the spawn of helll.
   MaximumStacks: 1
-  Icon: {fileID: 21300000, guid: 13b9a2876b7145c4ca8fa0edd16ca2b2, type: 3}
+  Icon: {fileID: 21300000, guid: a82079876bcde7142bc5d38df209d5dd, type: 3}
+  iconInventory: {fileID: 21300000, guid: 004e9f48653312f4fb2aab2e443dc7e9, type: 3}
   equipmentType: 1
   NormalAttackChainLength: 0
   NormalAtkData:

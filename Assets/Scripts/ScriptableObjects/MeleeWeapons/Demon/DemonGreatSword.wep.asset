@@ -16,7 +16,8 @@ MonoBehaviour:
   Name: Demon Greatsword
   Desc: 'Forged from the heart of a Demon. Does enough damage to live up to the name. '
   MaximumStacks: 1
-  Icon: {fileID: 21300000, guid: b34a3c4a08ecf5d4caa8e024804e6849, type: 3}
+  Icon: {fileID: 21300000, guid: 7bf4bc3deb1d74748ac7817ea8efe2f6, type: 3}
+  iconInventory: {fileID: 21300000, guid: 3545795244e3f6b4f92f939fe7153a12, type: 3}
   equipmentType: 1
   NormalAttackChainLength: 0
   NormalAtkData: []
