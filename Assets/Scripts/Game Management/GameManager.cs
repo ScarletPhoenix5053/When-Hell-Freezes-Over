@@ -17,17 +17,7 @@ public class GameManager : MonoBehaviour
         if (Instance == null) Instance = this;
         else if (Instance != this) Destroy(this);
     }
-
-    /// <summary>
-    /// Freezes characters and projectiles in place for a specified duration.
-    /// </summary>
-    /// <param name="duration"></param>
-    public void HitStopFor(int frames)
-    {  
-        if (currentHitStopRoutine != null) StopCoroutine(currentHitStopRoutine);
-        currentHitStopRoutine = HitStopRoutine(Utility.FramesToSeconds(frames));
-        StartCoroutine(currentHitStopRoutine);
-    }
+    
     /// <summary>
     /// Reloads the active scene
     /// </summary>
@@ -43,21 +33,10 @@ public class GameManager : MonoBehaviour
     {
         StartCoroutine(ReloadSceneRoutine(timer));
     }
-    public IEnumerator UntillHitStopInactive()
-    {
-        while (HitStopActive) yield return null;
-    }
 
     private IEnumerator ReloadSceneRoutine(float timer)
     {
         yield return new WaitForSeconds(timer);
         ReloadGame();
-    }
-    private IEnumerator HitStopRoutine(float timer)
-    {
-        HitStopActive = true;
-        yield return new WaitForSeconds(timer);
-
-        HitStopActive = false;
     }
 }

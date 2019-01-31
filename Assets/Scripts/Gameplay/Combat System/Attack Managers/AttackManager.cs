@@ -128,8 +128,6 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
         if (hurtState == Hurtbox.State.Armored) hp.DealDamageArmored(Attacks[currentAttackIndex]);
         else hp.DealDamageNormal(Attacks[currentAttackIndex]);
 
-        GameManager.Instance.HitStopFor(Attacks[currentAttackIndex].HitStop);
-
         //hurtbox.GetComponent<Hurtbox>().Health.LogHp();
 
         Hitbox.SetInactive();

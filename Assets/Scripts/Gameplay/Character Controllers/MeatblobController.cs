@@ -133,7 +133,14 @@ public class MeatblobController : EnemyController
         switch (CurrentBehaviour)
         {
             case Behaviour.Idle:
-                if (DistToPlayer < DetectionRange) StartChase();
+                if (DistToPlayer < DetectionRange)
+                {
+                    Debug.Log("chase");
+                    StartChase();
+                }
+                else
+                {
+                }
                 break;
 
             case Behaviour.Chasing:
@@ -141,6 +148,12 @@ public class MeatblobController : EnemyController
                     (DistToPlayer <= MaximumAttackRange && Utility.GetRandomFloat() < EnterWindupChance)
                     )
                     StartWindup();
+
+                if (DistToPlayer > DetectionRange)
+                {
+                    Debug.Log("wait");
+                    StopChase();
+                }
                 break;
                 
             case Behaviour.Leaping:
@@ -157,6 +170,11 @@ public class MeatblobController : EnemyController
         }
     }
 
+    protected void StopChase()
+    {
+        GenericEvents.OnMotionEnd.Invoke();
+        SetBehaviour(Behaviour.Idle);
+    }
     protected void StartChase()
     {
         GenericEvents.OnMotionStart.Invoke();
