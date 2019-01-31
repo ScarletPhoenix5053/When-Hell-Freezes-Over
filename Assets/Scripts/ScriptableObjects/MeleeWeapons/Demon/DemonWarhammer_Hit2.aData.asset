@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: DemonWarhammer_Hit2.aData
   m_EditorClassIdentifier: 
   Startup: 42
-  Active: 3
-  Recovery: 105
+  Active: 6
+  Recovery: 30
   MotionOnAttack: 10
   Damage: 8
   KnockBack: 30

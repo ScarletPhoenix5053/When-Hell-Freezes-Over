@@ -19,7 +19,7 @@ MonoBehaviour:
   Icon: {fileID: 21300000, guid: c514ce2850a839e4a9f0ef89bc03f67a, type: 3}
   iconInventory: {fileID: 21300000, guid: 38c54dc84f8a0bd4dbab1c5d69e536e0, type: 3}
   equipmentType: 1
-  WeaponSkinName: default
+  WeaponSkinName: Demon_Warhammer
   NormalAttackChainLength: 0
   NormalAtkData:
   - {fileID: 11400000, guid: 3f5fef6adae8135438056f0d4b9f9eae, type: 2}

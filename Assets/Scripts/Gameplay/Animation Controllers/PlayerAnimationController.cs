@@ -123,21 +123,23 @@ public class PlayerAnimationController : AnimationController
                     }
                     else
                     {
+                        switch (am.MeleeWeapon.Type)
+                        {
+                            case MeleeWeaponItem.WeaponType.LightSword:
+                                SwitchOnLSword(newAttackState);
+                                break;
 
-                    }
-                    
-                    switch (am.MeleeWeapon.Type)
-                    {
-                        case MeleeWeaponItem.WeaponType.LightSword:
-                            SwitchOnLSword(newAttackState);
-                            break;
+                            case MeleeWeaponItem.WeaponType.Mace:
+                                SwitchOnMace(newAttackState);
+                                break;
 
-                        case MeleeWeaponItem.WeaponType.Mace:
-                            SwitchOnMace(newAttackState);
-                            break;
+                            case MeleeWeaponItem.WeaponType.Warhammer:
+                                SwitchOnWarhammer(newAttackState);
+                                break;
 
-                        default:
-                            throw new NotImplementedException("This attack animation type is not yet configured!");
+                            default:
+                                throw new NotImplementedException("This attack animation type is not yet configured!");
+                        }
                     }
 
                 }
@@ -220,6 +222,23 @@ public class PlayerAnimationController : AnimationController
             case PlayerAttackManager.AttackState.N3:
                 sk_an.AnimationState.SetAnimation(0, "MaceString3", false);
                 break;
+
+            default:
+                throw new NotImplementedException("This attack animation sub-state is not yet configured!"); ;
+        }
+    }
+    private void SwitchOnWarhammer(PlayerAttackManager.AttackState newAttackState)
+    {
+        switch (newAttackState)
+        {
+            case PlayerAttackManager.AttackState.N1:
+                sk_an.AnimationState.SetAnimation(0, "AxeString1", false);
+                break;
+
+            case PlayerAttackManager.AttackState.N2:
+                sk_an.AnimationState.SetAnimation(0, "AxeString2", false);
+                break;
+                
 
             default:
                 throw new NotImplementedException("This attack animation sub-state is not yet configured!"); ;
