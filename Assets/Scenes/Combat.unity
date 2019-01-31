@@ -894,6 +894,11 @@ PrefabInstance:
       propertyPath: TempDeathCanvas
       value: 
       objectReference: {fileID: 1355049141}
+    - target: {fileID: 6268854667863297630, guid: 299c53565037cd24dacc737c83af3fc5,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f870ecd4ead64ac45857d3d144fa684c, type: 2}
     - target: {fileID: 192936917267964973, guid: 299c53565037cd24dacc737c83af3fc5,
         type: 3}
       propertyPath: Attacks.Array.data[1]
