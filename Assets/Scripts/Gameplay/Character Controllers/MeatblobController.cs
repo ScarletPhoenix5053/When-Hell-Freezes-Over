@@ -75,7 +75,6 @@ public class MeatblobController : EnemyController
     //Put this in all 3 types of enemies. 
     public override void Die()
     {
-
         int lootNum = UnityEngine.Random.Range(1, 3);
         for (int i = 0; i < lootNum; i++)
         {
@@ -98,6 +97,8 @@ public class MeatblobController : EnemyController
             Instantiate(bone, boneSpawnPos, transform.rotation);
             Instantiate(eyeball, eyeSpawnPos, transform.rotation);
         }
+
+        if (currentRoutine != null) StopCoroutine(currentRoutine);
 
         base.Die();
     }
