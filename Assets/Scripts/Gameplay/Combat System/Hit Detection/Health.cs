@@ -37,6 +37,7 @@ public class Health : MonoBehaviour
         public UnityEvent OnDeath;
         public UnityEvent OnCriticalHit;
         public UnityEvent OnArmoredHit;
+        public UnityEvent OnRecovery;
     }
     public bool Dead { get { return Hp <= 0; } }
     #endregion
@@ -291,6 +292,7 @@ public class Health : MonoBehaviour
 
         // End timer
         chr?.SetState(BaseController.State.Ready);
+        Events.OnRecovery.Invoke();
     }    
     #endregion
 }
