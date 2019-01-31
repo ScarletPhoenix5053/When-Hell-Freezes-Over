@@ -22,6 +22,10 @@ public class AnimationController : MonoBehaviour
         sk_an = GetComponent<SkeletonAnimation>();
     }
 
+    public virtual void SetSkin(string skinName)
+    {
+        sk_an.skeleton.SetSkin(skinName);
+    }
     public virtual void PauseAnimation()
     {
         if (an != null) an.enabled = false;

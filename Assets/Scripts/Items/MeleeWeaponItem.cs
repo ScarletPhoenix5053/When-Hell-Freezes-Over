@@ -3,6 +3,7 @@
 [CreateAssetMenu(fileName = "New Weapon Data", menuName = "Item/Weapon")]
 public class MeleeWeaponItem : GenericItem
 {
+    public string WeaponSkinName = "default";
     [HideInInspector]
     public int NormalAttackChainLength;
     public AttackData[] NormalAtkData;
