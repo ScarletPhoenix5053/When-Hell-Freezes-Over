@@ -1,4 +1,4 @@
-﻿using Sierra;
+﻿using Spine.Unity;
 using System;
 using System.Collections;
 using Sierra.Combat2D;
@@ -19,12 +19,32 @@ public class PlayerAttackManager : AttackManager, IHitboxResponder
     {
         None, N1, N2, N3, N4, N5, Special, Ranged, RangedSpecial
     }
-    
+
+    protected MeleeWeaponItem meleeItem;
+    protected RangedWeaponItem rangedItem;
+
+
     protected virtual void OnEnable()
     {
         if (MeleeWeapon == null) throw new NullReferenceException("Please assign an object to MeleeWeapon");
         if (RangedWeapon == null) throw new NullReferenceException("Please assign an object to RangedWeapon");
         else AssignWeaponAttackData();
+    }
+    protected override void FixedUpdate()
+    {
+        base.FixedUpdate();
+
+        // If either weapon item changes
+        if (meleeItem != MeleeWeapon ||
+            rangedItem != RangedWeapon)
+        {
+            Debug.Log("Change");
+            meleeItem = MeleeWeapon;
+            rangedItem = RangedWeapon;
+
+            // update attackData array
+            AssignWeaponAttackData();
+        }
     }
 
     protected override IEnumerator IE_DoAttack()
@@ -125,6 +145,9 @@ public class PlayerAttackManager : AttackManager, IHitboxResponder
         }
 
         Attacks = newAttacks;
+
+        Debug.Log(MeleeWeapon.WeaponSkinName);
+        am.SetSkin(MeleeWeapon.WeaponSkinName);
     }
     
     protected void SetAtkState(AttackState newState)

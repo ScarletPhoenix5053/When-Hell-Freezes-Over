@@ -15,9 +15,15 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
     protected GameObject projectilePrefab;
     protected GameObject[] projectiles;
 
+    protected AnimationController am;
+
     protected int currentAttackIndex = 0;
     protected IEnumerator currentAttackRoutine = null;
 
+    protected virtual void Awake()
+    {
+        am = GetComponent<AnimationController>();
+    }
     protected virtual void FixedUpdate()
     {
         Hitbox.UpdateHitbox();

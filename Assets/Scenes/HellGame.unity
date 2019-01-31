@@ -359,31 +359,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
-    - target: {fileID: 6086003898064739420, guid: cac46ee8ed666b74ea7c03733c8fb064,
-        type: 3}
-      propertyPath: inventoryUI
-      value: 
-      objectReference: {fileID: 1426362267}
-    - target: {fileID: 6086003898064739420, guid: cac46ee8ed666b74ea7c03733c8fb064,
-        type: 3}
-      propertyPath: tooltip
-      value: 
-      objectReference: {fileID: 1942148552}
-    - target: {fileID: 6086003898064739420, guid: cac46ee8ed666b74ea7c03733c8fb064,
-        type: 3}
-      propertyPath: armorTooltip
-      value: 
-      objectReference: {fileID: 3207524184884742172}
-    - target: {fileID: 6086003898064739420, guid: cac46ee8ed666b74ea7c03733c8fb064,
-        type: 3}
-      propertyPath: craftingUI
-      value: 
-      objectReference: {fileID: 1257240612}
-    - target: {fileID: 6086003898064739420, guid: cac46ee8ed666b74ea7c03733c8fb064,
-        type: 3}
-      propertyPath: notEnough
-      value: 
-      objectReference: {fileID: 70253788}
     - target: {fileID: 6086003898064739419, guid: cac46ee8ed666b74ea7c03733c8fb064,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -439,6 +414,31 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6086003898064739420, guid: cac46ee8ed666b74ea7c03733c8fb064,
+        type: 3}
+      propertyPath: inventoryUI
+      value: 
+      objectReference: {fileID: 1426362267}
+    - target: {fileID: 6086003898064739420, guid: cac46ee8ed666b74ea7c03733c8fb064,
+        type: 3}
+      propertyPath: tooltip
+      value: 
+      objectReference: {fileID: 1942148552}
+    - target: {fileID: 6086003898064739420, guid: cac46ee8ed666b74ea7c03733c8fb064,
+        type: 3}
+      propertyPath: armorTooltip
+      value: 
+      objectReference: {fileID: 3207524184884742172}
+    - target: {fileID: 6086003898064739420, guid: cac46ee8ed666b74ea7c03733c8fb064,
+        type: 3}
+      propertyPath: craftingUI
+      value: 
+      objectReference: {fileID: 1257240612}
+    - target: {fileID: 6086003898064739420, guid: cac46ee8ed666b74ea7c03733c8fb064,
+        type: 3}
+      propertyPath: notEnough
+      value: 
+      objectReference: {fileID: 70253788}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cac46ee8ed666b74ea7c03733c8fb064, type: 3}
 --- !u!4 &310707446 stripped
@@ -850,40 +850,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8993978443071335220, guid: 299c53565037cd24dacc737c83af3fc5,
-        type: 3}
-      propertyPath: TempDeathCanvas
-      value: 
-      objectReference: {fileID: 1451031840}
-    - target: {fileID: 5235472720850088560, guid: 299c53565037cd24dacc737c83af3fc5,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8993978443071335215, guid: 299c53565037cd24dacc737c83af3fc5,
-        type: 3}
-      propertyPath: healthImages.Array.data[0]
-      value: 
-      objectReference: {fileID: 1505902372}
-    - target: {fileID: 8993978443071335215, guid: 299c53565037cd24dacc737c83af3fc5,
-        type: 3}
-      propertyPath: healthImages.Array.data[1]
-      value: 
-      objectReference: {fileID: 1794617299}
-    - target: {fileID: 8993978443071335215, guid: 299c53565037cd24dacc737c83af3fc5,
-        type: 3}
-      propertyPath: healthImages.Array.data[2]
-      value: 
-      objectReference: {fileID: 744006972}
-    - target: {fileID: 1620014276, guid: 299c53565037cd24dacc737c83af3fc5, type: 3}
-      propertyPath: prompt
-      value: 
-      objectReference: {fileID: 128075751}
-    - target: {fileID: 5729220773539553565, guid: 299c53565037cd24dacc737c83af3fc5,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3950877417624386931, guid: 299c53565037cd24dacc737c83af3fc5,
         type: 3}
       propertyPath: m_Mesh
@@ -894,6 +860,17 @@ PrefabInstance:
       propertyPath: TempDeathCanvas
       value: 
       objectReference: {fileID: 400107413}
+    - target: {fileID: 6268854667863297630, guid: 299c53565037cd24dacc737c83af3fc5,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f870ecd4ead64ac45857d3d144fa684c, type: 2}
+    - target: {fileID: 192936917267964973, guid: 299c53565037cd24dacc737c83af3fc5,
+        type: 3}
+      propertyPath: MeleeWeapon
+      value: 
+      objectReference: {fileID: 11400000, guid: 535bf0fdb8219a64eb135ee01d0cf8c1,
+        type: 2}
     - target: {fileID: 192936917267964972, guid: 299c53565037cd24dacc737c83af3fc5,
         type: 3}
       propertyPath: HealthImages.Array.size
@@ -939,6 +916,40 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 9114288007197113287, guid: 299c53565037cd24dacc737c83af3fc5,
         type: 3}
+      propertyPath: prompt
+      value: 
+      objectReference: {fileID: 128075751}
+    - target: {fileID: 5729220773539553565, guid: 299c53565037cd24dacc737c83af3fc5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8993978443071335220, guid: 299c53565037cd24dacc737c83af3fc5,
+        type: 3}
+      propertyPath: TempDeathCanvas
+      value: 
+      objectReference: {fileID: 1451031840}
+    - target: {fileID: 5235472720850088560, guid: 299c53565037cd24dacc737c83af3fc5,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8993978443071335215, guid: 299c53565037cd24dacc737c83af3fc5,
+        type: 3}
+      propertyPath: healthImages.Array.data[0]
+      value: 
+      objectReference: {fileID: 1505902372}
+    - target: {fileID: 8993978443071335215, guid: 299c53565037cd24dacc737c83af3fc5,
+        type: 3}
+      propertyPath: healthImages.Array.data[1]
+      value: 
+      objectReference: {fileID: 1794617299}
+    - target: {fileID: 8993978443071335215, guid: 299c53565037cd24dacc737c83af3fc5,
+        type: 3}
+      propertyPath: healthImages.Array.data[2]
+      value: 
+      objectReference: {fileID: 744006972}
+    - target: {fileID: 1620014276, guid: 299c53565037cd24dacc737c83af3fc5, type: 3}
       propertyPath: prompt
       value: 
       objectReference: {fileID: 128075751}
@@ -2445,16 +2456,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: InventoryCanvas
       objectReference: {fileID: 0}
-    - target: {fileID: 1397650146165103119, guid: db0729ed02d4290408a2427a41e803c6,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1397650146620796336, guid: db0729ed02d4290408a2427a41e803c6,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1397650146642272010, guid: db0729ed02d4290408a2427a41e803c6,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2560,15 +2561,16 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1602078999, guid: db0729ed02d4290408a2427a41e803c6, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 295172199}
-    - target: {fileID: 1397650147013830428, guid: db0729ed02d4290408a2427a41e803c6,
+    - target: {fileID: 1397650146165103119, guid: db0729ed02d4290408a2427a41e803c6,
         type: 3}
-      propertyPath: pam
-      value: 
-      objectReference: {fileID: 1134511663}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1397650146620796336, guid: db0729ed02d4290408a2427a41e803c6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1848781545, guid: db0729ed02d4290408a2427a41e803c6, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -2581,6 +2583,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1602078999, guid: db0729ed02d4290408a2427a41e803c6, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 295172199}
     - target: {fileID: 1397650147213011024, guid: db0729ed02d4290408a2427a41e803c6,
         type: 3}
       propertyPath: startingItems.Array.size
@@ -2646,6 +2652,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: cdfc058d3abb5b741904190ffd43a259,
         type: 2}
+    - target: {fileID: 1397650147013830428, guid: db0729ed02d4290408a2427a41e803c6,
+        type: 3}
+      propertyPath: pam
+      value: 
+      objectReference: {fileID: 1134511663}
     - target: {fileID: 1397650147446102129, guid: db0729ed02d4290408a2427a41e803c6,
         type: 3}
       propertyPath: m_SizeDelta.x

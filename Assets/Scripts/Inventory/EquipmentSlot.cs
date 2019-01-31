@@ -8,8 +8,6 @@ public class EquipmentSlot : ItemSlot
 
     protected override void Update()
     {
-        Debug.Log("being called");
-
         if (Item is MeleeWeaponItem)
         {
             image.sprite = Item.Icon;

@@ -19,10 +19,10 @@ MonoBehaviour:
   Icon: {fileID: 21300000, guid: a82079876bcde7142bc5d38df209d5dd, type: 3}
   iconInventory: {fileID: 21300000, guid: 004e9f48653312f4fb2aab2e443dc7e9, type: 3}
   equipmentType: 1
+  WeaponSkinName: Demon_Mace
   NormalAttackChainLength: 0
   NormalAtkData:
   - {fileID: 11400000, guid: fd9f7287e38759049b568d38966ad240, type: 2}
   - {fileID: 11400000, guid: 383972eda32c07b43b933d1fc9582813, type: 2}
   - {fileID: 11400000, guid: 990cfab95ac5f1845b071e756072c890, type: 2}
-  SpecialAtkData: {fileID: 11400000, guid: 703929c51bbef094db9e91d76c03bb1d, type: 2}
   Type: 2
