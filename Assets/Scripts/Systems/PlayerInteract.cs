@@ -46,10 +46,10 @@ public class PlayerInteract : MonoBehaviour
 
     private void Update()
     {
-
-        if (health.Dead == true)
+        if (health.Dead)
         {
             transform.position = respawnPoint;
+            GetComponent<PlayerController>().Respawn();
             health.Hp = 6;
         }
 

@@ -75,7 +75,6 @@ public class MeatblobController : EnemyController
     //Put this in all 3 types of enemies. 
     public override void Die()
     {
-
         int lootNum = UnityEngine.Random.Range(1, 3);
         for (int i = 0; i < lootNum; i++)
         {
@@ -98,6 +97,8 @@ public class MeatblobController : EnemyController
             Instantiate(bone, boneSpawnPos, transform.rotation);
             Instantiate(eyeball, eyeSpawnPos, transform.rotation);
         }
+
+        if (currentRoutine != null) StopCoroutine(currentRoutine);
 
         base.Die();
     }
@@ -132,7 +133,14 @@ public class MeatblobController : EnemyController
         switch (CurrentBehaviour)
         {
             case Behaviour.Idle:
-                if (DistToPlayer < DetectionRange) StartChase();
+                if (DistToPlayer < DetectionRange)
+                {
+                    Debug.Log("chase");
+                    StartChase();
+                }
+                else
+                {
+                }
                 break;
 
             case Behaviour.Chasing:
@@ -140,6 +148,12 @@ public class MeatblobController : EnemyController
                     (DistToPlayer <= MaximumAttackRange && Utility.GetRandomFloat() < EnterWindupChance)
                     )
                     StartWindup();
+
+                if (DistToPlayer > DetectionRange)
+                {
+                    Debug.Log("wait");
+                    StopChase();
+                }
                 break;
                 
             case Behaviour.Leaping:
@@ -156,6 +170,11 @@ public class MeatblobController : EnemyController
         }
     }
 
+    protected void StopChase()
+    {
+        GenericEvents.OnMotionEnd.Invoke();
+        SetBehaviour(Behaviour.Idle);
+    }
     protected void StartChase()
     {
         GenericEvents.OnMotionStart.Invoke();

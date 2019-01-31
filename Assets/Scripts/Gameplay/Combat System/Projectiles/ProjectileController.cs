@@ -1,6 +1,6 @@
-﻿using System.Collections;
-using System;
+﻿using System;
 using UnityEngine;
+using UnityEngine.Events;
 using Sierra.Combat2D;
 
 /// <summary>
@@ -10,6 +10,14 @@ using Sierra.Combat2D;
 [RequireComponent(typeof(MotionController))]
 public class ProjectileController : MonoBehaviour, IHitboxResponder
 {
+    public ProjectileEvents Events;
+    [Serializable]
+    public class ProjectileEvents
+    {
+        public UnityEvent OnHit;
+        public UnityEvent OnEnvironmentImpact;
+    }    
+
     protected int ySign = 1;
     protected int xSign = 1;
 
@@ -36,6 +44,11 @@ public class ProjectileController : MonoBehaviour, IHitboxResponder
         mc.MoveVector = new Vector2(xSign, ySign);
         mc.UpdatePosition();
     }
+    protected void OnCollisionEnter2D(Collision2D collision)
+    {
+        Events.OnEnvironmentImpact.Invoke();
+        Destroy(gameObject);
+    }
 
     // IHitboxResponder
     public virtual void Hit(Collider2D hurtbox)
@@ -49,8 +62,7 @@ public class ProjectileController : MonoBehaviour, IHitboxResponder
             if (hb is ButtonHurtbox)
             {
                 hb.CheckHit();
-
-                Destroy(gameObject);
+                Events.OnEnvironmentImpact.Invoke();
             }
             // else must have hit a character
             else
@@ -77,8 +89,10 @@ public class ProjectileController : MonoBehaviour, IHitboxResponder
                     default:
                         return;
                 }
+                Events.OnHit.Invoke();
             }
         }
+        Destroy(gameObject);
     }
 
     /// <summary>
