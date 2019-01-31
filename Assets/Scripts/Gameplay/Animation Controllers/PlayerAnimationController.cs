@@ -123,25 +123,23 @@ public class PlayerAnimationController : AnimationController
                     }
                     else
                     {
+                        switch (am.MeleeWeapon.Type)
+                        {
+                            case MeleeWeaponItem.WeaponType.LightSword:
+                                SwitchOnLSword(newAttackState);
+                                break;
 
-                    }
-                    
-                    switch (am.MeleeWeapon.Type)
-                    {
-                        case MeleeWeaponItem.WeaponType.LightSword:
-                            SwitchOnLSword(newAttackState);
-                            break;
+                            case MeleeWeaponItem.WeaponType.Mace:
+                                SwitchOnMace(newAttackState);
+                                break;
 
-                        case MeleeWeaponItem.WeaponType.Mace:
-                            SwitchOnMace(newAttackState);
-                            break;
+                            case MeleeWeaponItem.WeaponType.Warhammer:
+                                SwitchOnWarhammer(newAttackState);
+                                break;
 
-                        case MeleeWeaponItem.WeaponType.Warhammer:
-                            SwitchOnWarhammer(newAttackState);
-                            break;
-
-                        default:
-                            throw new NotImplementedException("This attack animation type is not yet configured!");
+                            default:
+                                throw new NotImplementedException("This attack animation type is not yet configured!");
+                        }
                     }
 
                 }
