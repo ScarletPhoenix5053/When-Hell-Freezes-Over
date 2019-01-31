@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb82047a286ce7148b5718176ec43ce7, type: 3}
   m_Name: DemonLightSword_Hit3.aData
   m_EditorClassIdentifier: 
-  Startup: 5
+  Startup: 13
   Active: 1
-  Recovery: 13
+  Recovery: 22
   MotionOnAttack: 7
   Damage: 3
   KnockBack: 6
