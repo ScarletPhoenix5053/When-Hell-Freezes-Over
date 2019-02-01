@@ -14,10 +14,10 @@ public class Hitbox_Player : Hitbox
     }
     private void Start()
     {
-        sk_an.state.Event += State_Event;
+        sk_an.state.Event += ChangeHitboxShapeOnEvent;
     }
     
-    private void State_Event(Spine.TrackEntry trackEntry, Spine.Event e)
+    private void ChangeHitboxShapeOnEvent(Spine.TrackEntry trackEntry, Spine.Event e)
     {
         const int AnimCount = 2;
         if (SizeOnAnims.Length != AnimCount) throw new IndexOutOfRangeException();
