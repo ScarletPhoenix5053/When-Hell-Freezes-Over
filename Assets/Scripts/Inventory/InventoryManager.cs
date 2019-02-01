@@ -6,10 +6,12 @@ using UnityEngine.EventSystems;
 
 public class InventoryManager : MonoBehaviour
 {
+#pragma warning disable 0649
     [SerializeField] Inventory inventory;
     [SerializeField] EquipmentPanel equipmentPanel;
     [SerializeField] CraftingWindow craftingWindow;
     [SerializeField] DestroyDialog dropCheck;
+#pragma warning restore 0649
 
     private void Awake()
     {

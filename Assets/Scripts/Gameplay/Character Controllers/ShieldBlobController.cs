@@ -15,8 +15,6 @@ public class ShieldBlobController : EnemyController
         Guarding, ReadyToPush, Pushing
     }
 
-    new protected EnemyAttackManager am;
-
     protected IEnumerator currentTurnRoutine;
     protected bool turning;
     protected int turningTo;
@@ -24,7 +22,6 @@ public class ShieldBlobController : EnemyController
     protected override void Awake()
     {
         base.Awake();
-        am = GetComponent<EnemyAttackManager>();
     }
     protected void OnDrawGizmosSelected()
     {
@@ -73,7 +70,6 @@ public class ShieldBlobController : EnemyController
             hp.Hurtbox.SetState(Hurtbox.State.Critical);
         }
 
-
         // READYTOPUSH
         // Push player if facing them
         if (CurrentBehaviour == Behaviour.ReadyToPush &&
@@ -83,7 +79,9 @@ public class ShieldBlobController : EnemyController
             Sign == 1 && !PlayerToLeft
             ))
         {
-            am.Attack();
+            var e_am = am as EnemyAttackManager;
+            e_am.Attack();
+
             GenericEvents.OnAttack.Invoke();
             CurrentState = State.Action;
         }

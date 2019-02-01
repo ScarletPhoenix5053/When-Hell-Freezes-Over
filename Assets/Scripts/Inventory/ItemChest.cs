@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class ItemChest : MonoBehaviour
 {
+#pragma warning disable 0649
     [SerializeField] GenericItem item; //Put the item you want the chest to have in this inspector slot
     [SerializeField] int amount = 1;
     [SerializeField] Inventory inventory; //Drag the players inventory
-    [SerializeField] SpriteRenderer spriteRenderer, chestRenderer;
+    [SerializeField] SpriteRenderer spriteRenderer = null, chestRenderer = null;
     [SerializeField] KeyCode itemPickupKeycode = KeyCode.E; //change as you like.
+#pragma warning restore 0649
 
     public Sprite closed;
     public Sprite open;

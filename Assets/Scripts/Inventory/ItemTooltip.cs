@@ -5,9 +5,11 @@ using UnityEngine.UI;
 
 public class ItemTooltip : MonoBehaviour
 {
+#pragma warning disable 0649
     [SerializeField] Text itemNameText;
     [SerializeField] Text slotText;
     [SerializeField] Text descText;
+#pragma warning restore 0649
 
     public GameObject tooltip;
 

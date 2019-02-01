@@ -5,8 +5,10 @@ using UnityEngine;
 
 public class Inventory : ItemContainer
 {
+#pragma warning disable 0649
     [SerializeField] List<GenericItem> startingItems;
     [SerializeField] Transform itemsParent;
+#pragma warning restore 0649
 
     public event Action<GenericItem> OnItemLeftClickedEvent;
     public event Action<GenericItem> OnItemRightClickedEvent;
@@ -42,7 +44,6 @@ public class Inventory : ItemContainer
             itemSlots[i].Item = null;
             itemSlots[i].Amount = 0;
         }
-    }
-   
+    }   
 }
 
