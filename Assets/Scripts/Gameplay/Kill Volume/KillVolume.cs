@@ -12,7 +12,7 @@ public class KillVolume : MonoBehaviour
             var plr = other.GetComponent<PlayerController>();
             if (plr != null)
             {
-                plr.Die();
+                plr.GetComponent<Health>().Die();
             }
             else
             {

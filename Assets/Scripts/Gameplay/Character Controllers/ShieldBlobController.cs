@@ -84,7 +84,7 @@ public class ShieldBlobController : EnemyController
             ))
         {
             am.Attack();
-            Events.OnAttack.Invoke();
+            GenericEvents.OnAttack.Invoke();
             CurrentState = State.Action;
         }
     }

@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 911b52c54ce470740ae628eac3bf9c46, type: 3}
+  m_Name: DemonWarhammer.wep
+  m_EditorClassIdentifier: 
+  id: 9d56596401dbeaf4889b2e3d9855a3a5
+  Name: Demon Warhammer
+  Desc: 'Nothing to it: Hit hard, kill more demons, claim back hell. '
+  MaximumStacks: 1
+  Icon: {fileID: 21300000, guid: c514ce2850a839e4a9f0ef89bc03f67a, type: 3}
+  iconInventory: {fileID: 21300000, guid: 38c54dc84f8a0bd4dbab1c5d69e536e0, type: 3}
+  equipmentType: 1
+  WeaponSkinName: Demon_Warhammer
+  NormalAttackChainLength: 0
+  NormalAtkData:
+  - {fileID: 11400000, guid: 3f5fef6adae8135438056f0d4b9f9eae, type: 2}
+  - {fileID: 11400000, guid: e2c39b5db321cdf4bbb182e0ceca0178, type: 2}
+  Type: 3

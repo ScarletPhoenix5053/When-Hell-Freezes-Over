@@ -23,11 +23,13 @@ public class InventoryManager : MonoBehaviour
         if(item is MeleeWeaponItem)
         {
             Equip((MeleeWeaponItem)item);
+            FindObjectOfType<AudioManager>().Play("WeaponEquip"); //EQUIPPING WEAPON SOUNDS
         }
 
         if(item is ArmorItem)
         {
             Equip((ArmorItem)item);
+            FindObjectOfType<AudioManager>().Play("ArmorEquip"); //EQUIPPING ARMOR SOUND
         }
     }
 
@@ -54,12 +56,13 @@ public class InventoryManager : MonoBehaviour
                 if(previousItem != null)
                 {
                     inventory.AddItem(previousItem);
-                    Debug.Log("here?");
+                    
                 }
             }
             else
             {
                 inventory.AddItem(item);
+
             }
         }
     }
@@ -69,6 +72,7 @@ public class InventoryManager : MonoBehaviour
         if(!inventory.IsFull() && equipmentPanel.RemoveItem(item))
         {
             inventory.AddItem(item);
+            FindObjectOfType<AudioManager>().Play("Unequip"); //UNEQUIPPING ITEMS SOUND
         }
     }
 
@@ -83,6 +87,7 @@ public class InventoryManager : MonoBehaviour
     public void ActuallyDestroyItem(GenericItem item)
     {
         inventory.RemoveItem(item);
+        FindObjectOfType<AudioManager>().Play("DestroyItem"); //DESTROYING ITEMS SOUND
         //Destroy(item);
 
     }

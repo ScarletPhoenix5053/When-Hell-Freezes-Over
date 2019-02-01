@@ -23,6 +23,7 @@ public class CraftingRecipe : ScriptableObject
             if(itemContainer.ItemCount(itemAmount.Item.ID) < itemAmount.Amount)
             {
                 return false;
+                
             }
         }
         return true;
@@ -46,6 +47,7 @@ public class CraftingRecipe : ScriptableObject
                 for (int i = 0; i < itemAmount.Amount; i++)
                 {
                     itemContainer.AddItem(itemAmount.Item.GetCopy());
+                    FindObjectOfType<AudioManager>().Play("Craft"); //CRAFTING ITEM SOUND
                 }
             }
         }

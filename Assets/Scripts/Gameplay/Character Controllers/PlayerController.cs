@@ -89,15 +89,13 @@ public class PlayerController : BaseController
     /// </summary>
     public override void Die()
     {
-        SetState(State.Dead);
-        
+        SetState(State.Dead);        
         GetComponent<Health>().Hurtbox.SetState(Hurtbox.State.Inactive);
-
-        // display you died message
-        TempDeathCanvas.gameObject.SetActive(true);
-
-        // restart game after delay
-        GameManager.Instance.ReloadGame(3f);
+    }
+    public void Respawn()
+    {
+        SetState(State.Ready);
+        GetComponent<Health>().Hurtbox.SetState(Hurtbox.State.Vulnerable);
     }
     #endregion
     #region Private Methods
@@ -198,7 +196,6 @@ public class PlayerController : BaseController
 
         Physics2D.IgnoreLayerCollision(9, 10, true);        
         yield return new WaitForSeconds(Sierra.Utility.FramesToSeconds(RollFrames));
-        yield return GameManager.Instance.UntillHitStopInactive();
 
         SetState(State.Ready);
         SetAction(Action.None);

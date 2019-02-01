@@ -10,6 +10,7 @@ public class Checkpoint : MonoBehaviour
     private SpriteRenderer spriteRenderer;
 
     public bool checkpointReached;
+    bool hasPlayed;
 
     void Start()
     {
@@ -27,6 +28,12 @@ public class Checkpoint : MonoBehaviour
         {
             spriteRenderer.sprite = afterReached;
             checkpointReached = true;
+
+            if(hasPlayed == false)
+            {
+                FindObjectOfType<AudioManager>().Play("Checkpoint");
+                hasPlayed = true;
+            }
         }
     }
 }

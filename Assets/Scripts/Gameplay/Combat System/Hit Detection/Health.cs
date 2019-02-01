@@ -30,12 +30,14 @@ public class Health : MonoBehaviour
 
     public EnemyEvents Events;
     [Serializable]
+
     public class EnemyEvents
     {
         public UnityEvent OnDamage;
         public UnityEvent OnDeath;
         public UnityEvent OnCriticalHit;
         public UnityEvent OnArmoredHit;
+        public UnityEvent OnRecovery;
     }
     public bool Dead { get { return Hp <= 0; } }
     #endregion
@@ -122,6 +124,16 @@ public class Health : MonoBehaviour
         }
     }
 
+    public void Die()
+    {
+        Hp = 0;
+        if (chr is EnemyController)
+        {
+            var enm = chr as EnemyController;
+            Events.OnDeath.Invoke();
+        }
+        StopAllCoroutines();
+    }
     public void LogHp()
     {
         Debug.Log(name + ": " + Hp + "/ " + HpMax);
@@ -231,18 +243,9 @@ public class Health : MonoBehaviour
         if (!AffectedByKnockback) return;
         if (Hurtbox.CurrentState == Hurtbox.State.Critical && !AffectedByKnockbackOnCrit) return;
 
+        Debug.Log("kb");
         var sign = Mathf.Sign(transform.localScale.x);
         mc?.DoImpulse(new Vector2(atkData.KnockBack * atkData.Sign, atkData.KnockUp));
-    }
-    private void Die()
-    {
-        Hp = 0;
-        if (chr is EnemyController)
-        {
-            var enm = chr as EnemyController;
-            Events.OnDeath.Invoke();
-        }
-        StopAllCoroutines();
     }
     private void UpdateHeartImages()
     {
@@ -290,6 +293,7 @@ public class Health : MonoBehaviour
 
         // End timer
         chr?.SetState(BaseController.State.Ready);
+        Events.OnRecovery.Invoke();
     }    
     #endregion
 }

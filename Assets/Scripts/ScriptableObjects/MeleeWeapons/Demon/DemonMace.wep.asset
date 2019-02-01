@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 911b52c54ce470740ae628eac3bf9c46, type: 3}
+  m_Name: DemonMace.wep
+  m_EditorClassIdentifier: 
+  id: aa662c7224db3f146a6e094d97e8e559
+  Name: Demon Mace
+  Desc: A powerful mace, soon to be bloodied by the spawn of helll.
+  MaximumStacks: 1
+  Icon: {fileID: 21300000, guid: a82079876bcde7142bc5d38df209d5dd, type: 3}
+  iconInventory: {fileID: 21300000, guid: 004e9f48653312f4fb2aab2e443dc7e9, type: 3}
+  equipmentType: 1
+  WeaponSkinName: Demon_Mace
+  NormalAttackChainLength: 0
+  NormalAtkData:
+  - {fileID: 11400000, guid: fd9f7287e38759049b568d38966ad240, type: 2}
+  - {fileID: 11400000, guid: 383972eda32c07b43b933d1fc9582813, type: 2}
+  - {fileID: 11400000, guid: 990cfab95ac5f1845b071e756072c890, type: 2}
+  Type: 2
