@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class CraftingRecipeUI : MonoBehaviour
 {
+#pragma warning disable 0649
     [SerializeField] RectTransform arrowParent;
     [SerializeField] ItemSlot[] itemSlots;
+#pragma warning restore 0649
 
     //public GameObject notEnough;
     public Animator anim;
