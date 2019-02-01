@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class CraftingWindow : MonoBehaviour
 {
+#pragma warning disable 0649
     [SerializeField] CraftingRecipeUI recipeUIPrefab;
     [SerializeField] RectTransform recipeUIParent;
     [SerializeField] List<CraftingRecipeUI> craftingRecipeUIs;
+#pragma warning restore 0649
 
     public ItemContainer ItemContainer;
     public List<CraftingRecipe> CraftingRecipes;

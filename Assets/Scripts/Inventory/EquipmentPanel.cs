@@ -7,8 +7,11 @@ public class EquipmentPanel : MonoBehaviour
 {
     public PlayerAttackManager pam;
 
+#pragma warning disable 0649
     [SerializeField] Transform equipmentSlotsParent;
     [SerializeField] EquipmentSlot[] equipmentSlots;
+#pragma warning restore 0649
+
     public List<GenericItem> equippedItems = new List<GenericItem>();
 
     public event Action<GenericItem> OnItemLeftClickedEvent;

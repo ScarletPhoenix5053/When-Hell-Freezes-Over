@@ -38,7 +38,6 @@ public class PlayerAttackManager : AttackManager, IHitboxResponder
         if (meleeItem != MeleeWeapon ||
             rangedItem != RangedWeapon)
         {
-            Debug.Log("Change");
             meleeItem = MeleeWeapon;
             rangedItem = RangedWeapon;
 
@@ -146,7 +145,6 @@ public class PlayerAttackManager : AttackManager, IHitboxResponder
 
         Attacks = newAttacks;
 
-        Debug.Log(MeleeWeapon.WeaponSkinName);
         am.SetSkin(MeleeWeapon.WeaponSkinName);
     }
     
