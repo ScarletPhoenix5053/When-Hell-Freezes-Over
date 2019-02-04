@@ -23,6 +23,7 @@ public class BouncingExplosiveProjectileController : MonoBehaviour, IHitboxRespo
     #region Public Vars
     [Range(0,1)]
     public float BounceDecayStrength = 0.2f;
+    public float LinearDecay = 0.1f;
     #endregion
     #region Private Vars
     private CharacterMotionController mc;
@@ -38,7 +39,11 @@ public class BouncingExplosiveProjectileController : MonoBehaviour, IHitboxRespo
     }
     private void FixedUpdate()
     {
+        mc.MoveVector = Vector2.right;
         mc.UpdatePosition();
+
+        if (mc.XSpeed > 0.05) mc.XSpeed -= LinearDecay;
+        else mc.XSpeed = 0;
     }
     private void LateUpdate()
     {
@@ -58,7 +63,7 @@ public class BouncingExplosiveProjectileController : MonoBehaviour, IHitboxRespo
         Events.OnEnvironmentImpact.Invoke();
 
         // On collision with anything, bounce upwards
-        mc.DoImpulse(Vector2.up * -(downVel * BounceDecayStrength));        
+        mc.DoImpulse(new Vector2(mc.ContMotionVector.x, -(downVel * BounceDecayStrength)));    
     }
     public virtual void Hit(Collider2D hurtbox)
     {

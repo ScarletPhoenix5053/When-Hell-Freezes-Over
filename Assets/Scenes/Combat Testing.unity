@@ -950,7 +950,7 @@ PrefabInstance:
     - target: {fileID: 8747437113877806074, guid: a35679aeea45f9649a6b73599ac90c1f,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2
+      value: -4
       objectReference: {fileID: 0}
     - target: {fileID: 8747437113877806074, guid: a35679aeea45f9649a6b73599ac90c1f,
         type: 3}
@@ -1007,10 +1007,20 @@ PrefabInstance:
       propertyPath: BounceDecayStrength
       value: 0.9
       objectReference: {fileID: 0}
+    - target: {fileID: 8747437113877806073, guid: a35679aeea45f9649a6b73599ac90c1f,
+        type: 3}
+      propertyPath: LinearDecay
+      value: 0.08
+      objectReference: {fileID: 0}
     - target: {fileID: 8747437113877806072, guid: a35679aeea45f9649a6b73599ac90c1f,
         type: 3}
       propertyPath: Gravity
       value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8747437113877806072, guid: a35679aeea45f9649a6b73599ac90c1f,
+        type: 3}
+      propertyPath: XSpeed
+      value: 12
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a35679aeea45f9649a6b73599ac90c1f, type: 3}
