@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using Sierra.Combat2D;
@@ -21,10 +22,11 @@ public class BouncingExplosiveProjectileController : MonoBehaviour, IHitboxRespo
     }
     #endregion
     #region Public Vars
+    public float BlastRadius = 2f;
     [Range(0,1)]
     public float BounceDecayStrength = 0.2f;
     public float LinearDecay = 0.1f;
-    public AttackData attackData;
+    public AttackData AttackData;
     #endregion
     #region Private Vars
     private CharacterMotionController mc;
@@ -72,7 +74,7 @@ public class BouncingExplosiveProjectileController : MonoBehaviour, IHitboxRespo
     #region Public Methods
     public void SetAttackData(AttackData newData)
     {
-        attackData = newData;
+        AttackData = newData;
     }
     public virtual void Hit(Collider2D hurtbox)
     {
@@ -81,27 +83,54 @@ public class BouncingExplosiveProjectileController : MonoBehaviour, IHitboxRespo
         var hb = hurtbox.GetComponent<Hurtbox>();
         if (hb is ButtonHurtbox) return;
 
-        // SCRAP THIS: replace with explosion method
-        if (hb.GetHurtboxState() != Hurtbox.State.Inactive &&
-            hb.GetHurtboxState() != Hurtbox.State.Blocking
-            )
+        Events.OnHit.Invoke();
+        Explode();
+
+    }
+    public void Explode()
+    {
+
+        Debug.Log("Boom bih");
+
+        // find all hurtboxes in radius
+        var overlaps = Physics2D.OverlapCircleAll(transform.position, BlastRadius);
+
+        // identify which objects are on the left and right sides
+        List<Hurtbox> left = new List<Hurtbox>();
+        List<Hurtbox> right = new List<Hurtbox>();
+        foreach (Collider2D overlap in overlaps)
         {
-            // Will need to fix this later, bomb creates knockback away from its center
-            attackData.Sign = 1;
-            hb.hp.DealDamageNormal(attackData);
+            Hurtbox hurtbox = overlap.GetComponent<Hurtbox>();
+            if (overlap.transform.position.x <= transform.position.x)
+            {
+                Debug.Log("Left: " + overlap.name);
+                if (hurtbox != null) left.Add(hurtbox);
+            }
+            else
+            {
+                Debug.Log("Right: " + overlap.name);
+                if (hurtbox != null) right.Add(hurtbox);
+            }
         }
 
-        Events.OnHit.Invoke();
-        Destroy(gameObject);
-    }
-    #endregion
-    #region Private Methods
-    private void Explode()
-    {
-        // find all hurtboxes in radius
-        
-        // identify which objects are on the left and right sides
         // apply knockback and damage to each group of objects
+        if (left != null && left.Count > 0)
+        {
+            foreach (Hurtbox hurtbox in left)
+            {
+                AttackData.Sign = -1;
+                hurtbox.hp.DealDamageNormal(AttackData);
+            }
+        }
+        if (right != null && right.Count > 0)
+        {
+            foreach (Hurtbox hurtbox in right)
+            {
+                AttackData.Sign = 1;
+                hurtbox.hp.DealDamageNormal(AttackData);
+            }
+        }
+        Destroy(gameObject);
     }
     #endregion
 }

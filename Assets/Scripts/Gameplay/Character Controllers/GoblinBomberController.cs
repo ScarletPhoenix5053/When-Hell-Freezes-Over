@@ -93,6 +93,7 @@ public class GoblinBomberController : EnemyController
         var bomb = Instantiate(BombPrefab, transform.position + new Vector3(1,1), Quaternion.identity);
         bomb.GetComponent<CharacterMotionController>().ContMotionVector.y = BombUpVel;
         bomb.GetComponent<CharacterMotionController>().XSpeed = BombHorVel;
+        bomb.GetComponent<BouncingExplosiveProjectileController>().AttackData = AttackData;
 
         timer = 0;
         while (timer < AttackData.Active) { yield return new WaitForFixedUpdate(); timer++; }

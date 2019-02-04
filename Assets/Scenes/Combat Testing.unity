@@ -1929,20 +1929,20 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6633400298540834917, guid: c2b79a4a2fd1e904895539b26321947e,
-        type: 3}
-      propertyPath: m_Constraints
-      value: 4
-      objectReference: {fileID: 0}
     - target: {fileID: 422946958779677802, guid: c2b79a4a2fd1e904895539b26321947e,
         type: 3}
       propertyPath: m_Name
       value: Goblin Bomber
       objectReference: {fileID: 0}
+    - target: {fileID: 6633400298540834917, guid: c2b79a4a2fd1e904895539b26321947e,
+        type: 3}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 422946958779677803, guid: c2b79a4a2fd1e904895539b26321947e,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3
+      value: -14
       objectReference: {fileID: 0}
     - target: {fileID: 422946958779677803, guid: c2b79a4a2fd1e904895539b26321947e,
         type: 3}
@@ -2003,6 +2003,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Size.y
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4396227740827574113, guid: c2b79a4a2fd1e904895539b26321947e,
+        type: 3}
+      propertyPath: Range
+      value: 40
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c2b79a4a2fd1e904895539b26321947e, type: 3}
@@ -4786,5 +4791,10 @@ PrefabInstance:
       propertyPath: prompt
       value: 
       objectReference: {fileID: 128075751}
+    - target: {fileID: 192936917267964982, guid: 299c53565037cd24dacc737c83af3fc5,
+        type: 3}
+      propertyPath: m_Name
+      value: Player object
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 299c53565037cd24dacc737c83af3fc5, type: 3}
