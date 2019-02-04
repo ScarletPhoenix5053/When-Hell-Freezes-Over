@@ -4,7 +4,6 @@ using System;
 using Spine.Unity;
 
 [RequireComponent(typeof(EnemyAnimationController))]
-[RequireComponent(typeof(AttackManager))]
 [RequireComponent(typeof(CharacterMotionController))]
 [RequireComponent(typeof(Health))]
 public abstract class EnemyController : BaseController
@@ -55,7 +54,7 @@ public abstract class EnemyController : BaseController
     {
         Debug.Log(name + "Is Dead.");
         SetState(State.Dead);
-        am.StopAttack();
+        am?.StopAttack();
 
         // Despawn
         Destroy(transform.parent.gameObject, 1.2f);
