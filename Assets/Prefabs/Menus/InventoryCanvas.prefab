@@ -19490,26 +19490,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1397650147446102129}
     m_Modifications:
-    - target: {fileID: 8886214811771042433, guid: 81e19101344ffde4da1946f7cdf54812,
-        type: 3}
-      propertyPath: m_Name
-      value: CraftingRecipeUI
-      objectReference: {fileID: 0}
-    - target: {fileID: 4914650680701295264, guid: 81e19101344ffde4da1946f7cdf54812,
-        type: 3}
-      propertyPath: anim
-      value: 
-      objectReference: {fileID: 1397650147410812619}
-    - target: {fileID: 4914650680701295264, guid: 81e19101344ffde4da1946f7cdf54812,
-        type: 3}
-      propertyPath: itemContainer
-      value: 
-      objectReference: {fileID: 1397650147213011024}
-    - target: {fileID: 7064414896284319342, guid: 81e19101344ffde4da1946f7cdf54812,
-        type: 3}
-      propertyPath: tooltip
-      value: 
-      objectReference: {fileID: 3207524184884742172}
     - target: {fileID: 8886214811771042686, guid: 81e19101344ffde4da1946f7cdf54812,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -19630,6 +19610,26 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.95764
       objectReference: {fileID: 0}
+    - target: {fileID: 4914650680701295264, guid: 81e19101344ffde4da1946f7cdf54812,
+        type: 3}
+      propertyPath: anim
+      value: 
+      objectReference: {fileID: 1397650147410812619}
+    - target: {fileID: 4914650680701295264, guid: 81e19101344ffde4da1946f7cdf54812,
+        type: 3}
+      propertyPath: itemContainer
+      value: 
+      objectReference: {fileID: 1397650147213011024}
+    - target: {fileID: 8886214811771042433, guid: 81e19101344ffde4da1946f7cdf54812,
+        type: 3}
+      propertyPath: m_Name
+      value: CraftingRecipeUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 7064414896284319342, guid: 81e19101344ffde4da1946f7cdf54812,
+        type: 3}
+      propertyPath: tooltip
+      value: 
+      objectReference: {fileID: 3207524184884742172}
     - target: {fileID: 8886214810637309050, guid: 81e19101344ffde4da1946f7cdf54812,
         type: 3}
       propertyPath: m_LocalScale.x
