@@ -36,11 +36,9 @@ public class ShieldBlobController : EnemyController
     {
         if (currentTurnRoutine == null)
         {
-            Debug.Log("hi");
             return;
         }
 
-        Debug.Log("stopping t urn");
         StopCoroutine(currentTurnRoutine);
         turning = false;
     }

@@ -243,7 +243,6 @@ public class Health : MonoBehaviour
         if (!AffectedByKnockback) return;
         if (Hurtbox.CurrentState == Hurtbox.State.Critical && !AffectedByKnockbackOnCrit) return;
 
-        Debug.Log("kb");
         var sign = Mathf.Sign(transform.localScale.x);
         mc?.DoImpulse(new Vector2(atkData.KnockBack * atkData.Sign, atkData.KnockUp));
     }

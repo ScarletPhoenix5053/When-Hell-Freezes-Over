@@ -18,9 +18,13 @@ public class FightManager : MonoBehaviour
     public void GoToNextStage(bool unloadPrevious = true)
     {
         // Unload prev stage
+        if (CurrentStage != 0)
+        {
+            Stages[CurrentStage - 1].Unload();
+        }
 
         // Incriment
-        if (CurrentStage < StageCount - 1) CurrentStage++;
+        if (CurrentStage < StageCount) CurrentStage++;
         else
         {
             Debug.LogWarning("No more stages to load!");
@@ -28,7 +32,7 @@ public class FightManager : MonoBehaviour
         }
 
         // Load next Stage
-        Stages[CurrentStage].Load();
+        Stages[CurrentStage-1].Load();
     }
     /// <summary>
     /// Updates the parent object in every <see cref="InstanceContainer"/> on every <see cref="Stage"/> created by this

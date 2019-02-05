@@ -50,16 +50,16 @@ public class InstanceContainer
     public GameObject Prefab;
     public Transform Parent;
     public Vector2[] SpawnLocations;
+    /// <summary>
+    /// Number of prefabs this Instance container will spawn
+    /// </summary>
+    public int Count { get { return SpawnLocations.Length; } }
 
     /// <summary>
     /// Tracks all of the instances spawned by this class
     /// </summary>
     private List<GameObject> SpawnedObjects = new List<GameObject>();
 
-    /// <summary>
-    /// Number of prefabs this Instance container will spawn
-    /// </summary>
-    public int Count { get { return SpawnLocations.Length; } }
 
     /// <summary>
     /// Instantiate all prefabs within this container into the current scene.
@@ -81,13 +81,29 @@ public class InstanceContainer
             Debug.LogWarning("There must be at least one spawn location for InstanceContainer to work!");
         }
 
-        throw new NotImplementedException();
+        for (int i = 0; i < Count; i++)
+        {
+            var newInstance = UnityEngine.Object.Instantiate(Prefab, SpawnLocations[i], Quaternion.identity, Parent);
+            SpawnedObjects.Add(newInstance);
+        }
     }
     /// <summary>
     /// Destroy all instances spawned by this class
     /// </summary>
     public void DespawnInstances()
     {
-        throw new NotImplementedException();
+        if (SpawnedObjects == null || SpawnedObjects.Count == 0)
+        {
+            Debug.LogError("InstanceContainer has not spawned any objects to unload");
+            return;
+        }
+
+        foreach (GameObject spawnedObject in SpawnedObjects)
+        {
+            if (spawnedObject == null) continue;
+
+            UnityEngine.Object.Destroy(spawnedObject);
+        }
+        SpawnedObjects = new List<GameObject>();
     }
 }

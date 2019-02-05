@@ -113,12 +113,10 @@ public class BouncingExplosiveProjectileController : MonoBehaviour, IHitboxRespo
             Hurtbox hurtbox = overlap.GetComponent<Hurtbox>();
             if (overlap.transform.position.x <= transform.position.x)
             {
-                Debug.Log("Left: " + overlap.name);
                 if (hurtbox != null) left.Add(hurtbox);
             }
             else
             {
-                Debug.Log("Right: " + overlap.name);
                 if (hurtbox != null) right.Add(hurtbox);
             }
         }

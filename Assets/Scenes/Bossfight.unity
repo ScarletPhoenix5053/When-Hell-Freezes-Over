@@ -230,13 +230,31 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &224410329 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6086003898064739416, guid: cac46ee8ed666b74ea7c03733c8fb064,
+    type: 3}
+  m_PrefabInstance: {fileID: 310707445}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &224410330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 224410329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbc601d5f58828446bbae459598a2934, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &295172199 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6086003898064739420, guid: cac46ee8ed666b74ea7c03733c8fb064,
     type: 3}
   m_PrefabInstance: {fileID: 310707445}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 224410329}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4831ddab741676b44907f6b4fd11ec9b, type: 3}
@@ -1176,36 +1194,50 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Stages:
   - Instances:
-    - Prefab: {fileID: 0}
+    - Prefab: {fileID: 6763183356060681103, guid: 7071b878b255b894bb173e712acf7629,
+        type: 3}
       Parent: {fileID: 809317299}
-      SpawnLocations: []
-    - Prefab: {fileID: 0}
-      Parent: {fileID: 809317299}
-      SpawnLocations: []
-    - Prefab: {fileID: 0}
-      Parent: {fileID: 809317299}
-      SpawnLocations: []
+      SpawnLocations:
+      - {x: -6, y: 10}
+      - {x: 6, y: 10}
   - Instances:
-    - Prefab: {fileID: 0}
+    - Prefab: {fileID: 8747437113877806055, guid: a35679aeea45f9649a6b73599ac90c1f,
+        type: 3}
       Parent: {fileID: 809317299}
-      SpawnLocations: []
-    - Prefab: {fileID: 0}
+      SpawnLocations:
+      - {x: 1, y: 6}
+      - {x: 0, y: 6}
+      - {x: -1, y: 6}
+      - {x: -2, y: 6}
+      - {x: -3, y: 6}
+    - Prefab: {fileID: 8964276677523617525, guid: be1d16c193736524d84be4fa72a1e406,
+        type: 3}
       Parent: {fileID: 809317299}
-      SpawnLocations: []
+      SpawnLocations:
+      - {x: -5, y: 0}
+    - Prefab: {fileID: 422946958779677802, guid: c2b79a4a2fd1e904895539b26321947e,
+        type: 3}
+      Parent: {fileID: 809317299}
+      SpawnLocations:
+      - {x: -6, y: 1}
+      - {x: -4, y: 1}
   - Instances:
-    - Prefab: {fileID: 0}
+    - Prefab: {fileID: 8747437113877806055, guid: a35679aeea45f9649a6b73599ac90c1f,
+        type: 3}
       Parent: {fileID: 809317299}
-      SpawnLocations: []
-    - Prefab: {fileID: 0}
+      SpawnLocations:
+      - {x: 1, y: 6}
+      - {x: 0, y: 6}
+      - {x: -1, y: 6}
+      - {x: -2, y: 6}
+      - {x: -3, y: 6}
+    - Prefab: {fileID: 8964276677523617525, guid: be1d16c193736524d84be4fa72a1e406,
+        type: 3}
       Parent: {fileID: 809317299}
-      SpawnLocations: []
-    - Prefab: {fileID: 0}
-      Parent: {fileID: 809317299}
-      SpawnLocations: []
-    - Prefab: {fileID: 0}
-      Parent: {fileID: 809317299}
-      SpawnLocations: []
-  CurrentStage: 1
+      SpawnLocations:
+      - {x: 0, y: -2}
+      - {x: 5, y: -3}
+  CurrentStage: 0
   InstanceParent: {fileID: 809317299}
 --- !u!4 &806127656
 Transform:
