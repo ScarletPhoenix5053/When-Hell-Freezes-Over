@@ -144,9 +144,11 @@ MonoBehaviour:
         m_Calls: []
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
+  BlastRadius: 2
+  Fuse: 3
   BounceDecayStrength: 0.9
   LinearDecay: 0.08
-  attackData: {fileID: 11400000, guid: b80e94fef87c770448107e4da88abe9c, type: 2}
+  AttackData: {fileID: 11400000, guid: b80e94fef87c770448107e4da88abe9c, type: 2}
 --- !u!114 &8747437113877806072
 MonoBehaviour:
   m_ObjectHideFlags: 0
