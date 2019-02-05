@@ -1,11 +1,20 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 /// <summary>
 /// Loads and unloads instances which form a stage into a gameobject
 /// </summary>
 public class FightManager : MonoBehaviour
 {
+    [Serializable]
+    public class FightManagerEvents
+    {
+        public UnityEvent OnStageChange;
+        public UnityEvent OnLastStageEnd;
+    }
+    public FightManagerEvents Events;
+
     public Stage[] Stages;
     public int CurrentStage;
     public Transform InstanceParent;
@@ -24,10 +33,15 @@ public class FightManager : MonoBehaviour
         }
 
         // Incriment
-        if (CurrentStage < StageCount) CurrentStage++;
+        if (CurrentStage < StageCount)
+        {
+            CurrentStage++;
+            Events.OnStageChange.Invoke();
+        }
         else
         {
-            Debug.LogWarning("No more stages to load!");
+            Debug.Log("No more stages to load!");
+            Events.OnLastStageEnd.Invoke();
             return;
         }
 
@@ -40,7 +54,7 @@ public class FightManager : MonoBehaviour
     /// </summary>
     public void UpdateInstanceParents()
     {
-        if (StageCount <= 0) return;
+        if (StageCount == 0) return;
 
         foreach (Stage stage in Stages)
         {
