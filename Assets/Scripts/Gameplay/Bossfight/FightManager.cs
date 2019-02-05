@@ -19,6 +19,12 @@ public class FightManager : MonoBehaviour
     public int CurrentStage;
     public Transform InstanceParent;
 
+    /// <summary>
+    /// This script's core methods will not work if the bool is active
+    /// </summary>
+    [ReadOnly]
+    public bool Completed = false;
+
     public int StageCount { get { return Stages.Length; } }
 
     /// <summary>
@@ -26,6 +32,8 @@ public class FightManager : MonoBehaviour
     /// </summary>
     public void GoToNextStage(bool unloadPrevious = true)
     {
+        if (Completed) return;
+
         // Unload prev stage
         if (CurrentStage != 0)
         {
@@ -42,6 +50,7 @@ public class FightManager : MonoBehaviour
         {
             Debug.Log("No more stages to load!");
             Events.OnLastStageEnd.Invoke();
+            Completed = true;
             return;
         }
 
@@ -55,6 +64,7 @@ public class FightManager : MonoBehaviour
     public void UpdateInstanceParents()
     {
         if (StageCount == 0) return;
+        if (Completed) return;
 
         foreach (Stage stage in Stages)
         {

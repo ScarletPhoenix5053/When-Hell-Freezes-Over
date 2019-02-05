@@ -4,7 +4,6 @@ using System;
 using Spine.Unity;
 
 [RequireComponent(typeof(EnemyAnimationController))]
-[RequireComponent(typeof(CharacterMotionController))]
 [RequireComponent(typeof(Health))]
 public abstract class EnemyController : BaseController
 {
@@ -34,9 +33,6 @@ public abstract class EnemyController : BaseController
     }
     protected virtual void FixedUpdate()
     {
-
-        if (GameManager.Instance.HitStopActive) return;
-
         if (CurrentState == State.Ready)
         {
             DecideAction();
