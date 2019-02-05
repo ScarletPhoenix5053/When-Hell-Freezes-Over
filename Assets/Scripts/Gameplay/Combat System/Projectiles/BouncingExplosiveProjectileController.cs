@@ -23,6 +23,7 @@ public class BouncingExplosiveProjectileController : MonoBehaviour, IHitboxRespo
     #endregion
     #region Public Vars
     public float BlastRadius = 2f;
+    public float Fuse = 3f;
     [Range(0,1)]
     public float BounceDecayStrength = 0.2f;
     public float LinearDecay = 0.1f;
@@ -57,6 +58,16 @@ public class BouncingExplosiveProjectileController : MonoBehaviour, IHitboxRespo
 
         // Hitbox
         hb.UpdateHitbox();
+
+        // Fuse time
+        if (Fuse <= 0)
+        {
+            Explode();
+        }
+        else
+        {
+            Fuse -= Time.fixedDeltaTime;
+        }
     }
     private void LateUpdate()
     {
