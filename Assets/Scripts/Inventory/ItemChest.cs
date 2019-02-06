@@ -40,13 +40,14 @@ public class ItemChest : MonoBehaviour
             //Item tooltip isn't appearing
             if (inventory.AddItem(itemCopy))
             {
-                FindObjectOfType<AudioManager>().Play("ChestOpen");
+                FindObjectOfType<AudioManager>().Play("ItemPickup");
                 amount--;
                 if (amount == 0)
                 {
                     isEmpty = true;
                     spriteRenderer.enabled = false;
                     chestRenderer.sprite = open;
+                    FindObjectOfType<AudioManager>().Play("ChestOpen");
                 }
             }
             else
