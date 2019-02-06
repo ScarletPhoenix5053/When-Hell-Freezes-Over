@@ -42,6 +42,11 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
             {
                 hb.CheckHit();
             }
+            else if (hb is BreakableWall && this is PlayerAttackManager)
+            {
+                var bw = hb as BreakableWall;   
+                bw.CheckHit(Attacks[currentAttackIndex].Strength);
+            }
             // else must have hit a character
             else
             {
