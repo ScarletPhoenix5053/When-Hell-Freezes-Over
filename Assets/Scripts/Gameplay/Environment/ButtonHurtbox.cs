@@ -7,7 +7,6 @@ namespace Sierra.Combat2D
 {
     /// <summary>
     /// Interacts with <see cref="Hitbox"/>es to for hit detection.
-    /// Must point to a <see cref="Health"/> component for attack system to work.
     /// </summary>
     [RequireComponent(typeof(Collider2D))]
     [RequireComponent(typeof(EventRaiser))]
