@@ -6,7 +6,6 @@ using UnityEngine.UI;
 using Sierra;
 using Sierra.Combat2D;
 
-[RequireComponent(typeof(CharacterMotionController))]
 public class Health : MonoBehaviour
 {
     #region Public Variables
@@ -73,7 +72,7 @@ public class Health : MonoBehaviour
     }
 
     #region Public Methods
-    public void DealDamageNormal(AttackData data)
+    public virtual void DealDamageNormal(AttackData data)
     {
         if (AlreadyDead()) return;
 
@@ -90,7 +89,7 @@ public class Health : MonoBehaviour
             Events.OnDamage.Invoke();
         }
     }
-    public void DealDamageCritical(AttackData data)
+    public virtual void DealDamageCritical(AttackData data)
     {
         if (AlreadyDead()) return;
         
@@ -107,7 +106,7 @@ public class Health : MonoBehaviour
             Events.OnCriticalHit.Invoke();
         }
     }
-    public void DealDamageArmored(AttackData data)
+    public virtual void DealDamageArmored(AttackData data)
     {
         if (AlreadyDead()) return;
 
@@ -124,7 +123,7 @@ public class Health : MonoBehaviour
         }
     }
 
-    public void Die()
+    public virtual void Die()
     {
         Hp = 0;
         if (chr is EnemyController)
@@ -206,7 +205,7 @@ public class Health : MonoBehaviour
     }
     #endregion
     #region Private Methods
-    private void AdjustHP()
+    protected void AdjustHP()
     {
 
         if (atkData.Damage != 0)
@@ -243,7 +242,6 @@ public class Health : MonoBehaviour
         if (!AffectedByKnockback) return;
         if (Hurtbox.CurrentState == Hurtbox.State.Critical && !AffectedByKnockbackOnCrit) return;
 
-        Debug.Log("kb");
         var sign = Mathf.Sign(transform.localScale.x);
         mc?.DoImpulse(new Vector2(atkData.KnockBack * atkData.Sign, atkData.KnockUp));
     }
@@ -262,7 +260,7 @@ public class Health : MonoBehaviour
     /// <summary>
     /// Log warning and return if ALREADY dead
     /// </summary>
-    private bool AlreadyDead()
+    protected bool AlreadyDead()
     {
         if (Dead)
         {

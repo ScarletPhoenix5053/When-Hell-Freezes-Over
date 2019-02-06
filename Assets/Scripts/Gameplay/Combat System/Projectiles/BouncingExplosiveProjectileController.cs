@@ -100,8 +100,7 @@ public class BouncingExplosiveProjectileController : MonoBehaviour, IHitboxRespo
     }
     public void Explode()
     {
-
-        Debug.Log("Boom bih");
+        Debug.Log("Boom");
 
         // find all hurtboxes in radius
         var overlaps = Physics2D.OverlapCircleAll(transform.position, BlastRadius);
@@ -114,12 +113,10 @@ public class BouncingExplosiveProjectileController : MonoBehaviour, IHitboxRespo
             Hurtbox hurtbox = overlap.GetComponent<Hurtbox>();
             if (overlap.transform.position.x <= transform.position.x)
             {
-                Debug.Log("Left: " + overlap.name);
                 if (hurtbox != null) left.Add(hurtbox);
             }
             else
             {
-                Debug.Log("Right: " + overlap.name);
                 if (hurtbox != null) right.Add(hurtbox);
             }
         }

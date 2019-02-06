@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class GoblinBomberController : EnemyController
 {
@@ -31,6 +32,10 @@ public class GoblinBomberController : EnemyController
     {
         base.Awake();
     }
+    protected void OnDrawGizmosSelected()
+    {
+        DrawCircle(Range, Color.cyan);
+    }
     #endregion
 
     #region Public Methods
@@ -46,7 +51,7 @@ public class GoblinBomberController : EnemyController
         if (currentRoutine != null) StopCoroutine(currentRoutine);
 
         // Despawn
-        if (true)
+        if (holdingBomb)
         {
             var bomb = Instantiate(BombPrefab, transform.position = Vector3.up, Quaternion.identity);
         }
@@ -79,6 +84,11 @@ public class GoblinBomberController : EnemyController
         {
             SetBehaviour(Behaviour.Idle);
         }
+    }
+    protected void DrawCircle(float radius, Color colour)
+    {
+        Handles.color = colour;
+        Handles.DrawWireDisc(transform.position, Vector3.forward, radius);
     }
     private IEnumerator ThrowBombRoutine()
     {
