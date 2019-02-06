@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEditor;
 using Sierra;
 using Sierra.Combat2D;
@@ -9,6 +10,13 @@ using Sierra.Combat2D;
 public class MeatblobController : EnemyController
 {
     #region Public Vars
+    public MeatblobEvents BlobEvents;
+    [Serializable]
+    public class MeatblobEvents
+    {
+        public UnityEvent OnWindup;
+        public UnityEvent OnLand;
+    }
     public GameObject bone, eyeball;//Put this in every enemy with what items they drop. Since we only have 3 enemies it's not bad.
     public Vector2 AverageItemVariance = new Vector2(3, 3);
 
@@ -67,7 +75,6 @@ public class MeatblobController : EnemyController
     //Put this in all 3 types of enemies. 
     public override void Die()
     {
-
         int lootNum = UnityEngine.Random.Range(1, 3);
         for (int i = 0; i < lootNum; i++)
         {
@@ -90,6 +97,8 @@ public class MeatblobController : EnemyController
             Instantiate(bone, boneSpawnPos, transform.rotation);
             Instantiate(eyeball, eyeSpawnPos, transform.rotation);
         }
+
+        if (currentRoutine != null) StopCoroutine(currentRoutine);
 
         base.Die();
     }
@@ -124,7 +133,14 @@ public class MeatblobController : EnemyController
         switch (CurrentBehaviour)
         {
             case Behaviour.Idle:
-                if (DistToPlayer < DetectionRange) StartChase();
+                if (DistToPlayer < DetectionRange)
+                {
+                    Debug.Log("chase");
+                    StartChase();
+                }
+                else
+                {
+                }
                 break;
 
             case Behaviour.Chasing:
@@ -132,6 +148,12 @@ public class MeatblobController : EnemyController
                     (DistToPlayer <= MaximumAttackRange && Utility.GetRandomFloat() < EnterWindupChance)
                     )
                     StartWindup();
+
+                if (DistToPlayer > DetectionRange)
+                {
+                    Debug.Log("wait");
+                    StopChase();
+                }
                 break;
                 
             case Behaviour.Leaping:
@@ -148,9 +170,14 @@ public class MeatblobController : EnemyController
         }
     }
 
+    protected void StopChase()
+    {
+        GenericEvents.OnMotionEnd.Invoke();
+        SetBehaviour(Behaviour.Idle);
+    }
     protected void StartChase()
     {
-        Events.OnMotionStart.Invoke();
+        GenericEvents.OnMotionStart.Invoke();
         SetBehaviour(Behaviour.Chasing);
     }
     protected void StartWindup()
@@ -159,12 +186,12 @@ public class MeatblobController : EnemyController
         currentRoutine = WindupRoutine();
         StartCoroutine(currentRoutine);
 
-        Events.OnMotionEnd.Invoke();
+        GenericEvents.OnMotionEnd.Invoke();
         SetBehaviour(Behaviour.WindingUp);
     }
     protected void StartLeap()
     {
-        Events.OnMotionStart.Invoke();
+        GenericEvents.OnAttack.Invoke();
         SetBehaviour(Behaviour.Leaping);
         hp.Hurtbox.SetState(Hurtbox.State.Armored);
         am.DoAttack(0);
@@ -178,7 +205,7 @@ public class MeatblobController : EnemyController
     }
     protected void StartRecovery()
     {
-        Events.OnMotionEnd.Invoke();
+        BlobEvents.OnLand.Invoke();
         SetBehaviour(Behaviour.Recovering);
         hp.Hurtbox.SetState(Hurtbox.State.Critical);
         am.StopAttack();

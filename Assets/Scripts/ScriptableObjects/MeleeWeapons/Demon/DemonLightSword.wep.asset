@@ -19,6 +19,7 @@ MonoBehaviour:
   Icon: {fileID: 21300000, guid: 1d66a6d3ec224494dbaa43b8f4e5e99b, type: 3}
   iconInventory: {fileID: 21300000, guid: 8f4bf1262c24ac944a2449e0f83a0d6d, type: 3}
   equipmentType: 1
+  WeaponSkinName: Demon_LightSword
   NormalAttackChainLength: 0
   NormalAtkData:
   - {fileID: 11400000, guid: 4649cb0a2931dda4db0da922b22251d2, type: 2}
@@ -26,5 +27,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: abda49c7de787dc49a3c3faae651d16d, type: 2}
   - {fileID: 11400000, guid: bc473cbd51cd28340a3b8c170cbec276, type: 2}
   - {fileID: 11400000, guid: ae43b40e871e8fe4fb733792339e9a26, type: 2}
-  SpecialAtkData: {fileID: 0}
   Type: 0

@@ -15,9 +15,15 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
     protected GameObject projectilePrefab;
     protected GameObject[] projectiles;
 
+    protected AnimationController am;
+
     protected int currentAttackIndex = 0;
     protected IEnumerator currentAttackRoutine = null;
 
+    protected virtual void Awake()
+    {
+        am = GetComponent<AnimationController>();
+    }
     protected virtual void FixedUpdate()
     {
         Hitbox.UpdateHitbox();
@@ -121,8 +127,6 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
         // melee cannot trigger superstun, so we will never need to call DealDamageCritical
         if (hurtState == Hurtbox.State.Armored) hp.DealDamageArmored(Attacks[currentAttackIndex]);
         else hp.DealDamageNormal(Attacks[currentAttackIndex]);
-
-        GameManager.Instance.HitStopFor(Attacks[currentAttackIndex].HitStop);
 
         //hurtbox.GetComponent<Hurtbox>().Health.LogHp();
 

@@ -6,7 +6,6 @@ using UnityEngine.UI;
 using Sierra;
 using Sierra.Combat2D;
 
-[RequireComponent(typeof(CharacterMotionController))]
 public class Health : MonoBehaviour
 {
     #region Public Variables
@@ -37,6 +36,7 @@ public class Health : MonoBehaviour
         public UnityEvent OnDeath;
         public UnityEvent OnCriticalHit;
         public UnityEvent OnArmoredHit;
+        public UnityEvent OnRecovery;
     }
     public bool Dead { get { return Hp <= 0; } }
     #endregion
@@ -72,7 +72,7 @@ public class Health : MonoBehaviour
     }
 
     #region Public Methods
-    public void DealDamageNormal(AttackData data)
+    public virtual void DealDamageNormal(AttackData data)
     {
         if (AlreadyDead()) return;
 
@@ -89,7 +89,7 @@ public class Health : MonoBehaviour
             Events.OnDamage.Invoke();
         }
     }
-    public void DealDamageCritical(AttackData data)
+    public virtual void DealDamageCritical(AttackData data)
     {
         if (AlreadyDead()) return;
         
@@ -106,7 +106,7 @@ public class Health : MonoBehaviour
             Events.OnCriticalHit.Invoke();
         }
     }
-    public void DealDamageArmored(AttackData data)
+    public virtual void DealDamageArmored(AttackData data)
     {
         if (AlreadyDead()) return;
 
@@ -123,6 +123,16 @@ public class Health : MonoBehaviour
         }
     }
 
+    public virtual void Die()
+    {
+        Hp = 0;
+        if (chr is EnemyController)
+        {
+            var enm = chr as EnemyController;
+            Events.OnDeath.Invoke();
+        }
+        StopAllCoroutines();
+    }
     public void LogHp()
     {
         Debug.Log(name + ": " + Hp + "/ " + HpMax);
@@ -195,7 +205,7 @@ public class Health : MonoBehaviour
     }
     #endregion
     #region Private Methods
-    private void AdjustHP()
+    protected void AdjustHP()
     {
 
         if (atkData.Damage != 0)
@@ -235,16 +245,6 @@ public class Health : MonoBehaviour
         var sign = Mathf.Sign(transform.localScale.x);
         mc?.DoImpulse(new Vector2(atkData.KnockBack * atkData.Sign, atkData.KnockUp));
     }
-    private void Die()
-    {
-        Hp = 0;
-        if (chr is EnemyController)
-        {
-            var enm = chr as EnemyController;
-            Events.OnDeath.Invoke();
-        }
-        StopAllCoroutines();
-    }
     private void UpdateHeartImages()
     {
         if (HealthImages == null) return;
@@ -260,7 +260,7 @@ public class Health : MonoBehaviour
     /// <summary>
     /// Log warning and return if ALREADY dead
     /// </summary>
-    private bool AlreadyDead()
+    protected bool AlreadyDead()
     {
         if (Dead)
         {
@@ -291,6 +291,7 @@ public class Health : MonoBehaviour
 
         // End timer
         chr?.SetState(BaseController.State.Ready);
+        Events.OnRecovery.Invoke();
     }    
     #endregion
 }

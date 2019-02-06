@@ -14,7 +14,7 @@ public class PauseMenu : MonoBehaviour
     private PlayerInteract pB;
     public GameObject craftingUI;
     public GameObject notEnough;
-    //public Canvas screenUI;
+    public Canvas screenUI;
 
     void Start()
     {
@@ -34,14 +34,14 @@ public class PauseMenu : MonoBehaviour
                 {
                     PausedGame();
                     inventoryUI.SetActive(true);
-                    //screenUI.GetComponent<Canvas>().enabled = false;
+                    screenUI.GetComponent<Canvas>().enabled = false;
 
                 }
                 else if (!pauseEnabled)
                 {
                     UnpausedGame();
                     inventoryUI.SetActive(false);
-                    //screenUI.GetComponent<Canvas>().enabled = true;
+                    screenUI.GetComponent<Canvas>().enabled = true;
                     tooltip.HideTooltip();
                     armorTooltip.HideTooltip();
                 }

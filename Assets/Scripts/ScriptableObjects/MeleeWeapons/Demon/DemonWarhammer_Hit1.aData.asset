@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb82047a286ce7148b5718176ec43ce7, type: 3}
   m_Name: DemonWarhammer_Hit1.aData
   m_EditorClassIdentifier: 
-  Startup: 78
-  Active: 3
-  Recovery: 92
+  Startup: 40
+  Active: 8
+  Recovery: 36
   MotionOnAttack: 10
   Damage: 6
   KnockBack: 30

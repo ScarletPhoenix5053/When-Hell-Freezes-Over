@@ -22,6 +22,10 @@ public class AnimationController : MonoBehaviour
         sk_an = GetComponent<SkeletonAnimation>();
     }
 
+    public virtual void SetSkin(string skinName)
+    {
+        sk_an.skeleton.SetSkin(skinName);
+    }
     public virtual void PauseAnimation()
     {
         if (an != null) an.enabled = false;
@@ -41,11 +45,9 @@ public class AnimationController : MonoBehaviour
     }
     protected IEnumerator AnimatePhysicsFor(int frames)
     {
-        yield return GameManager.Instance.UntillHitStopInactive();
         //Debug.Log("Starting Physics anim");
         an.updateMode = AnimatorUpdateMode.AnimatePhysics;
         yield return new WaitForSeconds(Utility.FramesToSeconds(frames));
-        yield return GameManager.Instance.UntillHitStopInactive();
 
         //Debug.Log("Stopping Physics anim");
         an.updateMode = AnimatorUpdateMode.Normal;

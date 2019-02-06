@@ -19,6 +19,7 @@ MonoBehaviour:
   Icon: {fileID: 21300000, guid: 6e58043f0db02de4990de5ab54b8ad42, type: 3}
   iconInventory: {fileID: 21300000, guid: a0efbcf2d6b207f4abe64de0ad478469, type: 3}
   equipmentType: 1
+  WeaponSkinName: default
   NormalAttackChainLength: 0
   NormalAtkData:
   - {fileID: 11400000, guid: c1ec91413d07e7346b95b00dfe4e273c, type: 2}
@@ -26,5 +27,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 416b93637044ac34696a93997492f3f6, type: 2}
   - {fileID: 11400000, guid: 2d766fe201b87744fa80ea643172593f, type: 2}
   - {fileID: 11400000, guid: 9634d8d591904624b804afeb1b73ec73, type: 2}
-  SpecialAtkData: {fileID: 0}
   Type: 0
