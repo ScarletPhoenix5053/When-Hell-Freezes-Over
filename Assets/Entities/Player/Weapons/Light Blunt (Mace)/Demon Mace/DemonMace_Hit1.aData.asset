@@ -15,8 +15,9 @@ MonoBehaviour:
   Startup: 19
   Active: 2
   Recovery: 18
-  ImpulseStrength: 5
+  MotionOnAttack: 5
   Damage: 2
+  Strength: 0
   KnockBack: 2
   KnockUp: 0
   HitStun: 32

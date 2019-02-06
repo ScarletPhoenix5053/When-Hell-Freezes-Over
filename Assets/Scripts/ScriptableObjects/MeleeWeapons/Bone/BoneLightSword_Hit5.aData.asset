@@ -17,6 +17,7 @@ MonoBehaviour:
   Recovery: 22
   MotionOnAttack: 5
   Damage: 2
+  Strength: 1
   KnockBack: 16
   KnockUp: 6
   HitStun: 25
