@@ -58,7 +58,7 @@ public class InstanceContainer
     /// <summary>
     /// Tracks all of the instances spawned by this class
     /// </summary>
-    private List<GameObject> SpawnedObjects = new List<GameObject>();
+    public List<GameObject> SpawnedObjects = new List<GameObject>();
 
 
     /// <summary>
@@ -98,11 +98,21 @@ public class InstanceContainer
             return;
         }
 
-        foreach (GameObject spawnedObject in SpawnedObjects)
+        for (int i = 0; i < SpawnedObjects.Count; i++)
         {
+            var spawnedObject = SpawnedObjects[i];
+
             if (spawnedObject == null) continue;
 
-            UnityEngine.Object.Destroy(spawnedObject);
+            if (Application.isEditor)
+            {
+                UnityEngine.Object.DestroyImmediate(spawnedObject);
+                spawnedObject = null;
+            }
+            else
+            {
+                UnityEngine.Object.Destroy(spawnedObject);
+            }
         }
         SpawnedObjects = new List<GameObject>();
     }
