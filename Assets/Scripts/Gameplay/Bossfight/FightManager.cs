@@ -16,6 +16,7 @@ public class FightManager : MonoBehaviour
     public FightManagerEvents Events;
 
     public Stage[] Stages;
+    [HideInInspector]
     public int CurrentStage;
     public Transform InstanceParent;
 

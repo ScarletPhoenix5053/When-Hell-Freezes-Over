@@ -2043,7 +2043,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1532625956
 Transform:
   m_ObjectHideFlags: 0
@@ -5303,6 +5303,86 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Fight Manager
+      objectReference: {fileID: 0}
+    - target: {fileID: 5702455582220597950, guid: fd6d45d19c86deb4db4618511419f6e0,
+        type: 3}
+      propertyPath: Stages.Array.data[0].Instances.Array.data[0].SpawnedObjects.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5702455582220597950, guid: fd6d45d19c86deb4db4618511419f6e0,
+        type: 3}
+      propertyPath: Stages.Array.data[0].Instances.Array.data[1].SpawnedObjects.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5702455582220597950, guid: fd6d45d19c86deb4db4618511419f6e0,
+        type: 3}
+      propertyPath: Stages.Array.data[1].Instances.Array.data[0].SpawnedObjects.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5702455582220597950, guid: fd6d45d19c86deb4db4618511419f6e0,
+        type: 3}
+      propertyPath: Stages.Array.data[1].Instances.Array.data[1].SpawnedObjects.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5702455582220597950, guid: fd6d45d19c86deb4db4618511419f6e0,
+        type: 3}
+      propertyPath: CurrentStage
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5702455582220597950, guid: fd6d45d19c86deb4db4618511419f6e0,
+        type: 3}
+      propertyPath: Stages.Array.data[0].Instances.Array.data[1].SpawnLocations.Array.data[0].x
+      value: -9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5702455582220597950, guid: fd6d45d19c86deb4db4618511419f6e0,
+        type: 3}
+      propertyPath: Stages.Array.data[0].Instances.Array.data[0].SpawnedObjects.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5702455582220597950, guid: fd6d45d19c86deb4db4618511419f6e0,
+        type: 3}
+      propertyPath: Stages.Array.data[0].Instances.Array.data[1].SpawnedObjects.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5702455582220597950, guid: fd6d45d19c86deb4db4618511419f6e0,
+        type: 3}
+      propertyPath: Stages.Array.data[0].Instances.Array.data[1].SpawnedObjects.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5702455582220597950, guid: fd6d45d19c86deb4db4618511419f6e0,
+        type: 3}
+      propertyPath: Stages.Array.data[1].Instances.Array.data[0].SpawnedObjects.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5702455582220597950, guid: fd6d45d19c86deb4db4618511419f6e0,
+        type: 3}
+      propertyPath: Stages.Array.data[1].Instances.Array.data[0].SpawnedObjects.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5702455582220597950, guid: fd6d45d19c86deb4db4618511419f6e0,
+        type: 3}
+      propertyPath: Stages.Array.data[1].Instances.Array.data[1].SpawnedObjects.Array.data[0]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5702455582220597950, guid: fd6d45d19c86deb4db4618511419f6e0,
+        type: 3}
+      propertyPath: Stages.Array.data[1].Instances.Array.data[1].SpawnedObjects.Array.data[1]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5702455582220597950, guid: fd6d45d19c86deb4db4618511419f6e0,
+        type: 3}
+      propertyPath: Stages.Array.data[1].Instances.Array.data[1].SpawnedObjects.Array.data[2]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5702455582220597950, guid: fd6d45d19c86deb4db4618511419f6e0,
+        type: 3}
+      propertyPath: Stages.Array.data[1].Instances.Array.data[1].SpawnedObjects.Array.data[3]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5702455582220597950, guid: fd6d45d19c86deb4db4618511419f6e0,
+        type: 3}
+      propertyPath: Stages.Array.data[1].Instances.Array.data[1].SpawnedObjects.Array.data[4]
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5702455582220597937, guid: fd6d45d19c86deb4db4618511419f6e0,
         type: 3}
