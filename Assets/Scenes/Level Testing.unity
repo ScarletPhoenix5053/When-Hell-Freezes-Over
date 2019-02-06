@@ -10544,12 +10544,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1924266997}
   m_PrefabAsset: {fileID: 0}
---- !u!50 &1682521085 stripped
-Rigidbody2D:
-  m_CorrespondingSourceObject: {fileID: 8993978443071335208, guid: 299c53565037cd24dacc737c83af3fc5,
-    type: 3}
-  m_PrefabInstance: {fileID: 1924266997}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1682521089
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10562,12 +10556,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3944418cf9815a241838842512ad2ab4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 1682521085}
-  OnLadder: 0
-  climbSpeed: 4
+  rb: {fileID: 0}
+  climbingSpeed: 2
+  ladder:
+    serializedVersion: 2
+    m_Bits: 0
+  isClimbing: 0
   respawnPoint: {x: 0, y: 0, z: 0}
   atForge: 0
   prompt: {fileID: 0}
+  unfrozenForge: {fileID: 0}
+  itemSpeed: 6
+  target: {fileID: 0}
+  pickedUp: 0
 --- !u!1001 &1701459874
 PrefabInstance:
   m_ObjectHideFlags: 0
