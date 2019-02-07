@@ -100,7 +100,6 @@ MonoBehaviour:
   inventory: {fileID: 0}
   spriteRenderer: {fileID: 6427032579401620325}
   chestRenderer: {fileID: 6427032579714984268}
-  itemPickupKeycode: 101
   closed: {fileID: 21300000, guid: 9fc0af7fa3274bf49a16ef7dd71b9a07, type: 3}
   open: {fileID: 21300000, guid: 79ed11a147c9ac54882b7a9e58be1676, type: 3}
 --- !u!61 &819056722
