@@ -161,15 +161,6 @@ public class PlayerController : BaseController
 
             jumpLimitTimer = jumpLimitSeconds;
         }
-        // Platform interactions
-        if (InputManager.HoldingDown())
-        {
-            Physics2D.IgnoreLayerCollision(9, 13, true);
-        }
-        else
-        {
-            Physics2D.IgnoreLayerCollision(9, 13, false);
-        }
 
         if (CurrentAction == Action.None)
         {

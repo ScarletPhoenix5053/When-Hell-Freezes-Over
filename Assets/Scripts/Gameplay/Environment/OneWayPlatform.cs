@@ -33,16 +33,18 @@ public class OneWayPlatform : MonoBehaviour
     {
         if (plr != null)
         {
-            if (playerBelow)
+            if (playerBelow || InputManager.HoldingDown())
             {
+                Debug.Log("Player is below or holding down");
                 rn.material.color = halfColour;
-                solidCollider.enabled = false;
+                Physics2D.IgnoreLayerCollision(9, 13, true);
                 playerBelow = false;
             }
             else
             {
+                Debug.Log("Player not below");
                 rn.material.color = originalColour;
-                solidCollider.enabled = true;
+                Physics2D.IgnoreLayerCollision(9, 13, false);
             }
         }
     }
