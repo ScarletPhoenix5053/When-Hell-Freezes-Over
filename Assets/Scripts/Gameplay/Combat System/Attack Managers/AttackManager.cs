@@ -12,7 +12,7 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
     public AttackStage AtkStage = AttackStage.Ready;
     public enum AttackStage { Ready, Startup, Active, Recovery }
 
-    protected GameObject projectilePrefab;
+    public GameObject projectilePrefab;
     protected GameObject[] projectiles;
 
     protected AnimationController am;
@@ -26,7 +26,7 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
     }
     protected virtual void FixedUpdate()
     {
-        Hitbox.UpdateHitbox();
+        Hitbox?.UpdateHitbox();
     }
 
     // IHitboxResponder

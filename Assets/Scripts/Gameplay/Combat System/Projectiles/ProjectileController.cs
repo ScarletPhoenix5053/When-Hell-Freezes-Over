@@ -25,17 +25,17 @@ public class ProjectileController : MonoBehaviour, IHitboxResponder
     protected MotionController mc;
     protected AttackManager orign;
 
-    protected AttackData attackData;
+    public AttackData attackData;
 
     protected void Awake()
     {
         hb = GetComponent<Hitbox>();
         mc = GetComponent<MotionController>();
+        SetHitboxResponder(this);
     }
     protected void OnEnable()
     {
         hb.SetActive();
-        Destroy(gameObject, 1f);
     }
     protected void FixedUpdate()
     {
@@ -58,10 +58,9 @@ public class ProjectileController : MonoBehaviour, IHitboxResponder
         var hb = hurtbox.GetComponent<Hurtbox>();
         if (hb != null)
         {
-            // if hit a button
-            if (hb is ButtonHurtbox)
+            // if hit a non-player hurtbox
+            if (hb is ButtonHurtbox || hb is BreakableWall)
             {
-                hb.CheckHit();
                 Events.OnEnvironmentImpact.Invoke();
             }
             // else must have hit a character

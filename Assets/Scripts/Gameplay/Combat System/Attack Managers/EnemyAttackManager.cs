@@ -10,4 +10,8 @@ public class EnemyAttackManager : AttackManager, IHitboxResponder
     {
         DoAttack(0);
     }
+    public virtual void DoRangedAttack()
+    {
+        DoRangedAttack(1);
+    }
 }
