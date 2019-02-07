@@ -33,6 +33,10 @@ public class PlayerInteract : MonoBehaviour
     public Transform target;
     public bool pickedUp;
 
+    [Header("KeysAndDoors")]
+    public bool hasKey;
+    public bool doorOpen;
+
 
     private void Start()
     {
@@ -122,6 +126,30 @@ public class PlayerInteract : MonoBehaviour
                 FindObjectOfType<AudioManager>().Play("HealthPickup");
                 Destroy(other.gameObject);
             }
+        }
+
+        //KEY
+        if(other.tag == "Key")
+        {
+            hasKey = true;
+            Destroy(other.gameObject);
+        }
+
+        //DOOR
+        if(other.tag == "Door") //and the player presses a key
+        {
+            if(hasKey)
+            {
+                doorOpen = true;
+                FindObjectOfType<AudioManager>().Play("DoorUnlock");
+                //Either change the sprite or take the player to a new room?
+            }
+            else if(!hasKey)
+            {
+                FindObjectOfType<AudioManager>().Play("DoorLocked");
+                //Show a message saying the door is locked.
+            }
+
         }
     }
 
