@@ -10338,7 +10338,7 @@ GameObject:
   - component: {fileID: 1147696382}
   - component: {fileID: 1147696381}
   - component: {fileID: 1147696383}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: FORGEDOOR
   m_TagString: Door
   m_Icon: {fileID: 0}
