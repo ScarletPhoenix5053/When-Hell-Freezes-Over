@@ -63,7 +63,7 @@ public class PlayerInteract : MonoBehaviour
 
         if(hitInfo.collider != null)
         {
-            if (Input.GetKeyDown(KeyCode.W))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 isClimbing = true;
             }
