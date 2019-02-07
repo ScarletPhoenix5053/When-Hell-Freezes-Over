@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class OneWayPlatform : MonoBehaviour
@@ -14,7 +15,10 @@ public class OneWayPlatform : MonoBehaviour
 
     private bool playerBelow;
 
+    private const int PlayerLayer = 9;
+    private const int PlatformLayer = 13;
     private float lowestPoint;
+    private IEnumerator updateRoutine;
 
     private void Awake()
     {
@@ -29,20 +33,24 @@ public class OneWayPlatform : MonoBehaviour
 
         FindLowestPoint();
     }
-    private void FixedUpdate()
+    private void OnEnable()
+    {
+        updateRoutine = UpdatePlatformState();
+        StartCoroutine(updateRoutine);
+    }
+    private void OnDisable()
+    {
+        StopCoroutine(updateRoutine);
+    }
+    private void Update()
     {
         if (plr != null)
         {
-            if (playerBelow)
+            if (InputManager.HoldingDown())
             {
+                Debug.Log("Player is holding down");
                 rn.material.color = halfColour;
-                solidCollider.enabled = false;
-                playerBelow = false;
-            }
-            else
-            {
-                rn.material.color = originalColour;
-                solidCollider.enabled = true;
+                transform.GetChild(0).gameObject.layer = PlayerLayer;
             }
         }
     }
@@ -57,5 +65,30 @@ public class OneWayPlatform : MonoBehaviour
     private void FindLowestPoint()
     {
         lowestPoint = transform.position.y - solidCollider.bounds.extents.y;
+    }
+    private IEnumerator UpdatePlatformState()
+    {
+        while (true)
+        {
+            yield return new WaitForFixedUpdate();
+
+            if (plr != null)
+            {
+                if (playerBelow || InputManager.HoldingDown())
+                {
+                    Debug.Log("Player is below");
+                    rn.material.color = halfColour;
+                    transform.GetChild(0).gameObject.layer = PlayerLayer;
+                    playerBelow = false;
+                }
+                else
+                {
+                    Debug.Log("Player not below");
+                    rn.material.color = originalColour;
+                    transform.GetChild(0).gameObject.layer = PlatformLayer;
+                }
+            }
+
+        }
     }
 }

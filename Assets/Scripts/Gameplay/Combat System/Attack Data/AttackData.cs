@@ -9,6 +9,7 @@ public class AttackData : ScriptableObject
 
     public float MotionOnAttack = 5f;
     public int Damage = 1;
+    public int Strength = 0;
     public float KnockBack = 8f;
     public float KnockUp = 3f;
     public int HitStun = 32;

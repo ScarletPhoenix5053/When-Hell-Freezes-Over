@@ -1,0 +1,90 @@
+
+demon.png
+size: 8192,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Head
+  rotate: false
+  xy: 4996, 901
+  size: 1359, 1057
+  orig: 1359, 1057
+  offset: 0, 0
+  index: -1
+Left Leg
+  rotate: false
+  xy: 7141, 1445
+  size: 272, 513
+  orig: 272, 513
+  offset: 0, 0
+  index: -1
+Left Wing
+  rotate: true
+  xy: 2027, 609
+  size: 1349, 1534
+  orig: 1349, 1534
+  offset: 0, 0
+  index: -1
+Left shoulder
+  rotate: false
+  xy: 6357, 988
+  size: 302, 385
+  orig: 302, 385
+  offset: 0, 0
+  index: -1
+Right Arm
+  rotate: false
+  xy: 1832, 366
+  size: 188, 268
+  orig: 188, 268
+  offset: 0, 0
+  index: -1
+Right Hand
+  rotate: false
+  xy: 7415, 1805
+  size: 161, 153
+  orig: 161, 153
+  offset: 0, 0
+  index: -1
+Right Leg
+  rotate: false
+  xy: 6859, 1399
+  size: 280, 559
+  orig: 280, 559
+  offset: 0, 0
+  index: -1
+Right Wing
+  rotate: true
+  xy: 3563, 631
+  size: 1327, 1431
+  orig: 1327, 1431
+  offset: 0, 0
+  index: -1
+Right shoulder
+  rotate: true
+  xy: 4996, 666
+  size: 233, 337
+  orig: 233, 337
+  offset: 0, 0
+  index: -1
+Scythe
+  rotate: false
+  xy: 2, 636
+  size: 2023, 1322
+  orig: 2023, 1322
+  offset: 0, 0
+  index: -1
+Torso
+  rotate: true
+  xy: 2, 2
+  size: 632, 1828
+  orig: 632, 1828
+  offset: 0, 0
+  index: -1
+left Arm
+  rotate: false
+  xy: 6357, 1375
+  size: 500, 583
+  orig: 500, 583
+  offset: 0, 0
+  index: -1
