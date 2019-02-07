@@ -24,7 +24,7 @@ public class PauseMenu : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (InputManager.Pause())
         {
             if (!craftingEnabled)
             {
@@ -50,7 +50,7 @@ public class PauseMenu : MonoBehaviour
 
         if(pB.atForge == true)
         {
-            if(Input.GetKeyDown(KeyCode.E))
+            if(InputManager.Interact())
             {
                 craftingEnabled = !craftingEnabled;
 

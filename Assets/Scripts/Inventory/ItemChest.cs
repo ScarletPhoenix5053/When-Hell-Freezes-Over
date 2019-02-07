@@ -9,7 +9,6 @@ public class ItemChest : MonoBehaviour
     [SerializeField] int amount = 1;
     [SerializeField] Inventory inventory; //Drag the players inventory
     [SerializeField] SpriteRenderer spriteRenderer = null, chestRenderer = null;
-    [SerializeField] KeyCode itemPickupKeycode = KeyCode.E; //change as you like.
 #pragma warning restore 0649
 
     public Sprite closed;
@@ -34,7 +33,7 @@ public class ItemChest : MonoBehaviour
 
     private void Update()
     {
-        if(isInRange && !isEmpty && Input.GetKeyDown(itemPickupKeycode))
+        if(isInRange && !isEmpty && InputManager.Interact())
         {
             GenericItem itemCopy = item.GetCopy();
             //Item tooltip isn't appearing

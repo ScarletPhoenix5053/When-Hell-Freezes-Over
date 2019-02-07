@@ -97,7 +97,7 @@ public class IntroManager : MonoBehaviour
 
     public void SkipScene()
     {
-        if (Input.GetKeyDown(KeyCode.P))
+        if (InputManager.Jump())
         {
             StopCoroutine(ShowCutscenes());
             SceneManager.LoadScene(levelToLoad);

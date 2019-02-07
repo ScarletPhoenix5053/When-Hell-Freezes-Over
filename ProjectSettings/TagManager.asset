@@ -12,6 +12,8 @@ TagManager:
   - Inventory
   - VisiblitySprite
   - Camera
+  - Key
+  - Door
   layers:
   - Default
   - TransparentFX

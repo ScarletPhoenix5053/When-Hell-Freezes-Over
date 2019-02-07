@@ -27,7 +27,8 @@ public class DialogueHolder : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            if (Input.GetKeyDown(KeyCode.Space)) //If it's getkeydown the first line doesn't play, but it doesn't repeat. 
+            //if (Input.GetKeyDown(KeyCode.Space)) //If it's getkeydown the first line doesn't play, but it doesn't repeat. 
+            if(InputManager.Interact())
             {
                 //Audio here?
 
