@@ -123,7 +123,10 @@ public class DemonController : EnemyController
                     SetBehaviour(Behaviour.Idle);
                     break;
                 }
+                // If in melee range
 
+
+                // If in throw range
                 if (DistToPlayer > ThrowRange)
                 {
                     mc.XSpeed = fastSpeed;
