@@ -29,6 +29,16 @@ public class InputManager : MonoBehaviour
     private KeyCode ControllerJumpButton = KeyCode.JoystickButton0;
     [SerializeField]
     private KeyCode KeyboardJumpButton = KeyCode.Space;
+
+    [SerializeField]
+    private KeyCode ControllerInteractButton = KeyCode.JoystickButton2;
+    [SerializeField]
+    private KeyCode KeyboardInteractButton = KeyCode.E;
+
+    [SerializeField]
+    private KeyCode ControllerPauseButton = KeyCode.JoystickButton7;
+    [SerializeField]
+    private KeyCode KeyboardPauseButton = KeyCode.Escape;
     #endregion
 
     private void Awake()
@@ -72,6 +82,18 @@ public class InputManager : MonoBehaviour
         return Input.GetKeyDown(Instance.ControllerRollButton)
             || Input.GetKeyDown(Instance.KeyboardRollButton);
     }
+    public static bool Interact()
+    {
+        return Input.GetKeyDown(Instance.ControllerInteractButton)
+            || Input.GetKeyDown(Instance.KeyboardInteractButton);
+    }
+    public static bool Pause()
+    {
+        return Input.GetKeyDown(Instance.ControllerPauseButton)
+            || Input.GetKeyDown(Instance.KeyboardPauseButton);
+    }
+
+
     public static bool HoldingDown()
     {
         return VeticalAxis() < -booleanDeadZone;
