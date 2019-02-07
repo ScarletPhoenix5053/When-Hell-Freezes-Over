@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb82047a286ce7148b5718176ec43ce7, type: 3}
   m_Name: DemonThrow
   m_EditorClassIdentifier: 
-  Startup: 60
+  Startup: 124
   Active: 1
-  Recovery: 60
-  MotionOnAttack: 5
+  Recovery: 54
+  MotionOnAttack: -13
   Damage: 1
   Strength: 0
   KnockBack: 15
   KnockUp: 40
   HitStun: 32
   HitStop: 4
-  Sign: 1
+  Sign: -1

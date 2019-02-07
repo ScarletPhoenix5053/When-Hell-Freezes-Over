@@ -97,13 +97,10 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
         currentAttackIndex = attackIndex;
 
         // Create Projectile
-        projectiles = new GameObject[1];
-        projectiles[0] = Instantiate(projectilePrefab, transform.position, projectilePrefab.transform.rotation);
+        CreateProjectile();
 
         // Configure projectile
-        var projControl = projectiles[0].GetComponent<ProjectileController>();
-        projControl.SetAttackData(Attacks[0]);
-        projControl.SetHitboxResponder(projControl);
+        ConfigureProjectile();
 
         // Start attack routine
         StartRangedAttackRoutine();
@@ -169,6 +166,17 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
         if (currentAttackRoutine != null) StopCoroutine(currentAttackRoutine);
         currentAttackRoutine = IE_DoRangedAttack();
         StartCoroutine(currentAttackRoutine);
+    }
+    protected virtual void CreateProjectile()
+    {
+        projectiles = new GameObject[1];
+        projectiles[0] = Instantiate(projectilePrefab, transform.position, projectilePrefab.transform.rotation);
+    }
+    protected virtual void ConfigureProjectile()
+    {
+        var projControl = projectiles[0].GetComponent<ProjectileController>();
+        projControl.SetAttackData(Attacks[0]);
+        projControl.SetHitboxResponder(projControl);
     }
 
     protected virtual IEnumerator IE_DoAttack()
