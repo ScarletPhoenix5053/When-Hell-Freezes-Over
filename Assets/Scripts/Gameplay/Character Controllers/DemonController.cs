@@ -2,6 +2,7 @@
 using UnityEngine;
 using System;
 using System.Collections;
+using Sierra.Combat2D;
 
 [RequireComponent(typeof(EnemyAttackManager))]
 public class DemonController : EnemyController
@@ -30,9 +31,16 @@ public class DemonController : EnemyController
     #region Protected Vars
     protected const float fastSpeed = 7.5f;
     protected const float slowSpeed = 2.5f;
+
+    protected Hurtbox hurtbox;
     #endregion
 
     #region Unity Messages
+    protected override void Awake()
+    {
+        base.Awake();
+        hurtbox = GetComponent<Hurtbox>();
+    }
     protected void OnDrawGizmosSelected()
     {
         DrawCircle(ChaseRangeMax, GizmoColours.ChaseRange);
@@ -63,6 +71,16 @@ public class DemonController : EnemyController
     #region Protected Methods
     protected override void Act()
     {
+        // Critical hurtbox on recovery
+        if (am.AtkStage == AttackManager.AttackStage.Recovery)
+        {
+            hurtbox.SetState(Hurtbox.State.Critical);
+        }
+        else
+        {
+            hurtbox.SetState(Hurtbox.State.Armored);
+        }
+
         switch (CurrentBehaviour)
         {
             case Behaviour.Idle:
@@ -115,7 +133,7 @@ public class DemonController : EnemyController
                     mc.XSpeed = slowSpeed;
 
                     // Start throw if close
-                    StartThrow();
+                    if (CurrentState != State.Action) StartThrow();
                 }
 
                 break;
@@ -132,10 +150,10 @@ public class DemonController : EnemyController
     protected void StartThrow()
     {
         SetState(State.Action);
-        //SetBehaviour(Behaviour.Throwing);
-
         GenericEvents.OnAttack.Invoke();
-        am.DoRangedAttack();
+
+        var dir = plr.transform.position - transform.position;
+        am.RangedAttack(dir);
     }
     #endregion
 }
