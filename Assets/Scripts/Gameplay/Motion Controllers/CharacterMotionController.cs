@@ -61,6 +61,7 @@ public class CharacterMotionController : MotionController
                 GroundMask);
         }
     }
+    public bool GravityEnabledByDefault = true;
     public Vector2 ContMotionVector;
     #endregion
     #region Protected Vars
@@ -73,6 +74,8 @@ public class CharacterMotionController : MotionController
     protected const int deltaMultiplicationFactor = 50;
 
     protected bool impulseLastFrame = false;
+    [ReadOnly][SerializeField]
+    protected bool gravityEnabled = true;
     protected Vector2 combinedMotionVector;
 
     protected LayerMask GroundMask
@@ -92,6 +95,8 @@ public class CharacterMotionController : MotionController
         base.Awake();
         chr = GetComponent<BaseController>();
         col = GetComponent<Collider2D>();
+
+        if (!GravityEnabledByDefault) gravityEnabled = false;
     }
 
     /// <summary>
@@ -118,6 +123,10 @@ public class CharacterMotionController : MotionController
         ContMotionVector = impulse;
         impulseLastFrame = true;
     }
+    public void SetGravityEnabled(bool enabled = true)
+    {
+        gravityEnabled = enabled;
+    }
 
     protected override void UpdatePos()
     {
@@ -138,6 +147,7 @@ public class CharacterMotionController : MotionController
     /// </summary>
     protected virtual void StickToGround()
     {
+        if (!gravityEnabled) return;
         if (impulseLastFrame) return;
 
         // Check if close enough to stick to ground
@@ -168,6 +178,8 @@ public class CharacterMotionController : MotionController
     /// </summary>
     protected virtual void ApplyGravity()
     {
+        if (!gravityEnabled) return;
+
         if (IsGrounded)
         {
             if (ContMotionVector.y < 0f) ContMotionVector.y = -0.5f;

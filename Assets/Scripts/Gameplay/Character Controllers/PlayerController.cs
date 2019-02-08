@@ -47,8 +47,6 @@ public class PlayerController : BaseController
     }
     private void LateUpdate()
     {
-        if (GameManager.Instance.HitStopActive) return;
-
         if (CurrentState == State.Ready ||
             (CurrentState == State.Action && CurrentAction == Action.Attacking))
             CheckInput();
@@ -58,8 +56,6 @@ public class PlayerController : BaseController
     }
     private void FixedUpdate()
     {
-        if (GameManager.Instance.HitStopActive) return;
-
         if (CurrentAction == Action.Rolling) mc.MoveVector = new Vector2(Math.Sign(transform.localScale.x), 0);
 
         IncrimentJumpTimer();
@@ -143,7 +139,6 @@ public class PlayerController : BaseController
             SetAction(Action.Attacking);
             am.RangedAttack();
             Debug.Log("Called");
-            am.Arrows-= 1;
         }
 
         // Jump

@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb82047a286ce7148b5718176ec43ce7, type: 3}
   m_Name: DemonSlice
   m_EditorClassIdentifier: 
-  Startup: 12
+  Startup: 50
   Active: 4
-  Recovery: 20
-  MotionOnAttack: 5
-  Damage: 1
+  Recovery: 120
+  MotionOnAttack: 12
+  Damage: 3
   Strength: 0
-  KnockBack: 8
-  KnockUp: 3
+  KnockBack: 32
+  KnockUp: 8
   HitStun: 32
   HitStop: 4
-  Sign: 1
+  Sign: -1
