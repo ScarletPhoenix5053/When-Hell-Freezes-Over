@@ -8,6 +8,7 @@ public class Checkpoint : MonoBehaviour
     //public Sprite afterReached;
 
     //private SpriteRenderer spriteRenderer;
+    public GameObject particle;
 
     public bool checkpointReached;
     bool hasPlayed;
@@ -29,6 +30,7 @@ public class Checkpoint : MonoBehaviour
             //spriteRenderer.sprite = afterReached;
             //PLAY THE PARTICLES INSTEAD
             checkpointReached = true;
+            Instantiate(particle, gameObject.transform);
 
             if(hasPlayed == false)
             {
