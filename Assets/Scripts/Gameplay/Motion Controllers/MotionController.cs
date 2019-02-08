@@ -27,7 +27,7 @@ public class MotionController : MonoBehaviour
     }
 
     protected Rigidbody2D rb;
-
+    [ReadOnly][SerializeField]
     protected Vector2 moveVector;
 
 

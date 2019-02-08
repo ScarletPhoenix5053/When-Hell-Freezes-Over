@@ -112,6 +112,7 @@ public class PlayerAttackManager : AttackManager, IHitboxResponder
     {
         if (AtkStage == AttackStage.Ready)
         {
+            Arrows -= 1;
             SetAtkState(AttackState.Ranged);
             DoRangedAttack(0);
         }
