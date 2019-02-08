@@ -62,6 +62,7 @@ public class DemonController : EnemyController
         if (CurrentState == State.Ready ||
             CurrentState == State.Action)
         {
+            hurtbox.CurrentState = Hurtbox.State.Critical;
             DecideAction();
             Act();
         }
@@ -96,7 +97,7 @@ public class DemonController : EnemyController
         {
             hurtbox.SetState(Hurtbox.State.Armored);
         }
-
+        
         // If close to ground
         Debug.DrawLine(transform.position, transform.position + (Vector3.down * minDistToGround), Color.green, Time.fixedDeltaTime); 
         if (Physics2D.Raycast(

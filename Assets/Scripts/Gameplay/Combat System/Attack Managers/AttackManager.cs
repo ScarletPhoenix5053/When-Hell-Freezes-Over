@@ -225,6 +225,7 @@ public abstract class AttackManager : MonoBehaviour, IHitboxResponder
         // Recovery
         AtkStage = AttackStage.Recovery;
         yield return Utility.FrameTimer(Attacks[currentAttackIndex].Recovery, attackTimer);
+        while (GetComponent<BaseController>().CurrentState == BaseController.State.SuperStun) yield return new WaitForFixedUpdate();
 
         // End
         GetComponent<BaseController>().SetState(BaseController.State.Ready);

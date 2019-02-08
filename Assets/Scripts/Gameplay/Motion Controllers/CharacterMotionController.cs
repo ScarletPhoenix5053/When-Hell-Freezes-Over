@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class CharacterMotionController : MotionController
@@ -63,6 +64,8 @@ public class CharacterMotionController : MotionController
     }
     public bool GravityEnabledByDefault = true;
     public Vector2 ContMotionVector;
+
+    public UnityEvent OnLanding;
     #endregion
     #region Protected Vars
     protected BaseController chr;
@@ -73,9 +76,10 @@ public class CharacterMotionController : MotionController
     protected const float zeroThreshold = 0.05f;
     protected const int deltaMultiplicationFactor = 50;
 
-    protected bool impulseLastFrame = false;
     [ReadOnly][SerializeField]
     protected bool gravityEnabled = true;
+    protected bool impulseLastFrame = false;
+    protected bool inAirLastFrame = false;
     protected Vector2 combinedMotionVector;
 
     protected LayerMask GroundMask
@@ -97,6 +101,19 @@ public class CharacterMotionController : MotionController
         col = GetComponent<Collider2D>();
 
         if (!GravityEnabledByDefault) gravityEnabled = false;
+    }
+    protected void Update()
+    {
+        if (inAirLastFrame && IsGrounded)
+        {
+            inAirLastFrame = false;
+            OnLanding.Invoke();
+            Debug.Log(name + " Landed");
+        }
+        else if (!IsGrounded)
+        {
+            inAirLastFrame = true;
+        }
     }
 
     /// <summary>
