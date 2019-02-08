@@ -36,6 +36,10 @@ public class PlayerInteract : MonoBehaviour
     [Header("KeysAndDoors")]
     public bool hasKey;
     public bool doorOpen;
+    public Transform forgeRoom;
+    public Transform mainRoom;
+    bool hasTeleported;
+    bool atDoor;
 
 
     private void Start()
@@ -81,7 +85,22 @@ public class PlayerInteract : MonoBehaviour
         {
             pM.Gravity = gravityStore;
         }
-        
+
+        if (doorOpen && atDoor)
+        {
+            if (InputManager.Interact())
+            {
+                transform.position = forgeRoom.transform.position;
+                hasTeleported = true;
+            }
+        }
+
+        else if (!hasKey && InputManager.Interact())
+        {
+            FindObjectOfType<AudioManager>().Play("DoorLocked");
+            //Show a message saying the door is locked.
+        }
+
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -133,19 +152,28 @@ public class PlayerInteract : MonoBehaviour
         }
 
         //DOOR
-        if(other.tag == "Door") //and the player presses a key?
+        if(other.tag == "ForgeDoor") //&& !hasTeleported)
         {
-            if(hasKey)
+            atDoor = true;
+            bool hasPlayed = false;
+
+            if (hasKey)
             {
                 doorOpen = true;
-                FindObjectOfType<AudioManager>().Play("DoorUnlock");
-            }
-            else if(!hasKey)
-            {
-                FindObjectOfType<AudioManager>().Play("DoorLocked");
-                //Show a message saying the door is locked.
-            }
+                hasTeleported = false;
 
+                if (!hasPlayed)
+                {
+                    FindObjectOfType<AudioManager>().Play("DoorUnlock");
+                    hasPlayed = true;
+                }
+            }  
+        }
+
+        if (other.tag == "Door" && !hasTeleported)
+        {
+            transform.position = mainRoom.transform.position;
+            hasTeleported = true;
         }
     }
 
@@ -174,6 +202,16 @@ public class PlayerInteract : MonoBehaviour
         if(other.tag == "Interactable")
         {
             pickedUp = false;
+        }
+
+        if(other.tag == "ForgeDoor")
+        {
+            atDoor = false;
+        }
+
+        if(other.tag == "Door")
+        {
+            hasTeleported = false;
         }
     }
 
