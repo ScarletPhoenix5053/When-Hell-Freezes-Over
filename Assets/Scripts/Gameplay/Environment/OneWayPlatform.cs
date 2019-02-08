@@ -48,7 +48,6 @@ public class OneWayPlatform : MonoBehaviour
         {
             if (InputManager.HoldingDown())
             {
-                Debug.Log("Player is holding down");
                 rn.material.color = halfColour;
                 transform.GetChild(0).gameObject.layer = PlayerLayer;
             }
@@ -76,14 +75,12 @@ public class OneWayPlatform : MonoBehaviour
             {
                 if (playerBelow || InputManager.HoldingDown())
                 {
-                    Debug.Log("Player is below");
                     rn.material.color = halfColour;
                     transform.GetChild(0).gameObject.layer = PlayerLayer;
                     playerBelow = false;
                 }
                 else
                 {
-                    Debug.Log("Player not below");
                     rn.material.color = originalColour;
                     transform.GetChild(0).gameObject.layer = PlatformLayer;
                 }

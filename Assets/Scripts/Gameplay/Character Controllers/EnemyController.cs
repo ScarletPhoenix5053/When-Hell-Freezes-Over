@@ -3,7 +3,6 @@ using UnityEngine.Events;
 using System;
 using Spine.Unity;
 
-[RequireComponent(typeof(EnemyAnimationController))]
 [RequireComponent(typeof(Health))]
 public abstract class EnemyController : BaseController
 {
@@ -18,7 +17,7 @@ public abstract class EnemyController : BaseController
 
     protected PlayerController plr;
     protected Health hp;
-    protected AttackManager am;
+    protected EnemyAttackManager am;
 
     protected float DistToPlayer { get { return Vector2.Distance(transform.position, plr.transform.position); } }
     protected bool PlayerToLeft { get { return plr.transform.position.x < transform.position.x; } }
@@ -29,7 +28,7 @@ public abstract class EnemyController : BaseController
 
         plr = FindObjectOfType<PlayerController>();
         hp = GetComponent<Health>();
-        am = GetComponent<AttackManager>();
+        am = GetComponent<EnemyAttackManager>();
     }
     protected virtual void FixedUpdate()
     {
@@ -39,7 +38,7 @@ public abstract class EnemyController : BaseController
             Act();
         }
 
-        mc.UpdatePosition();
+        mc?.UpdatePosition();
     }
 
 

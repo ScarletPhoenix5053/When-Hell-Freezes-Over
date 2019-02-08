@@ -113,7 +113,10 @@ public class InputManager : MonoBehaviour
     }
     public static float VeticalAxis()
     {
-        return Input.GetAxis("Vertical");
+        var motionAxis = 0f;
+        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow) || Input.GetAxis("Vertical") < -booleanDeadZone) motionAxis -= 1;
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.UpArrow) || Input.GetAxis("Vertical") > booleanDeadZone) motionAxis += 1;
+        return motionAxis;
     }
     #endregion
 }
