@@ -17,5 +17,5 @@ MonoBehaviour:
   Desc: 'A key to open, what I assume, some kind of obviously big and gold lock. '
   MaximumStacks: 1
   Icon: {fileID: 21300000, guid: 2b0898df2869eb241b80758b7d1d9c18, type: 3}
-  iconInventory: {fileID: 21300000, guid: 2b0898df2869eb241b80758b7d1d9c18, type: 3}
+  iconInventory: {fileID: 21300000, guid: aad739a3183492b41802920bd5719b22, type: 3}
   equipmentType: 5

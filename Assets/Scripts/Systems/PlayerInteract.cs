@@ -215,6 +215,11 @@ public class PlayerInteract : MonoBehaviour
         }
     }
 
+    public void BackToCheckpoint()
+    {
+        transform.position = respawnPoint;
+    }
+
    
 
 }
