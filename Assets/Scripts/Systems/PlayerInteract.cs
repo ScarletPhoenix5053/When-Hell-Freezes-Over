@@ -57,8 +57,6 @@ public class PlayerInteract : MonoBehaviour
             health.Hp = 6;
         }
 
-        //Climbing();
-
         RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, Vector2.up, distance, ladder);
 
         if(hitInfo.collider != null)
@@ -70,10 +68,7 @@ public class PlayerInteract : MonoBehaviour
         }
         else
         {
-            //if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
-            //{
                 isClimbing = false;
-            //}
         }
 
         if(isClimbing) // && hitInfo.collider != null)
@@ -132,17 +127,18 @@ public class PlayerInteract : MonoBehaviour
         if(other.tag == "Key")
         {
             hasKey = true;
-            Destroy(other.gameObject);
+
+            //if (other.transform.position == target.position)
+                other.gameObject.SendMessage("PickUp");
         }
 
         //DOOR
-        if(other.tag == "Door") //and the player presses a key
+        if(other.tag == "Door") //and the player presses a key?
         {
             if(hasKey)
             {
                 doorOpen = true;
                 FindObjectOfType<AudioManager>().Play("DoorUnlock");
-                //Either change the sprite or take the player to a new room?
             }
             else if(!hasKey)
             {

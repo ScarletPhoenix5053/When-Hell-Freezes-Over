@@ -4,17 +4,17 @@ using UnityEngine;
 
 public class Checkpoint : MonoBehaviour
 {
-    public Sprite beforeReached;
-    public Sprite afterReached;
+    //public Sprite beforeReached;
+    //public Sprite afterReached;
 
-    private SpriteRenderer spriteRenderer;
+    //private SpriteRenderer spriteRenderer;
 
     public bool checkpointReached;
     bool hasPlayed;
 
     void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        //spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     void Update()
@@ -26,7 +26,8 @@ public class Checkpoint : MonoBehaviour
     {
         if(other.gameObject.tag == "Player")
         {
-            spriteRenderer.sprite = afterReached;
+            //spriteRenderer.sprite = afterReached;
+            //PLAY THE PARTICLES INSTEAD
             checkpointReached = true;
 
             if(hasPlayed == false)
