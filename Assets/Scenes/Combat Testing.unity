@@ -2787,6 +2787,11 @@ MonoBehaviour:
   DragX: 0.5
   GravityEnabledByDefault: 0
   ContMotionVector: {x: 0, y: 0}
+  OnLanding:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   gravityEnabled: 1
 --- !u!50 &1869716174
 Rigidbody2D:
