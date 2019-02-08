@@ -39,8 +39,9 @@ public class ItemPickup : MonoBehaviour
     {
         Debug.Log("Picking up " + item.name);     
         inventoryPanel.AddItem(item);
+        FindObjectOfType<AudioManager>().Play("ItemPickup");
 
-        if(player.pickedUp == true)
+        if (player.pickedUp == true)
             player.pickedUp = false;
 
         Destroy(gameObject);

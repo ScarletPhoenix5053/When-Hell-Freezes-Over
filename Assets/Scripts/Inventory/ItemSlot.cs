@@ -117,7 +117,7 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
 
     public void Grow()
     {
-        transform.localScale += new Vector3(0.5F, 0.5f, originalScale.z);
+            transform.localScale += new Vector3(0.5F, 0.5f, originalScale.z);
     }
 
     public void Shrink()
