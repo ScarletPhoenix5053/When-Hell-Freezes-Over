@@ -39,7 +39,10 @@ public class ItemPickup : MonoBehaviour
     {
         Debug.Log("Picking up " + item.name);     
         inventoryPanel.AddItem(item);
-        player.pickedUp = false;
+
+        if(player.pickedUp == true)
+            player.pickedUp = false;
+
         Destroy(gameObject);
     }
 
