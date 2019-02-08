@@ -52,7 +52,8 @@ public abstract class EnemyController : BaseController
         am?.StopAttack();
 
         // Despawn
-        Destroy(transform.parent.gameObject, 1.2f);
+        if (transform.parent != null) Destroy(transform.parent.gameObject, 1.2f);
+        else Destroy(gameObject, 1.2f);
     }
 
     protected virtual void FacePlayer()

@@ -17,7 +17,7 @@ namespace Sierra
         {
             while (timer < timerDuration)
             {
-                if (!GameManager.Instance.HitStopActive) timer++;
+                timer++;
                 yield return new WaitForFixedUpdate();
             }
         }

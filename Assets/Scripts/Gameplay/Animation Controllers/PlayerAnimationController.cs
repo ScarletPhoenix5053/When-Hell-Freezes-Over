@@ -55,11 +55,6 @@ public class PlayerAnimationController : AnimationController
         am = GetComponent<PlayerAttackManager>();
         mc = GetComponent<PlayerMotionController>();
     }
-    private void LateUpdate()
-    {
-        if (GameManager.Instance.HitStopActive) sk_an.timeScale = 0;
-        else sk_an.timeScale = 1;
-    }
 
     public void RunAnimationStateMachine()
     {
