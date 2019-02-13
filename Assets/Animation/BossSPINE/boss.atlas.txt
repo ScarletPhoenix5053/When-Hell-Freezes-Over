@@ -1,0 +1,48 @@
+
+boss.png
+size: 8192,2048
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Arm
+  rotate: true
+  xy: 3392, 444
+  size: 409, 1146
+  orig: 409, 1146
+  offset: 0, 0
+  index: -1
+Head
+  rotate: true
+  xy: 5177, 872
+  size: 947, 1480
+  orig: 947, 1480
+  offset: 0, 0
+  index: -1
+Shield
+  rotate: true
+  xy: 6659, 932
+  size: 887, 1192
+  orig: 887, 1192
+  offset: 0, 0
+  index: -1
+Spear
+  rotate: true
+  xy: 2569, 855
+  size: 964, 2606
+  orig: 964, 2606
+  offset: 0, 0
+  index: -1
+Torso
+  rotate: true
+  xy: 2, 2
+  size: 1817, 2565
+  orig: 1817, 2565
+  offset: 0, 0
+  index: -1
+Wep arm
+  rotate: false
+  xy: 2569, 31
+  size: 821, 822
+  orig: 821, 822
+  offset: 0, 0
+  index: -1
