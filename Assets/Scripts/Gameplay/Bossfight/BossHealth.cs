@@ -23,6 +23,8 @@ public class BossHealth : Health
         Hp -= 1;
         StartIFrames();
 
+        Events.OnDamage.Invoke();
+
         if (Dead) Die();
     }
 

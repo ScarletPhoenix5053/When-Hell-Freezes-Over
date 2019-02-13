@@ -11,8 +11,7 @@ public class SlimePriestController : EnemyController, IBossAttackTriggerResponde
     }
     public float AimRange;
     public float AimMinHeight;
-
-    public Transform SpearArm;
+    
     #endregion
     #region Protected Vars
     protected Vector2 spearArmOriginalPos;
@@ -23,9 +22,10 @@ public class SlimePriestController : EnemyController, IBossAttackTriggerResponde
     protected override void Awake()
     {
         base.Awake();
-
-        spearArmOriginalPos = SpearArm.position;
-        spearArmOriginalRot = SpearArm.rotation;
+    }
+    protected void Start()
+    {
+        FindObjectOfType<FightManager>()?.GoToNextStage();
     }
     protected override void FixedUpdate()
     {
@@ -42,7 +42,7 @@ public class SlimePriestController : EnemyController, IBossAttackTriggerResponde
     #endregion
 
     #region Public Methods
-    public void StartAttack(BossAttackPath attackPath)
+    public void StartAttack()
     {
         throw new System.NotImplementedException();
     }
@@ -54,31 +54,9 @@ public class SlimePriestController : EnemyController, IBossAttackTriggerResponde
     #region Protected Methods
     protected override void Act()
     {
-        // If aiming
-        if (CurrentBehaviour == Behaviour.Aiming)
-        {
-            // aim
-            SpearArm.LookAt(plr.transform);
-        }
-        else
-        {
-            SpearArm.position = spearArmOriginalPos;
-            SpearArm.rotation = spearArmOriginalRot;
-        }
     }
     protected override void DecideAction()
     {
-        // If player in aim range
-        if (DistToPlayer < AimRange && plr.transform.position.y >= AimMinHeight)
-        {
-            // start aiming
-            SetBehaviour(Behaviour.Aiming);
-        }
-        else
-        {
-            // return to standing
-            SetBehaviour(Behaviour.Standing);
-        }
     }
     protected void DrawCircle(float radius, Color colour)
     {

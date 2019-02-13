@@ -2,7 +2,7 @@
 using UnityEditor;
 using System;
 using System.Collections.Generic;
-
+/*
 [CustomEditor(typeof(FightManager))]
 public class FightManagerEditor : Editor
 {
@@ -76,4 +76,4 @@ public class FightManagerEditor : Editor
             }
         }
     }
-}
+}*/
