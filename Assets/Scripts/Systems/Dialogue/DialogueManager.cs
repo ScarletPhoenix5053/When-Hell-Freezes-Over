@@ -27,7 +27,7 @@ public class DialogueManager : MonoBehaviour
     void Update()
     {
 
-        if (dialogActive && Input.GetKeyDown(KeyCode.Space))
+        if (dialogActive && InputManager.Interact())
         {
             currentLine++;
         }
