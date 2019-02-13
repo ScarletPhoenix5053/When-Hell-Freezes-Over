@@ -9,6 +9,9 @@ public class ShieldBlobController : EnemyController
     public int TurnDuration = 120;
     public GameObject BouncePadPrefab;
 
+    public GameObject bone, eyeball;//Put this in every enemy with what items they drop. Since we only have 3 enemies it's not bad.
+    public Vector2 AverageItemVariance = new Vector2(3, 3);
+
     public Behaviour CurrentBehaviour;
     public enum Behaviour
     {
@@ -105,6 +108,29 @@ public class ShieldBlobController : EnemyController
     }
     public override void Die()
     {
+        int lootNum = UnityEngine.Random.Range(1, 3);
+        for (int i = 0; i < lootNum; i++)
+        {
+            var boneVarianceY = AverageItemVariance.y * Utility.GetRandomFloat();
+            var boneVarianceX = AverageItemVariance.x * Utility.GetRandomFloat();
+
+            var eyeVarianceY = AverageItemVariance.y * Utility.GetRandomFloat();
+            var eyeVarianceX = AverageItemVariance.x * Utility.GetRandomFloat();
+
+            var boneSpawnPos = new Vector3(
+                transform.position.x + boneVarianceX,
+                transform.position.y + boneVarianceY,
+                transform.position.z);
+
+            var eyeSpawnPos = new Vector3(
+                transform.position.x + eyeVarianceX,
+                transform.position.y + eyeVarianceY,
+                transform.position.z);
+
+            Instantiate(bone, boneSpawnPos, transform.rotation);
+            Instantiate(eyeball, eyeSpawnPos, transform.rotation);
+        }
+
         if (BouncePadPrefab != null)
             Instantiate(
                 BouncePadPrefab,
