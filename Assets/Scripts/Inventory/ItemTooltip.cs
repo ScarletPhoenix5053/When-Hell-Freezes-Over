@@ -28,7 +28,7 @@ public class ItemTooltip : MonoBehaviour
         }
         else
         {
-                Debug.Log("Nothing here, cap'n");
+           Debug.Log("Nothing here, cap'n");
         }
         
     }
@@ -37,4 +37,6 @@ public class ItemTooltip : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
+
+  
 }
