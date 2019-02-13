@@ -1,0 +1,76 @@
+
+BombGoblin.png
+size: 2048,1024
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Across hand
+  rotate: true
+  xy: 1600, 11
+  size: 373, 324
+  orig: 373, 324
+  offset: 0, 0
+  index: -1
+Bomb
+  rotate: true
+  xy: 2, 64
+  size: 197, 382
+  orig: 197, 382
+  offset: 0, 0
+  index: -1
+Empty hand
+  rotate: false
+  xy: 1156, 2
+  size: 442, 382
+  orig: 442, 382
+  offset: 0, 0
+  index: -1
+Head
+  rotate: true
+  xy: 557, 467
+  size: 549, 754
+  orig: 549, 754
+  offset: 0, 0
+  index: -1
+Head 2
+  rotate: false
+  xy: 2, 263
+  size: 553, 753
+  orig: 553, 753
+  offset: 0, 0
+  index: -1
+Left leg
+  rotate: false
+  xy: 386, 80
+  size: 117, 181
+  orig: 117, 181
+  offset: 0, 0
+  index: -1
+Off hand
+  rotate: true
+  xy: 557, 231
+  size: 234, 597
+  orig: 234, 597
+  offset: 0, 0
+  index: -1
+Right leg
+  rotate: false
+  xy: 1887, 824
+  size: 143, 192
+  orig: 143, 192
+  offset: 0, 0
+  index: -1
+Throw arm
+  rotate: false
+  xy: 1313, 386
+  size: 573, 297
+  orig: 573, 297
+  offset: 0, 0
+  index: -1
+Torso
+  rotate: true
+  xy: 1313, 685
+  size: 331, 572
+  orig: 331, 572
+  offset: 0, 0
+  index: -1
