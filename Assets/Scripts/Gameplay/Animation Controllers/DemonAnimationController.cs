@@ -20,6 +20,10 @@ public class DemonAnimationController : EnemyAnimationController
     }
     public void EffectOnImpact()
     {
-        sk_an.AnimationState.SetAnimation(0, "Grounded", true);
+        if ((GetComponent<BaseController>() && GetComponent<BaseController>().CurrentState == BaseController.State.SuperStun) ||
+            (GetComponentInParent<BaseController>() && GetComponentInParent<BaseController>().CurrentState == BaseController.State.SuperStun))
+        {
+            sk_an.AnimationState.SetAnimation(0, "Grounded", true);
+        }
     }
 }
