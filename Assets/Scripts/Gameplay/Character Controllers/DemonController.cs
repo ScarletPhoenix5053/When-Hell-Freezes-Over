@@ -1,17 +1,24 @@
 ﻿using UnityEditor;
 using UnityEngine;
+using UnityEngine.Events;
 using System;
-using System.Collections;
 using Sierra.Combat2D;
 
 [RequireComponent(typeof(EnemyAttackManager))]
 public class DemonController : EnemyController
 {
     #region Public Vars
+    public DemonEvents Events;
+    [Serializable]
+    public class DemonEvents
+    {
+        public UnityEvent OnThrowAttack;
+    }
+
     public Behaviour CurrentBehaviour;
     public enum Behaviour
     {
-        Idle, Chasing, Throwing
+        Idle, Chasing, Evade
     }
 
     public float ChaseRangeMax = 12;
@@ -29,8 +36,10 @@ public class DemonController : EnemyController
     public DemonGizmoColours GizmoColours;
     #endregion
     #region Protected Vars
-    protected const float fastSpeed = 7.5f;
-    protected const float slowSpeed = 2.5f;
+    protected const float fastSpeed = 5f;
+    protected const float slowSpeed = 2f;
+    protected const float riseSpeed = 10f;
+    protected const float minDistToGround = 10f;
 
     protected Hurtbox hurtbox;
     #endregion
@@ -53,6 +62,7 @@ public class DemonController : EnemyController
         if (CurrentState == State.Ready ||
             CurrentState == State.Action)
         {
+            hurtbox.CurrentState = Hurtbox.State.Critical;
             DecideAction();
             Act();
         }
@@ -62,6 +72,13 @@ public class DemonController : EnemyController
     #endregion
 
     #region Public Methods
+    public override void SetState(State newState)
+    {
+        base.SetState(newState);
+
+        if (newState == State.SuperStun) mc.SetGravityEnabled();
+        else mc.SetGravityEnabled(false);
+    }
     public void SetBehaviour(Behaviour newBehaviour)
     {
         if (newBehaviour != CurrentBehaviour)
@@ -80,6 +97,48 @@ public class DemonController : EnemyController
         {
             hurtbox.SetState(Hurtbox.State.Armored);
         }
+        
+        // If close to ground
+        Debug.DrawLine(transform.position, transform.position + (Vector3.down * minDistToGround), Color.green, Time.fixedDeltaTime); 
+        if (Physics2D.Raycast(
+            transform.position,
+            Vector2.down,
+            minDistToGround,
+            LayerMask.GetMask("Environment", "Platform")))
+        {
+            mc.MoveVector = Vector2.up;
+            mc.YSpeed = riseSpeed;
+        }
+        else
+        {
+            mc.YSpeed = 0;
+            mc.ContMotionVector.y = 0;
+        }
+
+        // If evading or chasing
+        if (CurrentBehaviour == Behaviour.Chasing ||
+            CurrentBehaviour == Behaviour.Evade)
+        {
+
+            // If in melee range
+            if (DistToPlayer < MeleeRange)
+            {
+                if (CurrentState != State.Action) StartMelee();
+            }
+
+            // If in throw range
+            if (DistToPlayer > ThrowRange)
+            {
+                mc.XSpeed = fastSpeed;
+            }
+            else
+            {
+                mc.XSpeed = slowSpeed;
+
+                // Start throw if close
+                if (CurrentState != State.Action) StartThrow();
+            }
+        }
 
         switch (CurrentBehaviour)
         {
@@ -94,11 +153,27 @@ public class DemonController : EnemyController
                 // Move
                 if (PlayerToLeft)
                 {
-                    mc.MoveVector = Vector2.left;
+                    mc.MoveVector += Vector2.left;
                 }
                 else
                 {
-                    mc.MoveVector = Vector2.right;
+                    mc.MoveVector += Vector2.right;
+                }
+                break;
+
+            case Behaviour.Evade:
+                FacePlayer();
+
+                if (mc == null) break;
+
+                // Move
+                if (PlayerToLeft)
+                {
+                    mc.MoveVector += Vector2.right;
+                }
+                else
+                {
+                    mc.MoveVector += Vector2.left;
                 }
                 break;
 
@@ -117,33 +192,30 @@ public class DemonController : EnemyController
                 break;
 
             case Behaviour.Chasing:
-                if (DistToPlayer > ChaseRangeMax ||
-                    DistToPlayer < ChaseRangeMin)
+                if (DistToPlayer > ChaseRangeMax)
                 {
                     SetBehaviour(Behaviour.Idle);
                     break;
                 }
-                // If in melee range
-
-
-                // If in throw range
-                if (DistToPlayer > ThrowRange)
+                else if (DistToPlayer < ChaseRangeMin)
                 {
-                    mc.XSpeed = fastSpeed;
+                    SetBehaviour(Behaviour.Evade);
+                    break;
                 }
-                else
+                break;
+
+            case Behaviour.Evade:
+                if (DistToPlayer > ChaseRangeMin)
                 {
-                    mc.XSpeed = slowSpeed;
-
-                    // Start throw if close
-                    if (CurrentState != State.Action) StartThrow();
+                    SetBehaviour(Behaviour.Chasing);
+                    break;
                 }
-
                 break;
 
             default:
                 break;
         }
+
     }
     protected void DrawCircle(float radius, Color colour)
     {
@@ -153,10 +225,17 @@ public class DemonController : EnemyController
     protected void StartThrow()
     {
         SetState(State.Action);
-        GenericEvents.OnAttack.Invoke();
+        Events.OnThrowAttack.Invoke();
 
         var dir = plr.transform.position - transform.position;
         am.RangedAttack(dir);
+    }
+    protected void StartMelee()
+    {
+        SetState(State.Action);
+        GenericEvents.OnAttack.Invoke();
+
+        am.Attack();
     }
     #endregion
 }

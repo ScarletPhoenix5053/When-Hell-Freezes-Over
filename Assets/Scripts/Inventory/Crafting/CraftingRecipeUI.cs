@@ -9,8 +9,7 @@ public class CraftingRecipeUI : MonoBehaviour
     [SerializeField] ItemSlot[] itemSlots;
 #pragma warning restore 0649
 
-    //public GameObject notEnough;
-    public Animator anim;
+    public GameObject notEnough;
 
     public ItemContainer itemContainer;
 
@@ -90,10 +89,9 @@ public class CraftingRecipeUI : MonoBehaviour
 
     IEnumerator NotEnoughMaterials()
     {
-        
-        anim.SetBool("isDisplayed", true);
+        notEnough.SetActive(true);
         yield return new WaitForSecondsRealtime(4f);
-        anim.SetBool("isDisplayed", false); //this is not being set to false all of a sudden?
+        notEnough.SetActive(false);
         StopCoroutine(NotEnoughMaterials());
     }
 

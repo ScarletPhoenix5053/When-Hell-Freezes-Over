@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class CharacterMotionController : MotionController
@@ -61,7 +62,10 @@ public class CharacterMotionController : MotionController
                 GroundMask);
         }
     }
+    public bool GravityEnabledByDefault = true;
     public Vector2 ContMotionVector;
+
+    public UnityEvent OnLanding;
     #endregion
     #region Protected Vars
     protected BaseController chr;
@@ -72,7 +76,10 @@ public class CharacterMotionController : MotionController
     protected const float zeroThreshold = 0.05f;
     protected const int deltaMultiplicationFactor = 50;
 
+    [ReadOnly][SerializeField]
+    protected bool gravityEnabled = true;
     protected bool impulseLastFrame = false;
+    protected bool inAirLastFrame = false;
     protected Vector2 combinedMotionVector;
 
     protected LayerMask GroundMask
@@ -92,6 +99,21 @@ public class CharacterMotionController : MotionController
         base.Awake();
         chr = GetComponent<BaseController>();
         col = GetComponent<Collider2D>();
+
+        if (!GravityEnabledByDefault) gravityEnabled = false;
+    }
+    protected void Update()
+    {
+        if (inAirLastFrame && IsGrounded)
+        {
+            inAirLastFrame = false;
+            OnLanding.Invoke();
+            Debug.Log(name + " Landed");
+        }
+        else if (!IsGrounded)
+        {
+            inAirLastFrame = true;
+        }
     }
 
     /// <summary>
@@ -118,6 +140,10 @@ public class CharacterMotionController : MotionController
         ContMotionVector = impulse;
         impulseLastFrame = true;
     }
+    public void SetGravityEnabled(bool enabled = true)
+    {
+        gravityEnabled = enabled;
+    }
 
     protected override void UpdatePos()
     {
@@ -138,6 +164,7 @@ public class CharacterMotionController : MotionController
     /// </summary>
     protected virtual void StickToGround()
     {
+        if (!gravityEnabled) return;
         if (impulseLastFrame) return;
 
         // Check if close enough to stick to ground
@@ -168,6 +195,8 @@ public class CharacterMotionController : MotionController
     /// </summary>
     protected virtual void ApplyGravity()
     {
+        if (!gravityEnabled) return;
+
         if (IsGrounded)
         {
             if (ContMotionVector.y < 0f) ContMotionVector.y = -0.5f;

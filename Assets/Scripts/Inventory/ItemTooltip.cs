@@ -9,6 +9,7 @@ public class ItemTooltip : MonoBehaviour
     [SerializeField] Text itemNameText;
     [SerializeField] Text slotText;
     [SerializeField] Text descText;
+    public bool tooltipEnabled;
 #pragma warning restore 0649
 
     public GameObject tooltip;

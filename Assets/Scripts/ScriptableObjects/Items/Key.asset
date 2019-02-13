@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ad01d769757bae419be10c18adbc317, type: 3}
+  m_Name: Key
+  m_EditorClassIdentifier: 
+  id: c50c82eb4e1c4b74bbc11dc7df76952a
+  Name: Door Key
+  Desc: 'A key to open, what I assume, some kind of obviously big and gold lock. '
+  MaximumStacks: 1
+  Icon: {fileID: 21300000, guid: 2b0898df2869eb241b80758b7d1d9c18, type: 3}
+  iconInventory: {fileID: 21300000, guid: aad739a3183492b41802920bd5719b22, type: 3}
+  equipmentType: 5

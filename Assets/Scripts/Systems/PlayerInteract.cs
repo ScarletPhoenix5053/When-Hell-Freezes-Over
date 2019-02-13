@@ -36,6 +36,11 @@ public class PlayerInteract : MonoBehaviour
     [Header("KeysAndDoors")]
     public bool hasKey;
     public bool doorOpen;
+    public Transform forgeRoom;
+    public Transform mainRoom;
+    public Sprite doorOpenSprite;
+    bool hasTeleported;
+    bool atDoor;
 
 
     private void Start()
@@ -57,8 +62,6 @@ public class PlayerInteract : MonoBehaviour
             health.Hp = 6;
         }
 
-        //Climbing();
-
         RaycastHit2D hitInfo = Physics2D.Raycast(transform.position, Vector2.up, distance, ladder);
 
         if(hitInfo.collider != null)
@@ -70,10 +73,7 @@ public class PlayerInteract : MonoBehaviour
         }
         else
         {
-            //if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
-            //{
                 isClimbing = false;
-            //}
         }
 
         if(isClimbing) // && hitInfo.collider != null)
@@ -86,7 +86,22 @@ public class PlayerInteract : MonoBehaviour
         {
             pM.Gravity = gravityStore;
         }
-        
+
+        if (doorOpen && atDoor)
+        {
+            if (InputManager.Interact())
+            {
+                transform.position = forgeRoom.transform.position;
+                hasTeleported = true;
+            }
+        }
+
+        else if (!hasKey && InputManager.Interact())
+        {
+            FindObjectOfType<AudioManager>().Play("DoorLocked");
+            //Show a message saying the door is locked.
+        }
+
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -132,24 +147,38 @@ public class PlayerInteract : MonoBehaviour
         if(other.tag == "Key")
         {
             hasKey = true;
-            Destroy(other.gameObject);
+
+            //if (other.transform.position == target.position)
+                other.gameObject.SendMessage("PickUp");
         }
 
         //DOOR
-        if(other.tag == "Door") //and the player presses a key
+        if(other.tag == "ForgeDoor") //&& !hasTeleported)
         {
-            if(hasKey)
+            SpriteRenderer otherSprite;
+            otherSprite = other.GetComponent<SpriteRenderer>();
+
+            atDoor = true;
+            bool hasPlayed = false;
+
+            if (hasKey)
             {
                 doorOpen = true;
-                FindObjectOfType<AudioManager>().Play("DoorUnlock");
-                //Either change the sprite or take the player to a new room?
-            }
-            else if(!hasKey)
-            {
-                FindObjectOfType<AudioManager>().Play("DoorLocked");
-                //Show a message saying the door is locked.
-            }
+                otherSprite.sprite = doorOpenSprite;
+                hasTeleported = false;
 
+                if (!hasPlayed)
+                {
+                    FindObjectOfType<AudioManager>().Play("DoorUnlock");
+                    hasPlayed = true;
+                }
+            }  
+        }
+
+        if (other.tag == "Door" && !hasTeleported)
+        {
+            transform.position = mainRoom.transform.position;
+            hasTeleported = true;
         }
     }
 
@@ -179,6 +208,21 @@ public class PlayerInteract : MonoBehaviour
         {
             pickedUp = false;
         }
+
+        if(other.tag == "ForgeDoor")
+        {
+            atDoor = false;
+        }
+
+        if(other.tag == "Door")
+        {
+            hasTeleported = false;
+        }
+    }
+
+    public void BackToCheckpoint()
+    {
+        transform.position = respawnPoint;
     }
 
    
