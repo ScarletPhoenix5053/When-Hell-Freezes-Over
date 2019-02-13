@@ -11,6 +11,7 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
     public event Action<GenericItem> OnRightClickEvent;
 
     private Vector3 originalScale;
+    public bool Grown;
 
     private GenericItem _item;
     public GenericItem Item
@@ -115,13 +116,25 @@ public class ItemSlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
         Shrink();
     }
 
-    public void Grow()
-    {
+  public void Grow()
+  {
+        if (!Grown)
+        {
             transform.localScale += new Vector3(0.5F, 0.5f, originalScale.z);
-    }
+            Grown = true;
+        }
+  }
 
-    public void Shrink()
-    {
-        transform.localScale -= new Vector3(0.5F, 0.5f, originalScale.z);
-    }
+  public void Shrink()
+  {
+        if (Grown)
+        {
+            transform.localScale -= new Vector3(0.5F, 0.5f, originalScale.z);
+            Grown = false;
+        }
+  }
+
+  
+
+
 }
