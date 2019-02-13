@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 using System;
+using Sierra;
 using Sierra.Combat2D;
 
 [RequireComponent(typeof(EnemyAttackManager))]
@@ -34,6 +35,10 @@ public class DemonController : EnemyController
         public Color MeleeRange = Color.red;
     }
     public DemonGizmoColours GizmoColours;
+
+    public GameObject bone, demonChunk;//Put this in every enemy with what items they drop. Since we only have 3 enemies it's not bad.
+    public Vector2 AverageItemVariance = new Vector2(3, 3);
+
     #endregion
     #region Protected Vars
     protected const float fastSpeed = 5f;
@@ -236,6 +241,34 @@ public class DemonController : EnemyController
         GenericEvents.OnAttack.Invoke();
 
         am.Attack();
+    }
+
+    public override void Die()
+    {
+        int lootNum = UnityEngine.Random.Range(1, 3);
+        for (int i = 0; i < lootNum; i++)
+        {
+            var boneVarianceY = AverageItemVariance.y * Utility.GetRandomFloat();
+            var boneVarianceX = AverageItemVariance.x * Utility.GetRandomFloat();
+
+            var chunkVarianceY = AverageItemVariance.y * Utility.GetRandomFloat();
+            var chunkVarianceX = AverageItemVariance.x * Utility.GetRandomFloat();
+
+            var boneSpawnPos = new Vector3(
+                transform.position.x + boneVarianceX,
+                transform.position.y + boneVarianceY,
+                transform.position.z);
+
+            var eyeSpawnPos = new Vector3(
+                transform.position.x + chunkVarianceX,
+                transform.position.y + chunkVarianceY,
+                transform.position.z);
+
+            Instantiate(bone, boneSpawnPos, transform.rotation);
+            Instantiate(demonChunk, eyeSpawnPos, transform.rotation);
+        }
+
+        base.Die();
     }
     #endregion
 }
