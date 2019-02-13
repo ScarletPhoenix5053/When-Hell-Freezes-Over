@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/IntroSequence.unity
     guid: fbed7f71be5c0da43b40bbc6805017d7
+  - enabled: 1
+    path: Assets/Scenes/HellGame.unity
+    guid: cb37d95e847d75d45a68c22077070306
   m_configObjects: {}
