@@ -38,6 +38,7 @@ public class PlayerInteract : MonoBehaviour
     public bool doorOpen;
     public Transform forgeRoom;
     public Transform mainRoom;
+    public Sprite doorOpenSprite;
     bool hasTeleported;
     bool atDoor;
 
@@ -154,12 +155,16 @@ public class PlayerInteract : MonoBehaviour
         //DOOR
         if(other.tag == "ForgeDoor") //&& !hasTeleported)
         {
+            SpriteRenderer otherSprite;
+            otherSprite = other.GetComponent<SpriteRenderer>();
+
             atDoor = true;
             bool hasPlayed = false;
 
             if (hasKey)
             {
                 doorOpen = true;
+                otherSprite.sprite = doorOpenSprite;
                 hasTeleported = false;
 
                 if (!hasPlayed)

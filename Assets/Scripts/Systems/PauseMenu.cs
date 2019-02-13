@@ -15,6 +15,7 @@ public class PauseMenu : MonoBehaviour
     public GameObject craftingUI;
     public GameObject notEnough;
     public Canvas screenUI;
+    public GameObject prompt;
 
     void Start()
     {
@@ -35,6 +36,7 @@ public class PauseMenu : MonoBehaviour
                     PausedGame();
                     inventoryUI.SetActive(true);
                     screenUI.GetComponent<Canvas>().enabled = false;
+                    prompt.SetActive(false);
 
                 }
                 else if (!pauseEnabled)
@@ -44,6 +46,7 @@ public class PauseMenu : MonoBehaviour
                     screenUI.GetComponent<Canvas>().enabled = true;
                     tooltip.HideTooltip();
                     armorTooltip.HideTooltip();
+                    //the object in itemslot has to shrink
                 }
             }
         }
@@ -60,7 +63,7 @@ public class PauseMenu : MonoBehaviour
                     pB.prompt.SetActive(false);
                     craftingUI.SetActive(true);
                     inventoryUI.SetActive(true);
-                    notEnough.SetActive(true);
+                    screenUI.GetComponent<Canvas>().enabled = false;
                 }
                 else if(!craftingEnabled)
                 {
@@ -69,6 +72,7 @@ public class PauseMenu : MonoBehaviour
                     notEnough.SetActive(false);
                     pB.prompt.SetActive(true);
                     inventoryUI.SetActive(false);
+                    screenUI.GetComponent<Canvas>().enabled = true;
                     tooltip.HideTooltip();
                     armorTooltip.HideTooltip();
                 }
