@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a6b194f808b1af6499c93410e504af42, type: 3}
-  m_Name: BombGoblin_Atlas
+  m_Name: boss_Atlas
   m_EditorClassIdentifier: 
-  atlasFile: {fileID: 4900000, guid: bd75ac8edb563324fa93f5ac96d24278, type: 3}
+  atlasFile: {fileID: 4900000, guid: 1237131752b54114a9e63f8512d55794, type: 3}
   materials:
-  - {fileID: 2100000, guid: 534fa9e1fa87e424c831365f95c00c9d, type: 2}
+  - {fileID: 2100000, guid: c7009f2082695534b89ebc1a6cd578bc, type: 2}
