@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6b194f808b1af6499c93410e504af42, type: 3}
   m_Name: BombGoblin_Atlas
   m_EditorClassIdentifier: 
-  atlasFile: {fileID: 4900000, guid: bd75ac8edb563324fa93f5ac96d24278, type: 3}
+  atlasFile: {fileID: 4900000, guid: 7544265a22b72e942adbce6d554854ed, type: 3}
   materials:
-  - {fileID: 2100000, guid: 534fa9e1fa87e424c831365f95c00c9d, type: 2}
+  - {fileID: 2100000, guid: 13b37ffb9764330498998e34e0a49eb2, type: 2}

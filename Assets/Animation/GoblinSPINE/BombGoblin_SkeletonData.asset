@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: BombGoblin_SkeletonData
   m_EditorClassIdentifier: 
   atlasAssets:
-  - {fileID: 11400000, guid: 4280184cf7242794090d3065c016eb35, type: 2}
+  - {fileID: 11400000, guid: a854032c13380b94fa5c0c99407958b6, type: 2}
   scale: 0.01
-  skeletonJSON: {fileID: 4900000, guid: 88ed05d8f5b7ccc48adc52de3ec5a966, type: 3}
+  skeletonJSON: {fileID: 4900000, guid: 2825888104b349e4c99e3d65fbf09618, type: 3}
   skeletonDataModifiers: []
   fromAnimation: []
   toAnimation: []

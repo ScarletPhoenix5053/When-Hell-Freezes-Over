@@ -9,10 +9,8 @@ public class SlimePriestController : EnemyController, IBossAttackTriggerResponde
     {
         Standing, Aiming
     }
-    public float AimRange;
-    public float AimMinHeight;
-
-    public Transform SpearArm;
+    public BossAttackTrigger AttackTrigger;
+    
     #endregion
     #region Protected Vars
     protected Vector2 spearArmOriginalPos;
@@ -23,9 +21,11 @@ public class SlimePriestController : EnemyController, IBossAttackTriggerResponde
     protected override void Awake()
     {
         base.Awake();
-
-        spearArmOriginalPos = SpearArm.position;
-        spearArmOriginalRot = SpearArm.rotation;
+    }
+    protected void Start()
+    {
+        FindObjectOfType<FightManager>()?.GoToNextStage();
+        AttackTrigger.SetResponder(this);
     }
     protected override void FixedUpdate()
     {
@@ -37,48 +37,36 @@ public class SlimePriestController : EnemyController, IBossAttackTriggerResponde
     }
     protected void OnDrawGizmosSelected()
     {
-        DrawCircle(AimRange, Color.cyan);
     }
     #endregion
 
     #region Public Methods
-    public void StartAttack(BossAttackPath attackPath)
+    public void StartAttack()
     {
-        throw new System.NotImplementedException();
+        GenericEvents.OnAttack.Invoke();
+        am?.Attack();
     }
     public void SetBehaviour(Behaviour newBehaviour)
     {
         if (CurrentBehaviour != newBehaviour) CurrentBehaviour = newBehaviour;
     }
+    public override void Die()
+    {
+        Debug.Log(name + "Is Dead.");
+        SetState(State.Dead);
+        am?.StopAttack();
+
+        // Despawn
+        if (transform.parent != null) Destroy(transform.parent.gameObject, 2.7f);
+        else Destroy(gameObject, 2.7f);
+    }
     #endregion
     #region Protected Methods
     protected override void Act()
     {
-        // If aiming
-        if (CurrentBehaviour == Behaviour.Aiming)
-        {
-            // aim
-            SpearArm.LookAt(plr.transform);
-        }
-        else
-        {
-            SpearArm.position = spearArmOriginalPos;
-            SpearArm.rotation = spearArmOriginalRot;
-        }
     }
     protected override void DecideAction()
     {
-        // If player in aim range
-        if (DistToPlayer < AimRange && plr.transform.position.y >= AimMinHeight)
-        {
-            // start aiming
-            SetBehaviour(Behaviour.Aiming);
-        }
-        else
-        {
-            // return to standing
-            SetBehaviour(Behaviour.Standing);
-        }
     }
     protected void DrawCircle(float radius, Color colour)
     {

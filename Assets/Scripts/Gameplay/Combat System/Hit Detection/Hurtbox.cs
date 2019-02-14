@@ -85,7 +85,7 @@ namespace Sierra.Combat2D
 
             // Drawcube takes the full size, not halfextents
             Gizmos.DrawCube(
-                Vector3.zero,
+                transform.localPosition + (Vector3)Collider.offset,
                 new Vector3(
                     Collider.bounds.extents.x * 2,
                     Collider.bounds.extents.y * 2,

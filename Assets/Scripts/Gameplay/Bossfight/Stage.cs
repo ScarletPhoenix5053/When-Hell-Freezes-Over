@@ -104,15 +104,7 @@ public class InstanceContainer
 
             if (spawnedObject == null) continue;
 
-            if (Application.isEditor)
-            {
-                UnityEngine.Object.DestroyImmediate(spawnedObject);
-                spawnedObject = null;
-            }
-            else
-            {
-                UnityEngine.Object.Destroy(spawnedObject);
-            }
+            UnityEngine.Object.Destroy(spawnedObject);
         }
         SpawnedObjects = new List<GameObject>();
     }
