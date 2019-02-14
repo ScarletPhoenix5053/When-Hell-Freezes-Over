@@ -168,10 +168,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   XSpeed: 2
   YSpeed: 0
+  moveVector: {x: 0, y: 0}
   Gravity: 1
   GravityMax: 20
   DragX: 0.5
+  GravityEnabledByDefault: 1
   ContMotionVector: {x: 0, y: 0}
+  OnLanding:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  gravityEnabled: 1
 --- !u!114 &5792105401393206092
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -216,6 +224,9 @@ MonoBehaviour:
   TurnDuration: 120
   BouncePadPrefab: {fileID: 2294588854056839805, guid: 7bb0f1b5385a3c241b97740f54c89b7f,
     type: 3}
+  bone: {fileID: 5776911592199247892, guid: 722a5bb6955634d4c9274ad200deaec7, type: 3}
+  eyeball: {fileID: 532371373381874444, guid: 48a06ae9cb7159245b61d50683c04b15, type: 3}
+  AverageItemVariance: {x: 3, y: 3}
   CurrentBehaviour: 0
 --- !u!114 &2898335708096625760
 MonoBehaviour:
@@ -234,6 +245,7 @@ MonoBehaviour:
   Attacks:
   - {fileID: 11400000, guid: 2899b4dded3d38643ae76c3d1038b7ac, type: 2}
   AtkStage: 0
+  projectilePrefab: {fileID: 0}
 --- !u!114 &5792105401393206095
 MonoBehaviour:
   m_ObjectHideFlags: 0
